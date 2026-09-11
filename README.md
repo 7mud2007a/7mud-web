@@ -1,18 +1,28 @@
-# DANIEL — Digital Portfolio
+# DANIEL — Personal Portfolio
 
-Static HTML/CSS/JS portfolio.
+Premium personal portfolio website for Daniel.
 
-## Structure
-- index.html
-- css/style.css
-- js/script.js
-- assets/daniel.jpg
-- assets/d-crystal.png
+## Stack
 
-## Deploy
-Upload the folder to GitHub and deploy it as a Static Site on Render.
-No Node.js, npm, build command, or database is required.
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- Responsive design
+- Light / Dark mode
+- English / Arabic
+- Glass UI
+- Scroll animations
 
-## Contact
-Telegram: @DanielXdev
-Phone: 0951708141
+## Project Structure
+
+```text
+DANIEL/
+├── index.html
+├── README.md
+├── css/
+│   └── style.css
+├── js/
+│   └── script.js
+└── assets/
+    ├── daniel.jpg
+    └── d-crystal.png
