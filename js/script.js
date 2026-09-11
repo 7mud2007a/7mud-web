@@ -1,395 +1,356 @@
-(() => {
-  "use strict";
+/* =========================================================
+   DANIEL — PORTFOLIO SCRIPT
+   ========================================================= */
 
-  const body = document.body;
-  const loader = document.querySelector(".loader");
-  const crystal = document.querySelector(".hero-crystal");
-  const navItems = [...document.querySelectorAll(".nav-link")];
-  const activePill = document.querySelector(".active-pill");
-  const themeToggle = document.querySelector(".theme-toggle");
-  const languageToggle = document.querySelector(".language-toggle");
-  const nav = document.querySelector(".liquid-nav");
+document.addEventListener("DOMContentLoaded", () => {
 
-  /* =========================
-     LOADER
-  ========================= */
+  /* =======================================================
+     ELEMENTS
+  ======================================================= */
 
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      if (loader) {
-        loader.classList.add("is-hidden");
+  const html = document.documentElement;
 
-        setTimeout(() => {
-          loader.remove();
-        }, 900);
-      }
-    }, 650);
-  });
+  const loader = document.getElementById("loader");
 
+  const nav = document.getElementById("nav");
+  const navItems = [...document.querySelectorAll(".nav-btn")];
+  const activePill = document.getElementById("active-pill");
 
-  /* =========================
-     ACTIVE NAV PILL
-  ========================= */
+  const themeBtn = document.getElementById("theme-btn");
+  const langBtn = document.getElementById("lang-btn");
 
-  function moveActivePill(item) {
-    if (!item || !activePill) return;
-
-    const navBox = item.parentElement.getBoundingClientRect();
-    const itemBox = item.getBoundingClientRect();
-
-    const x = itemBox.left - navBox.left;
-
-    activePill.style.width = `${itemBox.width}px`;
-    activePill.style.transform = `translateX(${x}px)`;
-  }
-
-  function setActiveNav(item) {
-    navItems.forEach((link) => {
-      link.classList.remove("active");
-    });
-
-    if (item) {
-      item.classList.add("active");
-      moveActivePill(item);
-    }
-  }
-
-  navItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      setActiveNav(item);
-    });
-  });
-
-  window.addEventListener("resize", () => {
-    const active = document.querySelector(".nav-link.active");
-
-    if (active) {
-      moveActivePill(active);
-    }
-  });
-
-
-  /* =========================
-     CURSOR GLARE
-  ========================= */
-
-  if (nav) {
-    nav.addEventListener("pointermove", (event) => {
-      const rect = nav.getBoundingClientRect();
-
-      const x = ((event.clientX - rect.left) / rect.width) * 100;
-      const y = ((event.clientY - rect.top) / rect.height) * 100;
-
-      nav.style.setProperty("--glare-x", `${x}%`);
-      nav.style.setProperty("--glare-y", `${y}%`);
-    });
-
-    nav.addEventListener("pointerleave", () => {
-      nav.style.setProperty("--glare-x", "50%");
-      nav.style.setProperty("--glare-y", "50%");
-    });
-  }
-
-
-  /* =========================
-     CRYSTAL POINTER MOVEMENT
-  ========================= */
-
-  let pointerX = 0;
-  let pointerY = 0;
-
-  window.addEventListener("pointermove", (event) => {
-    pointerX =
-      (event.clientX / window.innerWidth - 0.5) * 2;
-
-    pointerY =
-      (event.clientY / window.innerHeight - 0.5) * 2;
-  });
-
-  function updateCrystal() {
-    if (!crystal) return;
-
-    const scroll = window.scrollY;
-    const heroHeight = window.innerHeight;
-
-    const progress = Math.min(scroll / heroHeight, 1);
-
-    const rotateX = pointerY * -4;
-    const rotateY = pointerX * 6;
-
-    const moveY = progress * -150;
-    const scale = 1 - progress * 0.35;
-    const opacity = 1 - progress * 1.15;
-
-    crystal.style.transform = `
-      translate3d(0, ${moveY}px, 0)
-      scale(${scale})
-      rotateX(${rotateX}deg)
-      rotateY(${rotateY}deg)
-    `;
-
-    crystal.style.opacity = Math.max(opacity, 0);
-  }
-
-  window.addEventListener("pointermove", updateCrystal);
-  window.addEventListener("scroll", updateCrystal, {
-    passive: true
-  });
-
-  updateCrystal();
-
-
-  /* =========================
-     SCROLL REVEAL
-  ========================= */
-
-  const revealElements = document.querySelectorAll(".reveal");
-
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      threshold: 0.12,
-      rootMargin: "0px 0px -40px 0px"
-    }
-  );
-
-  revealElements.forEach((element) => {
-    revealObserver.observe(element);
-  });
-
-
-  /* =========================
-     ACTIVE SECTION
-  ========================= */
+  const crystal = document.getElementById("crystal");
 
   const sections = [
-    ...document.querySelectorAll("section[id]")
+    ...document.querySelectorAll(
+      "#home, #about, #work, #contact"
+    )
   ];
 
-  const sectionObserver = new IntersectionObserver(
-    (entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort(
-          (a, b) =>
-            b.intersectionRatio - a.intersectionRatio
-        );
+  const revealElements = [
+    ...document.querySelectorAll(".reveal")
+  ];
 
-      if (!visible.length) return;
+  const tiltElements = [
+    ...document.querySelectorAll("[data-tilt]")
+  ];
 
-      const currentId = visible[0].target.id;
 
-      const matchingLink = navItems.find((link) => {
-        return (
-          link.getAttribute("href") === `#${currentId}`
-        );
-      });
+  /* =======================================================
+     LOADER
+     ======================================================= */
 
-      if (matchingLink) {
-        setActiveNav(matchingLink);
+  window.addEventListener("load", () => {
+
+    setTimeout(() => {
+
+      if (loader) {
+        loader.classList.add("hidden");
       }
-    },
-    {
-      threshold: [0.15, 0.35, 0.6],
-      rootMargin: "-15% 0px -55% 0px"
-    }
-  );
 
-  sections.forEach((section) => {
-    sectionObserver.observe(section);
+    }, 700);
+
   });
 
 
-  /* =========================
+  /* =======================================================
+     YEAR
+     ======================================================= */
+
+  const year = document.getElementById("year");
+
+  if (year) {
+    year.textContent = new Date().getFullYear();
+  }
+
+
+  /* =======================================================
      THEME
-  ========================= */
+     ======================================================= */
 
   const savedTheme =
     localStorage.getItem("daniel-theme");
 
-  if (savedTheme === "dark") {
-    body.classList.add("dark");
+  if (
+    savedTheme === "dark" ||
+    savedTheme === "light"
+  ) {
+    html.dataset.theme = savedTheme;
   } else {
-    body.classList.remove("dark");
+    html.dataset.theme = "light";
   }
 
-  function updateThemeIcon() {
-    if (!themeToggle) return;
 
-    const isDark = body.classList.contains("dark");
+  function setTheme(theme) {
 
-    themeToggle.setAttribute(
-      "aria-label",
-      isDark ? "Switch to light mode" : "Switch to dark mode"
+    html.dataset.theme = theme;
+
+    localStorage.setItem(
+      "daniel-theme",
+      theme
     );
 
-    themeToggle.setAttribute(
-      "title",
-      isDark ? "Light mode" : "Dark mode"
+  }
+
+
+  themeBtn?.addEventListener("click", () => {
+
+    const current =
+      html.dataset.theme === "dark"
+        ? "dark"
+        : "light";
+
+    setTheme(
+      current === "dark"
+        ? "light"
+        : "dark"
     );
 
-    themeToggle.innerHTML = isDark
-      ? "☼"
-      : "◐";
-  }
-
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      body.classList.toggle("dark");
-
-      const isDark =
-        body.classList.contains("dark");
-
-      localStorage.setItem(
-        "daniel-theme",
-        isDark ? "dark" : "light"
-      );
-
-      updateThemeIcon();
-    });
-  }
-
-  updateThemeIcon();
+  });
 
 
-  /* =========================
+  /* =======================================================
      LANGUAGE
-  ========================= */
+     ======================================================= */
 
   const translations = {
+
     en: {
+
+      loading: "Loading",
+
       home: "Home",
       work: "Work",
       about: "About",
       contact: "Contact",
 
-      heroKicker: "Independent Developer",
-      heroTitle: "Designing digital experiences.",
-      heroText:
-        "I build modern websites and digital products with a focus on design, technology and smooth experiences.",
+      eyebrow:
+        "DIGITAL CREATOR · WEB DEVELOPER",
 
-      aboutKicker: "About",
-      aboutTitle: "I turn ideas into digital experiences.",
+      hero1:
+        "I build digital",
+
+      hero2:
+        "experiences that feel different.",
+
+      heroCopy:
+        "A personal portfolio of selected work by Daniel — from AI products to immersive web experiences.",
+
+      explore:
+        "Explore my work",
+
+      scroll:
+        "Scroll to explore",
+
+      status:
+        "Building on the web",
+
+      aboutLabel:
+        "01 / ABOUT",
+
+      hi:
+        "Hi, I'm",
+
       aboutText:
-        "I'm Daniel, a developer focused on creating premium websites, interactive experiences and modern digital products.",
+        "I design and build modern websites, AI-powered products and digital experiences with a focus on clean visuals, motion and strong user experience.",
 
-      workKicker: "Selected Work",
-      workTitle: "Projects I've built.",
+      selected:
+        "Selected projects",
 
-      project1Title: "Garaue Chocolate",
-      project1Text:
-        "A premium chocolate experience with a modern visual identity.",
+      focus:
+        "Product focus",
 
-      project2Title: "Biz AI",
-      project2Text:
-        "An AI-powered content and social media assistant for businesses.",
+      design:
+        "Design & development",
 
-      project3Title: "EDGE AI Trader",
-      project3Text:
-        "A private AI-powered forex intelligence platform.",
+      workLabel:
+        "02 / SELECTED WORK",
 
-      statement:
-        "Good design is not decoration. It's how an experience feels.",
+      built:
+        "Things I've built.",
 
-      contactKicker: "Contact",
-      contactTitle: "Let's build something.",
+      workNote:
+        "A few projects that represent the direction I like to build in.",
+
+      garaueText:
+        "Premium product experience with a polished visual identity.",
+
+      bizText:
+        "AI-powered content generation for businesses and creators.",
+
+      edgeText:
+        "Private AI-powered forex intelligence experience.",
+
+      approach:
+        "THE APPROACH",
+
+      approachTitle:
+        "Simple on the surface. Thoughtful underneath.",
+
+      approachText:
+        "Every detail has a reason — from the first interaction to the final pixel.",
+
+      contactLabel:
+        "03 / CONTACT",
+
+      contactTitle:
+        "Have an idea? Let's build it.",
+
       contactText:
-        "Have an idea, project or collaboration in mind? Let's talk.",
+        "For projects, collaborations or just a conversation, reach me directly.",
 
-      telegram: "Telegram",
-      phone: "Phone",
+      phone:
+        "Phone",
 
       footer:
-        "Designed & built by Daniel."
+        "Designed & built with intention."
+
     },
 
+
     ar: {
-      home: "الرئيسية",
-      work: "أعمالي",
-      about: "عني",
-      contact: "تواصل",
 
-      heroKicker: "مطور مستقل",
-      heroTitle: "أصمم تجارب رقمية مختلفة.",
-      heroText:
-        "أبني مواقع ومنتجات رقمية حديثة مع التركيز على التصميم والتقنية وسلاسة التجربة.",
+      loading:
+        "جاري التحميل",
 
-      aboutKicker: "عني",
-      aboutTitle: "أحوّل الأفكار إلى تجارب رقمية.",
+      home:
+        "الرئيسية",
+
+      work:
+        "أعمالي",
+
+      about:
+        "عني",
+
+      contact:
+        "تواصل",
+
+      eyebrow:
+        "مطور ويب · صانع تجارب رقمية",
+
+      hero1:
+        "أبني تجارب",
+
+      hero2:
+        "رقمية مختلفة.",
+
+      heroCopy:
+        "معرض شخصي لأعمال دانيال — من منتجات الذكاء الاصطناعي إلى تجارب الويب الغامرة.",
+
+      explore:
+        "استكشف أعمالي",
+
+      scroll:
+        "مرر للاستكشاف",
+
+      status:
+        "أبني على الويب",
+
+      aboutLabel:
+        "01 / عني",
+
+      hi:
+        "مرحباً، أنا",
+
       aboutText:
-        "أنا دانيال، مطور أركز على بناء مواقع احترافية وتجارب تفاعلية ومنتجات رقمية حديثة.",
+        "أصمم وأطور مواقع حديثة ومنتجات مدعومة بالذكاء الاصطناعي وتجارب رقمية، مع التركيز على التصميم النظيف والحركة وتجربة المستخدم.",
 
-      workKicker: "أعمال مختارة",
-      workTitle: "مشاريع قمت ببنائها.",
+      selected:
+        "مشاريع مختارة",
 
-      project1Title: "Garaue Chocolate",
-      project1Text:
-        "تجربة شوكولاتة فاخرة بهوية بصرية عصرية.",
+      focus:
+        "تركيزي",
 
-      project2Title: "Biz AI",
-      project2Text:
-        "مساعد ذكي لإنشاء المحتوى وإدارة أفكار السوشال ميديا.",
+      design:
+        "تصميم وتطوير",
 
-      project3Title: "EDGE AI Trader",
-      project3Text:
-        "منصة خاصة لتحليل الفوركس بالذكاء الاصطناعي.",
+      workLabel:
+        "02 / أعمال مختارة",
 
-      statement:
-        "التصميم الجيد ليس مجرد شكل، بل هو الإحساس الذي تتركه التجربة.",
+      built:
+        "أشياء بنيتها.",
 
-      contactKicker: "تواصل",
-      contactTitle: "لنبني شيئاً مميزاً.",
+      workNote:
+        "مجموعة من المشاريع التي تمثل الاتجاه الذي أحب البناء فيه.",
+
+      garaueText:
+        "تجربة رقمية فاخرة لمنتج مع هوية بصرية مصقولة.",
+
+      bizText:
+        "منصة لتوليد المحتوى بالذكاء الاصطناعي للشركات وصناع المحتوى.",
+
+      edgeText:
+        "تجربة خاصة لتحليل أسواق الفوركس بالذكاء الاصطناعي.",
+
+      approach:
+        "النهج",
+
+      approachTitle:
+        "بسيط من الخارج. مدروس من الداخل.",
+
+      approachText:
+        "كل تفصيل له سبب — من أول تفاعل حتى آخر بكسل.",
+
+      contactLabel:
+        "03 / تواصل",
+
+      contactTitle:
+        "عندك فكرة؟ خلينا نبنيها.",
+
       contactText:
-        "عندك فكرة أو مشروع أو تعاون؟ تواصل معي.",
+        "للمشاريع أو التعاون أو حتى مجرد حديث، تواصل معي مباشرة.",
 
-      telegram: "تيليغرام",
-      phone: "الهاتف",
+      phone:
+        "الهاتف",
 
       footer:
-        "تصميم وتطوير دانيال."
+        "مصمم ومبني بعناية."
+
     }
+
   };
 
 
-  let currentLanguage =
-    localStorage.getItem("daniel-language") || "en";
-
   function applyLanguage(language) {
+
     const dictionary =
-      translations[language] || translations.en;
+      translations[language] ||
+      translations.en;
 
-    document.documentElement.lang = language;
+    html.lang = language;
 
-    document.documentElement.dir =
-      language === "ar" ? "rtl" : "ltr";
+    html.dir =
+      language === "ar"
+        ? "rtl"
+        : "ltr";
 
-    document.querySelectorAll("[data-i18n]")
-      .forEach((element) => {
+
+    document
+      .querySelectorAll("[data-i18n]")
+      .forEach(element => {
+
         const key =
-          element.getAttribute("data-i18n");
+          element.dataset.i18n;
 
-        if (dictionary[key]) {
-          element.textContent = dictionary[key];
+        if (
+          dictionary[key] !== undefined
+        ) {
+
+          element.textContent =
+            dictionary[key];
+
         }
+
       });
 
-    if (languageToggle) {
-      languageToggle.textContent =
-        language === "ar" ? "EN" : "AR";
 
-      languageToggle.setAttribute(
-        "aria-label",
-        language === "ar"
-          ? "Switch to English"
-          : "التبديل إلى العربية"
-      );
+    if (langBtn) {
+
+      langBtn.textContent =
+        language === "en"
+          ? "AR"
+          : "EN";
+
     }
 
     localStorage.setItem(
@@ -397,75 +358,697 @@
       language
     );
 
-    requestAnimationFrame(() => {
-      const active =
-        document.querySelector(".nav-link.active");
-
-      if (active) {
-        moveActivePill(active);
-      }
-    });
   }
 
-  if (languageToggle) {
-    languageToggle.addEventListener("click", () => {
-      currentLanguage =
-        currentLanguage === "en"
+
+  const savedLanguage =
+    localStorage.getItem(
+      "daniel-language"
+    );
+
+  applyLanguage(
+    savedLanguage === "ar"
+      ? "ar"
+      : "en"
+  );
+
+
+  langBtn?.addEventListener(
+    "click",
+    () => {
+
+      const current =
+        html.lang === "ar"
           ? "ar"
           : "en";
 
-      applyLanguage(currentLanguage);
-    });
+      applyLanguage(
+        current === "ar"
+          ? "en"
+          : "ar"
+      );
+
+      requestAnimationFrame(
+        updateActivePill
+      );
+
+    }
+  );
+
+
+  /* =======================================================
+     ACTIVE NAV PILL
+     ======================================================= */
+
+  function updateActivePill(
+    button,
+    instant = false
+  ) {
+
+    if (!button || !activePill) {
+      return;
+    }
+
+    const parent =
+      button.parentElement;
+
+    if (!parent) {
+      return;
+    }
+
+    const parentRect =
+      parent.getBoundingClientRect();
+
+    const buttonRect =
+      button.getBoundingClientRect();
+
+    const x =
+      buttonRect.left -
+      parentRect.left;
+
+    activePill.style.width =
+      `${buttonRect.width}px`;
+
+    if (instant) {
+
+      activePill.style.transition =
+        "none";
+
+      activePill.style.transform =
+        `translateX(${x}px)`;
+
+      requestAnimationFrame(() => {
+
+        activePill.style.transition =
+          "";
+
+      });
+
+    } else {
+
+      activePill.style.transform =
+        `translateX(${x}px)`;
+
+    }
+
   }
 
-  applyLanguage(currentLanguage);
+
+  function setActiveNav(button) {
+
+    navItems.forEach(item => {
+
+      item.classList.toggle(
+        "active",
+        item === button
+      );
+
+    });
+
+    updateActivePill(button);
+
+  }
 
 
-  /* =========================
-     SMOOTH ANCHOR SCROLL
-  ========================= */
+  navItems.forEach(button => {
 
-  document
-    .querySelectorAll('a[href^="#"]')
-    .forEach((link) => {
-      link.addEventListener("click", (event) => {
-        const targetId =
-          link.getAttribute("href");
-
-        if (!targetId || targetId === "#") return;
+    button.addEventListener(
+      "click",
+      event => {
 
         const target =
-          document.querySelector(targetId);
+          button.getAttribute("href");
 
-        if (!target) return;
+        if (!target?.startsWith("#")) {
+          return;
+        }
+
+        const element =
+          document.querySelector(target);
+
+        if (!element) {
+          return;
+        }
 
         event.preventDefault();
 
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
+        setActiveNav(button);
+
+        const offset =
+          window.innerWidth <= 650
+            ? 20
+            : 25;
+
+        const top =
+          element.getBoundingClientRect().top +
+          window.scrollY -
+          offset;
+
+        window.scrollTo({
+          top,
+          behavior: "smooth"
         });
-      });
-    });
 
-
-  /* =========================
-     MAGNETIC BUTTON EFFECT
-  ========================= */
-
-  const magneticElements =
-    document.querySelectorAll(
-      ".magnetic, .glass-button"
+      }
     );
 
-  magneticElements.forEach((element) => {
-    element.addEventListener(
+  });
+
+
+  /* Initial pill */
+
+  const initialActive =
+    document.querySelector(
+      ".nav-btn.active"
+    ) ||
+    navItems[0];
+
+  requestAnimationFrame(() => {
+
+    updateActivePill(
+      initialActive,
+      true
+    );
+
+  });
+
+
+  window.addEventListener(
+    "resize",
+    () => {
+
+      const active =
+        document.querySelector(
+          ".nav-btn.active"
+        );
+
+      updateActivePill(
+        active,
+        true
+      );
+
+    }
+  );
+
+
+  /* =======================================================
+     SECTION OBSERVER
+     ======================================================= */
+
+  if ("IntersectionObserver" in window) {
+
+    const sectionObserver =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(entry => {
+
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            const id =
+              entry.target.id;
+
+            const button =
+              document.querySelector(
+                `.nav-btn[data-section="${id}"]`
+              );
+
+            if (button) {
+              setActiveNav(button);
+            }
+
+          });
+
+        },
+        {
+          root: null,
+
+          rootMargin:
+            "-42% 0px -45% 0px",
+
+          threshold: 0
+        }
+      );
+
+
+    sections.forEach(section => {
+
+      sectionObserver.observe(section);
+
+    });
+
+  }
+
+
+  /* =======================================================
+     NAV SHOW / HIDE ON SCROLL
+     ======================================================= */
+
+  let lastScrollY =
+    window.scrollY;
+
+  let ticking = false;
+
+
+  function handleNavScroll() {
+
+    const currentY =
+      window.scrollY;
+
+    const difference =
+      currentY - lastScrollY;
+
+
+    if (currentY < 30) {
+
+      nav?.classList.remove(
+        "nav-hidden"
+      );
+
+    } else if (difference > 7) {
+
+      nav?.classList.add(
+        "nav-hidden"
+      );
+
+    } else if (difference < -5) {
+
+      nav?.classList.remove(
+        "nav-hidden"
+      );
+
+    }
+
+
+    lastScrollY = currentY;
+
+    ticking = false;
+
+  }
+
+
+  window.addEventListener(
+    "scroll",
+    () => {
+
+      if (!ticking) {
+
+        requestAnimationFrame(
+          handleNavScroll
+        );
+
+        ticking = true;
+
+      }
+
+    },
+    {
+      passive: true
+    }
+  );
+
+
+  /* =======================================================
+     CRYSTAL POINTER PARALLAX
+     ======================================================= */
+
+  let pointerX = 0;
+  let pointerY = 0;
+
+  let smoothX = 0;
+  let smoothY = 0;
+
+
+  function pointerMove(
+    clientX,
+    clientY
+  ) {
+
+    pointerX =
+      (clientX / window.innerWidth - .5);
+
+    pointerY =
+      (clientY / window.innerHeight - .5);
+
+  }
+
+
+  window.addEventListener(
+    "pointermove",
+    event => {
+
+      pointerMove(
+        event.clientX,
+        event.clientY
+      );
+
+      document.documentElement.style
+        .setProperty(
+          "--mouse-x",
+          `${event.clientX}px`
+        );
+
+      document.documentElement.style
+        .setProperty(
+          "--mouse-y",
+          `${event.clientY}px`
+        );
+
+    },
+    {
+      passive: true
+    }
+  );
+
+
+  /* =======================================================
+     CRYSTAL SCROLL ANIMATION
+     ======================================================= */
+
+  function updateCrystal() {
+
+    if (!crystal) {
+      return;
+    }
+
+    smoothX +=
+      (pointerX - smoothX) * .045;
+
+    smoothY +=
+      (pointerY - smoothY) * .045;
+
+
+    const scroll =
+      window.scrollY;
+
+    const heroHeight =
+      Math.max(
+        window.innerHeight,
+        1
+      );
+
+    const progress =
+      Math.min(
+        Math.max(
+          scroll / heroHeight,
+          0
+        ),
+        1
+      );
+
+
+    const rotateY =
+      smoothX * 8;
+
+    const rotateX =
+      -smoothY * 7;
+
+    const moveY =
+      progress * -190;
+
+    const scale =
+      1 - progress * .42;
+
+    const opacity =
+      Math.max(
+        0,
+        1 - progress * 1.25
+      );
+
+
+    crystal.style.transform =
+      `translate3d(0, ${moveY}px, 0)
+       rotateX(${rotateX}deg)
+       rotateY(${rotateY}deg)
+       scale(${scale})`;
+
+    crystal.style.opacity =
+      opacity;
+
+  }
+
+
+  function crystalLoop() {
+
+    updateCrystal();
+
+    requestAnimationFrame(
+      crystalLoop
+    );
+
+  }
+
+  crystalLoop();
+
+
+  /* =======================================================
+     NAV GLARE
+     ======================================================= */
+
+  const glare =
+    document.getElementById("glare");
+
+
+  nav?.addEventListener(
+    "pointermove",
+    event => {
+
+      const rect =
+        nav.getBoundingClientRect();
+
+      const x =
+        event.clientX - rect.left;
+
+      const y =
+        event.clientY - rect.top;
+
+      nav.style
+        .setProperty(
+          "--glare-x",
+          `${x}px`
+        );
+
+      nav.style
+        .setProperty(
+          "--glare-y",
+          `${y}px`
+        );
+
+      glare?.style
+        .setProperty(
+          "opacity",
+          ".8"
+        );
+
+    },
+    {
+      passive: true
+    }
+  );
+
+
+  nav?.addEventListener(
+    "pointerleave",
+    () => {
+
+      glare?.style
+        .setProperty(
+          "opacity",
+          ".45"
+        );
+
+    }
+  );
+
+
+  /* =======================================================
+     REVEAL ANIMATION
+     ======================================================= */
+
+  if (
+    "IntersectionObserver" in window
+  ) {
+
+    const revealObserver =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(
+            entry => {
+
+              if (
+                entry.isIntersecting
+              ) {
+
+                entry.target
+                  .classList
+                  .add("visible");
+
+                revealObserver
+                  .unobserve(
+                    entry.target
+                  );
+
+              }
+
+            }
+          );
+
+        },
+        {
+          threshold: .12
+        }
+      );
+
+
+    revealElements.forEach(
+      element => {
+
+        revealObserver.observe(
+          element
+        );
+
+      }
+    );
+
+  } else {
+
+    revealElements.forEach(
+      element => {
+
+        element.classList.add(
+          "visible"
+        );
+
+      }
+    );
+
+  }
+
+
+  /* =======================================================
+     CARD 3D TILT
+     ======================================================= */
+
+  tiltElements.forEach(card => {
+
+    let rect;
+
+
+    card.addEventListener(
+      "pointerenter",
+      () => {
+
+        rect =
+          card.getBoundingClientRect();
+
+      }
+    );
+
+
+    card.addEventListener(
       "pointermove",
-      (event) => {
-        if (window.innerWidth < 768) return;
+      event => {
+
+        if (
+          window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+          ).matches
+        ) {
+          return;
+        }
+
+        if (!rect) {
+
+          rect =
+            card.getBoundingClientRect();
+
+        }
+
+
+        const x =
+          event.clientX -
+          rect.left;
+
+        const y =
+          event.clientY -
+          rect.top;
+
+
+        const centerX =
+          rect.width / 2;
+
+        const centerY =
+          rect.height / 2;
+
+
+        const rotateY =
+          ((x - centerX) /
+            centerX) * 2.7;
+
+        const rotateX =
+          ((centerY - y) /
+            centerY) * 2.7;
+
+
+        card.style.transform =
+          `perspective(1000px)
+           rotateX(${rotateX}deg)
+           rotateY(${rotateY}deg)
+           translateY(-3px)`;
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    card.addEventListener(
+      "pointerleave",
+      () => {
+
+        card.style.transform =
+          "";
+
+        rect = null;
+
+      }
+    );
+
+  });
+
+
+  /* =======================================================
+     MAGNETIC BUTTONS
+     ======================================================= */
+
+  const magneticButtons =
+    document.querySelectorAll(
+      ".primary-button, .round-arrow, .contact-link"
+    );
+
+
+  magneticButtons.forEach(button => {
+
+    button.addEventListener(
+      "pointermove",
+      event => {
+
+        if (
+          window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+          ).matches
+        ) {
+          return;
+        }
+
 
         const rect =
-          element.getBoundingClientRect();
+          button.getBoundingClientRect();
+
 
         const x =
           event.clientX -
@@ -477,43 +1060,81 @@
           rect.top -
           rect.height / 2;
 
-        element.style.transform =
-          `translate(${x * 0.08}px, ${y * 0.08}px)`;
+
+        button.style.transform =
+          `translate(
+            ${x * .08}px,
+            ${y * .08}px
+          )`;
+
+      },
+      {
+        passive: true
       }
     );
 
-    element.addEventListener(
+
+    button.addEventListener(
       "pointerleave",
       () => {
-        element.style.transform = "";
+
+        button.style.transform =
+          "";
+
       }
     );
+
   });
 
 
-  /* =========================
+  /* =======================================================
+     KEYBOARD ACCESS
+     ======================================================= */
+
+  document.addEventListener(
+    "keydown",
+    event => {
+
+      if (
+        event.key === "Escape"
+      ) {
+
+        nav?.classList.remove(
+          "nav-hidden"
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =======================================================
      REDUCED MOTION
-  ========================= */
+     ======================================================= */
 
   const reducedMotion =
     window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     );
 
+
   if (reducedMotion.matches) {
-    document.documentElement.classList.add(
-      "reduced-motion"
+
+    nav?.classList.remove(
+      "nav-hidden"
     );
+
+    if (crystal) {
+
+      crystal.style.transform =
+        "none";
+
+      crystal.style.opacity =
+        "1";
+
+    }
+
   }
 
-  reducedMotion.addEventListener?.(
-    "change",
-    (event) => {
-      document.documentElement.classList.toggle(
-        "reduced-motion",
-        event.matches
-      );
-    }
-  );
-
-})();
+});
