@@ -60,166 +60,224 @@
 
 
   <!-- ==============================
-       NAVIGATION
+       BOTTOM GLASS NAVIGATION
   =============================== -->
 
-  <header class="site-header">
+  <nav
+    class="liquid-nav"
+    id="nav"
+    aria-label="Main navigation"
+  >
 
-    <nav
-      class="liquid-nav"
-      id="nav"
-      aria-label="Main navigation"
+    <div class="liquid-glare-container">
+      <div
+        class="liquid-glare"
+        id="glare"
+      ></div>
+    </div>
+
+
+    <div
+      class="nav-items"
+      id="navItems"
     >
 
-      <div class="liquid-glare-container">
-        <div
-          class="liquid-glare"
-          id="glare"
-        ></div>
-      </div>
+      <div
+        class="active-pill"
+        id="active-pill"
+      ></div>
 
 
-      <!-- BRAND -->
+      <!-- HOME -->
 
       <a
-        class="nav-brand"
+        class="nav-btn active"
         href="#home"
-        aria-label="Daniel"
+        data-section="home"
+        aria-label="Home"
       >
 
-        <span class="brand-d">D</span>
+        <span class="btn-content">
 
-        <span>DANIEL</span>
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 10.5 12 3l9 7.5"></path>
+            <path d="M5 9.5V21h14V9.5"></path>
+            <path d="M9 21v-7h6v7"></path>
+          </svg>
+
+          <span data-i18n="home">
+            Home
+          </span>
+
+        </span>
 
       </a>
 
 
-      <!-- NAV ITEMS -->
+      <!-- WORK -->
 
-      <div
-        class="nav-items"
-        id="navItems"
+      <a
+        class="nav-btn"
+        href="#work"
+        data-section="work"
+        aria-label="Work"
       >
 
-        <div
-          class="active-pill"
-          id="active-pill"
-        ></div>
+        <span class="btn-content">
 
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect
+              x="3"
+              y="3"
+              width="18"
+              height="18"
+              rx="4"
+            ></rect>
 
-        <a
-          class="nav-btn active"
-          href="#home"
-          data-section="home"
-        >
+            <path d="M8 8h8"></path>
+            <path d="M8 12h8"></path>
+            <path d="M8 16h5"></path>
+          </svg>
 
-          <span class="btn-content">
-
-            <span class="nav-icon">⌂</span>
-
-            <span data-i18n="home">
-              Home
-            </span>
-
+          <span data-i18n="work">
+            Work
           </span>
 
-        </a>
-
-
-        <a
-          class="nav-btn"
-          href="#work"
-          data-section="work"
-        >
-
-          <span class="btn-content">
-
-            <span class="nav-icon">◇</span>
-
-            <span data-i18n="work">
-              Work
-            </span>
-
-          </span>
-
-        </a>
-
-
-        <a
-          class="nav-btn"
-          href="#about"
-          data-section="about"
-        >
-
-          <span class="btn-content">
-
-            <span class="nav-icon">◌</span>
-
-            <span data-i18n="about">
-              About
-            </span>
-
-          </span>
-
-        </a>
-
-
-        <a
-          class="nav-btn"
-          href="#contact"
-          data-section="contact"
-        >
-
-          <span class="btn-content">
-
-            <span class="nav-icon">↗</span>
-
-            <span data-i18n="contact">
-              Contact
-            </span>
-
-          </span>
-
-        </a>
-
-      </div>
-
-
-      <div class="nav-divider"></div>
-
-
-      <!-- LANGUAGE -->
-
-      <button
-        class="tool-btn"
-        id="lang-btn"
-        aria-label="Change language"
-      >
-        AR
-      </button>
-
-
-      <!-- THEME -->
-
-      <button
-        class="tool-btn theme-btn"
-        id="theme-btn"
-        aria-label="Toggle dark mode"
-      >
-
-        <span class="theme-sun">
-          ☼
         </span>
 
-        <span class="theme-moon">
-          ◐
+      </a>
+
+
+      <!-- ABOUT -->
+
+      <a
+        class="nav-btn"
+        href="#about"
+        data-section="about"
+        aria-label="About"
+      >
+
+        <span class="btn-content">
+
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle
+              cx="12"
+              cy="8"
+              r="4"
+            ></circle>
+
+            <path d="M4 21a8 8 0 0 1 16 0"></path>
+          </svg>
+
+          <span data-i18n="about">
+            About
+          </span>
+
         </span>
 
-      </button>
+      </a>
 
-    </nav>
 
-  </header>
+      <!-- CONTACT -->
+
+      <a
+        class="nav-btn"
+        href="#contact"
+        data-section="contact"
+        aria-label="Contact"
+      >
+
+        <span class="btn-content">
+
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.6 9.6 0 0 1-4.3-1L3 20l1.2-4.2A8.3 8.3 0 0 1 3 11.5 8.5 8.5 0 1 1 21 11.5Z"></path>
+            <path d="M8 12h.01"></path>
+            <path d="M12 12h.01"></path>
+            <path d="M16 12h.01"></path>
+          </svg>
+
+          <span data-i18n="contact">
+            Contact
+          </span>
+
+        </span>
+
+      </a>
+
+    </div>
+
+
+    <div class="nav-divider"></div>
+
+
+    <!-- LANGUAGE -->
+
+    <button
+      class="tool-btn"
+      id="lang-btn"
+      aria-label="Change language"
+      type="button"
+    >
+      AR
+    </button>
+
+
+    <!-- THEME -->
+
+    <button
+      class="tool-btn theme-btn"
+      id="theme-btn"
+      aria-label="Toggle dark mode"
+      type="button"
+    >
+
+      <span class="theme-sun">
+        ☼
+      </span>
+
+      <span class="theme-moon">
+        ◐
+      </span>
+
+    </button>
+
+  </nav>
 
 
   <!-- ==============================
@@ -240,8 +298,6 @@
 
       <div class="intro-stage">
 
-
-        <!-- D LOGO -->
 
         <div
           class="hero-crystal"
@@ -321,7 +377,6 @@
     </section>
 
 
-
     <!-- ==============================
          ABOUT
     =============================== -->
@@ -333,8 +388,6 @@
 
       <div class="profile-grid">
 
-
-        <!-- PHOTO -->
 
         <div class="portrait-card glass reveal">
 
@@ -364,8 +417,6 @@
 
         </div>
 
-
-        <!-- ABOUT TEXT -->
 
         <div class="profile-copy reveal">
 
@@ -452,7 +503,6 @@
     </section>
 
 
-
     <!-- ==============================
          PROJECTS
     =============================== -->
@@ -462,9 +512,7 @@
       id="work"
     >
 
-
       <div class="section-heading reveal">
-
 
         <div>
 
@@ -493,7 +541,6 @@
         </p>
 
       </div>
-
 
 
       <div class="projects-grid">
@@ -571,7 +618,6 @@
         </article>
 
 
-
         <!-- PROJECT 2 -->
 
         <article
@@ -646,7 +692,6 @@
           </div>
 
         </article>
-
 
 
         <!-- PROJECT 3 -->
@@ -732,7 +777,6 @@
     </section>
 
 
-
     <!-- ==============================
          STATEMENT
     =============================== -->
@@ -773,7 +817,6 @@
       </div>
 
     </section>
-
 
 
     <!-- ==============================
@@ -822,11 +865,8 @@
         </div>
 
 
-
         <div class="contact-actions">
 
-
-          <!-- TELEGRAM -->
 
           <a
             class="contact-link glass-button"
@@ -859,9 +899,6 @@
 
           </a>
 
-
-
-          <!-- PHONE -->
 
           <a
             class="contact-link glass-button"
@@ -903,7 +940,6 @@
   </main>
 
 
-
   <!-- ==============================
        FOOTER
   =============================== -->
@@ -924,4 +960,5 @@
   <script src="js/script.js"></script>
 
 </body>
+
 </html>
