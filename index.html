@@ -1,200 +1,927 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" data-theme="light">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#fbfaff">
-  <meta name="description" content="Daniel — Web Developer & Digital Creator. Selected projects and contact.">
+
+  <meta name="theme-color" content="#f7f5ff">
+  <meta name="description" content="DANIEL — Web Developer & Digital Creator">
+
   <title>DANIEL — Digital Portfolio</title>
+
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-  <div id="loader" class="loader" aria-label="Loading Daniel">
-    <div class="loader-core">
-      <img src="assets/d-crystal.png" alt="D" class="loader-logo">
-      <span class="loader-light"></span>
+
+  <!-- ==============================
+       LOADING SCREEN
+  =============================== -->
+
+  <div class="loader" id="loader">
+
+    <div class="loader-logo-wrap">
+
+      <img
+        src="assets/d-crystal.png"
+        class="loader-logo"
+        alt="D"
+      >
+
+      <div class="loader-reflection"></div>
+
     </div>
-    <div class="loader-progress"><span></span></div>
+
+    <div class="loader-label">
+      <span data-i18n="loading">Loading</span>
+
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+
   </div>
 
-  <div class="cursor-glow" aria-hidden="true"></div>
-  <div class="ambient ambient-a"></div>
-  <div class="ambient ambient-b"></div>
+
+  <!-- ==============================
+       BACKGROUND
+  =============================== -->
+
+  <div class="bg-mesh" aria-hidden="true">
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+  </div>
+
+  <div class="cursor-glow"></div>
+
+
+  <!-- ==============================
+       NAVIGATION
+  =============================== -->
 
   <header class="site-header">
-    <nav class="nav-shell glass" aria-label="Primary navigation">
-      <a class="brand" href="#home" aria-label="Daniel home">
-        <span class="brand-mark">D</span>
-        <span>DANIEL</span>
-      </a>
 
-      <div class="nav-items" id="navItems">
-        <span class="nav-active" id="navActive"></span>
-        <a class="nav-link active" href="#home" data-section="home">Home</a>
-        <a class="nav-link" href="#work" data-section="work">Work</a>
-        <a class="nav-link" href="#about" data-section="about">About</a>
-        <a class="nav-link" href="#contact" data-section="contact">Contact</a>
+    <nav
+      class="liquid-nav"
+      id="nav"
+      aria-label="Main navigation"
+    >
+
+      <div class="liquid-glare-container">
+        <div
+          class="liquid-glare"
+          id="glare"
+        ></div>
       </div>
 
-      <a class="nav-contact glass-button" href="https://t.me/DanielXdev" target="_blank" rel="noreferrer">
-        <span>Let's talk</span>
-        <span class="button-arrow">↗</span>
+
+      <!-- BRAND -->
+
+      <a
+        class="nav-brand"
+        href="#home"
+        aria-label="Daniel"
+      >
+
+        <span class="brand-d">D</span>
+
+        <span>DANIEL</span>
+
       </a>
+
+
+      <!-- NAV ITEMS -->
+
+      <div
+        class="nav-items"
+        id="navItems"
+      >
+
+        <div
+          class="active-pill"
+          id="active-pill"
+        ></div>
+
+
+        <a
+          class="nav-btn active"
+          href="#home"
+          data-section="home"
+        >
+
+          <span class="btn-content">
+
+            <span class="nav-icon">⌂</span>
+
+            <span data-i18n="home">
+              Home
+            </span>
+
+          </span>
+
+        </a>
+
+
+        <a
+          class="nav-btn"
+          href="#work"
+          data-section="work"
+        >
+
+          <span class="btn-content">
+
+            <span class="nav-icon">◇</span>
+
+            <span data-i18n="work">
+              Work
+            </span>
+
+          </span>
+
+        </a>
+
+
+        <a
+          class="nav-btn"
+          href="#about"
+          data-section="about"
+        >
+
+          <span class="btn-content">
+
+            <span class="nav-icon">◌</span>
+
+            <span data-i18n="about">
+              About
+            </span>
+
+          </span>
+
+        </a>
+
+
+        <a
+          class="nav-btn"
+          href="#contact"
+          data-section="contact"
+        >
+
+          <span class="btn-content">
+
+            <span class="nav-icon">↗</span>
+
+            <span data-i18n="contact">
+              Contact
+            </span>
+
+          </span>
+
+        </a>
+
+      </div>
+
+
+      <div class="nav-divider"></div>
+
+
+      <!-- LANGUAGE -->
+
+      <button
+        class="tool-btn"
+        id="lang-btn"
+        aria-label="Change language"
+      >
+        AR
+      </button>
+
+
+      <!-- THEME -->
+
+      <button
+        class="tool-btn theme-btn"
+        id="theme-btn"
+        aria-label="Toggle dark mode"
+      >
+
+        <span class="theme-sun">
+          ☼
+        </span>
+
+        <span class="theme-moon">
+          ◐
+        </span>
+
+      </button>
+
     </nav>
+
   </header>
 
+
+  <!-- ==============================
+       MAIN
+  =============================== -->
+
   <main>
-    <section class="intro" id="home">
+
+
+    <!-- ==============================
+         HERO
+    =============================== -->
+
+    <section
+      class="intro"
+      id="home"
+    >
+
       <div class="intro-stage">
-        <div class="crystal-wrap" id="crystal">
-          <img src="assets/d-crystal.png" alt="Daniel crystal D" class="crystal-logo">
+
+
+        <!-- D LOGO -->
+
+        <div
+          class="hero-crystal"
+          id="crystal"
+        >
+
+          <img
+            src="assets/d-crystal.png"
+            alt="D crystal"
+            class="crystal-logo"
+          >
+
         </div>
+
+
         <div class="intro-halo"></div>
-        <p class="eyebrow intro-eyebrow">DIGITAL CREATOR · WEB DEVELOPER</p>
-        <h1 class="intro-title">I build <span>digital experiences</span><br>that feel different.</h1>
-        <p class="intro-copy">A personal portfolio of selected work by Daniel — from AI products to immersive web experiences.</p>
-        <a href="#work" class="primary-button glass-button">Explore my work <span>↓</span></a>
+
+
+        <p
+          class="eyebrow"
+          data-i18n="eyebrow"
+        >
+          DIGITAL CREATOR · WEB DEVELOPER
+        </p>
+
+
+        <h1 class="intro-title">
+
+          <span data-i18n="hero1">
+            I build digital
+          </span>
+
+          <br>
+
+          <em data-i18n="hero2">
+            experiences that feel different.
+          </em>
+
+        </h1>
+
+
+        <p
+          class="intro-copy"
+          data-i18n="heroCopy"
+        >
+          A personal portfolio of selected work by Daniel —
+          from AI products to immersive web experiences.
+        </p>
+
+
+        <a
+          href="#work"
+          class="primary-button glass-button"
+        >
+
+          <span data-i18n="explore">
+            Explore my work
+          </span>
+
+          <b>↓</b>
+
+        </a>
+
       </div>
-      <div class="scroll-cue"><span></span> Scroll to explore</div>
+
+
+      <div class="scroll-cue">
+
+        <span></span>
+
+        <span data-i18n="scroll">
+          Scroll to explore
+        </span>
+
+      </div>
+
     </section>
 
-    <section class="profile section-pad" id="about">
+
+
+    <!-- ==============================
+         ABOUT
+    =============================== -->
+
+    <section
+      class="profile section-pad"
+      id="about"
+    >
+
       <div class="profile-grid">
+
+
+        <!-- PHOTO -->
+
         <div class="portrait-card glass reveal">
+
           <div class="portrait-orbit"></div>
+
+
           <div class="portrait-frame">
-            <img src="assets/daniel.jpg" alt="Daniel" class="portrait">
+
+            <img
+              src="assets/daniel.jpg"
+              alt="Daniel"
+              class="portrait"
+            >
+
           </div>
+
+
           <div class="portrait-badge glass">
+
             <span class="status-dot"></span>
-            Building on the web
+
+            <span data-i18n="status">
+              Building on the web
+            </span>
+
           </div>
+
         </div>
+
+
+        <!-- ABOUT TEXT -->
 
         <div class="profile-copy reveal">
-          <p class="eyebrow">01 / ABOUT</p>
-          <h2>Hi, I'm <span>Daniel.</span></h2>
-          <p class="lead">I design and build modern websites, AI-powered products and digital experiences with a focus on clean visuals, motion and strong user experience.</p>
+
+          <p
+            class="eyebrow"
+            data-i18n="aboutLabel"
+          >
+            01 / ABOUT
+          </p>
+
+
+          <h2>
+
+            <span data-i18n="hi">
+              Hi, I'm
+            </span>
+
+            <em>
+              Daniel.
+            </em>
+
+          </h2>
+
+
+          <p
+            class="lead"
+            data-i18n="aboutText"
+          >
+            I design and build modern websites,
+            AI-powered products and digital experiences
+            with a focus on clean visuals, motion and
+            strong user experience.
+          </p>
+
+
           <div class="mini-stats">
-            <div class="stat glass"><strong>03+</strong><span>Selected projects</span></div>
-            <div class="stat glass"><strong>AI</strong><span>Product focus</span></div>
-            <div class="stat glass"><strong>Web</strong><span>Design & development</span></div>
+
+
+            <div class="stat glass">
+
+              <strong>
+                03+
+              </strong>
+
+              <span data-i18n="selected">
+                Selected projects
+              </span>
+
+            </div>
+
+
+            <div class="stat glass">
+
+              <strong>
+                AI
+              </strong>
+
+              <span data-i18n="focus">
+                Product focus
+              </span>
+
+            </div>
+
+
+            <div class="stat glass">
+
+              <strong>
+                Web
+              </strong>
+
+              <span data-i18n="design">
+                Design & development
+              </span>
+
+            </div>
+
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
-    <section class="work section-pad" id="work">
+
+
+    <!-- ==============================
+         PROJECTS
+    =============================== -->
+
+    <section
+      class="work section-pad"
+      id="work"
+    >
+
+
       <div class="section-heading reveal">
+
+
         <div>
-          <p class="eyebrow">02 / SELECTED WORK</p>
-          <h2>Things I've <span>built.</span></h2>
+
+          <p
+            class="eyebrow"
+            data-i18n="workLabel"
+          >
+            02 / SELECTED WORK
+          </p>
+
+
+          <h2 data-i18n="built">
+            Things I've
+            <em>built.</em>
+          </h2>
+
         </div>
-        <p class="section-note">A few projects that represent the direction I like to build in.</p>
+
+
+        <p
+          class="section-note"
+          data-i18n="workNote"
+        >
+          A few projects that represent
+          the direction I like to build in.
+        </p>
+
       </div>
+
+
 
       <div class="projects-grid">
-        <article class="project-card glass reveal" data-tilt>
+
+
+        <!-- PROJECT 1 -->
+
+        <article
+          class="project-card glass reveal"
+          data-tilt
+        >
+
           <div class="project-visual visual-chocolate">
+
             <div class="visual-orb orb-one"></div>
             <div class="visual-orb orb-two"></div>
+
+
             <div class="visual-window">
-              <span>GARAUE</span>
-              <b>Chocolate</b>
+
+              <span>
+                GARAUE
+              </span>
+
+              <b>
+                Chocolate
+              </b>
+
             </div>
+
           </div>
+
+
           <div class="project-meta">
+
             <div>
-              <span class="project-number">01</span>
-              <h3>Garaue Chocolate</h3>
+
+              <span class="project-number">
+                01
+              </span>
+
+              <h3>
+                Garaue Chocolate
+              </h3>
+
             </div>
-            <a href="https://garaue-chocolate.onrender.com/" target="_blank" rel="noreferrer" class="round-arrow" aria-label="Open Garaue Chocolate">↗</a>
+
+
+            <a
+              href="https://garaue-chocolate.onrender.com/"
+              target="_blank"
+              rel="noreferrer"
+              class="round-arrow"
+            >
+              ↗
+            </a>
+
           </div>
-          <p>Premium product experience with a polished visual identity.</p>
-          <div class="tags"><span>Web</span><span>Design</span><span>Experience</span></div>
+
+
+          <p data-i18n="garaueText">
+            Premium product experience
+            with a polished visual identity.
+          </p>
+
+
+          <div class="tags">
+
+            <span>Web</span>
+            <span>Design</span>
+            <span>Experience</span>
+
+          </div>
+
         </article>
 
-        <article class="project-card glass reveal" data-tilt>
+
+
+        <!-- PROJECT 2 -->
+
+        <article
+          class="project-card glass reveal"
+          data-tilt
+        >
+
           <div class="project-visual visual-biz">
+
             <div class="biz-panel">
-              <span>AI</span>
-              <strong>Biz AI</strong>
-              <small>Content intelligence</small>
+
+              <span>
+                AI
+              </span>
+
+              <strong>
+                Biz AI
+              </strong>
+
+              <small>
+                Content intelligence
+              </small>
+
             </div>
+
+
             <div class="signal signal-a"></div>
             <div class="signal signal-b"></div>
+
           </div>
+
+
           <div class="project-meta">
+
             <div>
-              <span class="project-number">02</span>
-              <h3>Biz AI</h3>
+
+              <span class="project-number">
+                02
+              </span>
+
+              <h3>
+                Biz AI
+              </h3>
+
             </div>
-            <a href="https://biz-ai.onrender.com" target="_blank" rel="noreferrer" class="round-arrow" aria-label="Open Biz AI">↗</a>
+
+
+            <a
+              href="https://biz-ai.onrender.com"
+              target="_blank"
+              rel="noreferrer"
+              class="round-arrow"
+            >
+              ↗
+            </a>
+
           </div>
-          <p>AI-powered content generation for businesses and creators.</p>
-          <div class="tags"><span>AI</span><span>SaaS</span><span>Arabic RTL</span></div>
+
+
+          <p data-i18n="bizText">
+            AI-powered content generation
+            for businesses and creators.
+          </p>
+
+
+          <div class="tags">
+
+            <span>AI</span>
+            <span>SaaS</span>
+            <span>Arabic RTL</span>
+
+          </div>
+
         </article>
 
-        <article class="project-card glass reveal" data-tilt>
+
+
+        <!-- PROJECT 3 -->
+
+        <article
+          class="project-card glass reveal"
+          data-tilt
+        >
+
           <div class="project-visual visual-edge">
+
             <div class="edge-grid"></div>
+
+
             <div class="edge-card">
-              <span>EDGE</span>
-              <strong>AI TRADER</strong>
-              <small>Forex Intelligence</small>
+
+              <span>
+                EDGE
+              </span>
+
+              <strong>
+                AI TRADER
+              </strong>
+
+              <small>
+                Forex Intelligence
+              </small>
+
             </div>
+
+
             <div class="edge-scan"></div>
+
           </div>
+
+
           <div class="project-meta">
+
             <div>
-              <span class="project-number">03</span>
-              <h3>EDGE AI Trader</h3>
+
+              <span class="project-number">
+                03
+              </span>
+
+              <h3>
+                EDGE AI Trader
+              </h3>
+
             </div>
-            <a href="https://edge-ai-trader.onrender.com" target="_blank" rel="noreferrer" class="round-arrow" aria-label="Open Edge AI Trader">↗</a>
+
+
+            <a
+              href="https://edge-ai-trader.onrender.com"
+              target="_blank"
+              rel="noreferrer"
+              class="round-arrow"
+            >
+              ↗
+            </a>
+
           </div>
-          <p>Private AI-powered forex intelligence experience.</p>
-          <div class="tags"><span>AI</span><span>Finance</span><span>Web App</span></div>
+
+
+          <p data-i18n="edgeText">
+            Private AI-powered forex
+            intelligence experience.
+          </p>
+
+
+          <div class="tags">
+
+            <span>AI</span>
+            <span>Finance</span>
+            <span>Web App</span>
+
+          </div>
+
         </article>
+
+
       </div>
+
     </section>
+
+
+
+    <!-- ==============================
+         STATEMENT
+    =============================== -->
 
     <section class="statement section-pad">
+
       <div class="statement-card glass reveal">
-        <p class="eyebrow">THE APPROACH</p>
-        <h2>Simple on the surface.<br><span>Thoughtful underneath.</span></h2>
-        <p>Every detail has a reason — from the first interaction to the final pixel.</p>
+
+        <p
+          class="eyebrow"
+          data-i18n="approach"
+        >
+          THE APPROACH
+        </p>
+
+
+        <h2 data-i18n="approachTitle">
+
+          Simple on the surface.
+
+          <br>
+
+          <em>
+            Thoughtful underneath.
+          </em>
+
+        </h2>
+
+
+        <p data-i18n="approachText">
+
+          Every detail has a reason —
+          from the first interaction
+          to the final pixel.
+
+        </p>
+
       </div>
+
     </section>
 
-    <section class="contact section-pad" id="contact">
+
+
+    <!-- ==============================
+         CONTACT
+    =============================== -->
+
+    <section
+      class="contact section-pad"
+      id="contact"
+    >
+
       <div class="contact-card glass reveal">
+
+
         <div>
-          <p class="eyebrow">03 / CONTACT</p>
-          <h2>Have an idea?<br><span>Let's build it.</span></h2>
-          <p>For projects, collaborations or just a conversation, reach me directly.</p>
+
+          <p
+            class="eyebrow"
+            data-i18n="contactLabel"
+          >
+            03 / CONTACT
+          </p>
+
+
+          <h2 data-i18n="contactTitle">
+
+            Have an idea?
+
+            <br>
+
+            <em>
+              Let's build it.
+            </em>
+
+          </h2>
+
+
+          <p data-i18n="contactText">
+
+            For projects, collaborations
+            or just a conversation,
+            reach me directly.
+
+          </p>
+
         </div>
+
+
 
         <div class="contact-actions">
-          <a class="contact-link glass-button" href="https://t.me/DanielXdev" target="_blank" rel="noreferrer">
-            <span class="contact-icon">✦</span>
-            <span><small>Telegram</small><strong>@DanielXdev</strong></span>
-            <span>↗</span>
+
+
+          <!-- TELEGRAM -->
+
+          <a
+            class="contact-link glass-button"
+            href="https://t.me/DanielXdev"
+            target="_blank"
+            rel="noreferrer"
+          >
+
+            <span class="contact-icon">
+              ✦
+            </span>
+
+
+            <span>
+
+              <small>
+                Telegram
+              </small>
+
+              <strong>
+                @DanielXdev
+              </strong>
+
+            </span>
+
+
+            <span>
+              ↗
+            </span>
+
           </a>
-          <a class="contact-link glass-button" href="tel:0951708141">
-            <span class="contact-icon">◌</span>
-            <span><small>Phone</small><strong>0951708141</strong></span>
-            <span>↗</span>
+
+
+
+          <!-- PHONE -->
+
+          <a
+            class="contact-link glass-button"
+            href="tel:0951708141"
+          >
+
+            <span class="contact-icon">
+              ◌
+            </span>
+
+
+            <span>
+
+              <small data-i18n="phone">
+                Phone
+              </small>
+
+              <strong>
+                0951708141
+              </strong>
+
+            </span>
+
+
+            <span>
+              ↗
+            </span>
+
           </a>
+
+
         </div>
+
       </div>
+
     </section>
+
+
   </main>
 
+
+
+  <!-- ==============================
+       FOOTER
+  =============================== -->
+
   <footer class="footer">
-    <span>© <span id="year"></span> DANIEL</span>
-    <span>Designed & built with intention.</span>
+
+    <span>
+      © <span id="year"></span> DANIEL
+    </span>
+
+    <span data-i18n="footer">
+      Designed & built with intention.
+    </span>
+
   </footer>
 
+
   <script src="js/script.js"></script>
+
 </body>
 </html>
