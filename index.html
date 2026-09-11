@@ -6,9 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
   <meta name="theme-color" content="#f7f5ff">
-  <meta name="description" content="DANIEL — Web Developer & Digital Creator">
+  <meta name="description" content="DANIEL — Web Developer & Creative Digital Creator. Building high-end digital experiences.">
 
-  <title>DANIEL — Digital Portfolio</title>
+  <title>DANIEL — Personal Portfolio</title>
+
+  <!-- Google Fonts for Modern Sans-Serif Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -16,17 +21,18 @@
 <body>
 
   <!-- ==============================
-       LOADING SCREEN
+       INTRO / LOADING EXPERIENCE
   =============================== -->
 
-  <div class="loader" id="loader">
+  <div class="loader" id="loader" aria-hidden="false">
 
     <div class="loader-logo-wrap">
 
+      <!-- Replace this image with your own crystal/logo image if desired -->
       <img
         src="assets/d-crystal.png"
         class="loader-logo"
-        alt="D"
+        alt="D Crystal Symbol"
       >
 
       <div class="loader-reflection"></div>
@@ -45,22 +51,20 @@
 
 
   <!-- ==============================
-       BACKGROUND
+       ATMOSPHERIC BACKGROUND & CURSOR
   =============================== -->
 
   <div class="bg-mesh" aria-hidden="true">
-
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
-
   </div>
 
-  <div class="cursor-glow"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
 
   <!-- ==============================
-       BOTTOM GLASS NAVIGATION
+       FLOATING GLASS BOTTOM NAVIGATION
   =============================== -->
 
   <nav
@@ -70,429 +74,243 @@
   >
 
     <div class="liquid-glare-container">
-      <div
-        class="liquid-glare"
-        id="glare"
-      ></div>
+      <div class="liquid-glare" id="glare"></div>
     </div>
 
+    <div class="nav-items" id="navItems">
 
-    <div
-      class="nav-items"
-      id="navItems"
-    >
-
-      <div
-        class="active-pill"
-        id="active-pill"
-      ></div>
-
+      <div class="active-pill" id="active-pill"></div>
 
       <!-- HOME -->
-
       <a
         class="nav-btn active"
         href="#home"
         data-section="home"
         aria-label="Home"
       >
-
         <span class="btn-content">
-
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M3 10.5 12 3l9 7.5"></path>
             <path d="M5 9.5V21h14V9.5"></path>
             <path d="M9 21v-7h6v7"></path>
           </svg>
-
-          <span data-i18n="home">
-            Home
-          </span>
-
+          <span data-i18n="home">Home</span>
         </span>
-
       </a>
 
-
       <!-- WORK -->
-
       <a
         class="nav-btn"
         href="#work"
         data-section="work"
         aria-label="Work"
       >
-
         <span class="btn-content">
-
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <rect
-              x="3"
-              y="3"
-              width="18"
-              height="18"
-              rx="4"
-            ></rect>
-
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="4"></rect>
             <path d="M8 8h8"></path>
             <path d="M8 12h8"></path>
             <path d="M8 16h5"></path>
           </svg>
-
-          <span data-i18n="work">
-            Work
-          </span>
-
+          <span data-i18n="work">Work</span>
         </span>
-
       </a>
 
-
       <!-- ABOUT -->
-
       <a
         class="nav-btn"
         href="#about"
         data-section="about"
         aria-label="About"
       >
-
         <span class="btn-content">
-
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle
-              cx="12"
-              cy="8"
-              r="4"
-            ></circle>
-
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"></circle>
             <path d="M4 21a8 8 0 0 1 16 0"></path>
           </svg>
-
-          <span data-i18n="about">
-            About
-          </span>
-
+          <span data-i18n="about">About</span>
         </span>
-
       </a>
 
-
       <!-- CONTACT -->
-
       <a
         class="nav-btn"
         href="#contact"
         data-section="contact"
         aria-label="Contact"
       >
-
         <span class="btn-content">
-
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.6 9.6 0 0 1-4.3-1L3 20l1.2-4.2A8.3 8.3 0 0 1 3 11.5 8.5 8.5 0 1 1 21 11.5Z"></path>
             <path d="M8 12h.01"></path>
             <path d="M12 12h.01"></path>
             <path d="M16 12h.01"></path>
           </svg>
-
-          <span data-i18n="contact">
-            Contact
-          </span>
-
+          <span data-i18n="contact">Contact</span>
         </span>
-
       </a>
 
     </div>
 
+    <div class="nav-divider" aria-hidden="true"></div>
 
-    <div class="nav-divider"></div>
-
-
-    <!-- LANGUAGE -->
-
+    <!-- LANGUAGE SWITCH -->
     <button
       class="tool-btn"
       id="lang-btn"
-      aria-label="Change language"
+      aria-label="Switch Language"
       type="button"
     >
       AR
     </button>
 
-
-    <!-- THEME -->
-
+    <!-- THEME SWITCH (SVG SUN & MOON) -->
     <button
       class="tool-btn theme-btn"
       id="theme-btn"
-      aria-label="Toggle dark mode"
+      aria-label="Toggle Theme"
       type="button"
     >
-
-      <span class="theme-sun">
-        ☼
+      <span class="theme-icon theme-sun" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
       </span>
 
-      <span class="theme-moon">
-        ◐
+      <span class="theme-icon theme-moon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
       </span>
-
     </button>
 
   </nav>
 
 
   <!-- ==============================
-       MAIN
+       MAIN CONTENT
   =============================== -->
 
-  <main>
-
+  <main id="main-content">
 
     <!-- ==============================
-         HERO
+         HERO SECTION
     =============================== -->
 
-    <section
-      class="intro"
-      id="home"
-    >
+    <section class="intro" id="home">
 
       <div class="intro-stage">
 
-
-        <div
-          class="hero-crystal"
-          id="crystal"
-        >
-
+        <div class="hero-crystal" id="crystal">
+          <!-- Replace this image with your own image -->
           <img
             src="assets/d-crystal.png"
-            alt="D crystal"
+            alt="D Crystal Object"
             class="crystal-logo"
           >
-
         </div>
 
+        <div class="intro-halo" aria-hidden="true"></div>
 
-        <div class="intro-halo"></div>
-
-
-        <p
-          class="eyebrow"
-          data-i18n="eyebrow"
-        >
+        <p class="eyebrow" data-i18n="eyebrow">
           DIGITAL CREATOR · WEB DEVELOPER
         </p>
 
-
         <h1 class="intro-title">
-
-          <span data-i18n="hero1">
-            I build digital
-          </span>
-
+          <span data-i18n="hero1">I build digital</span>
           <br>
-
-          <em data-i18n="hero2">
-            experiences that feel different.
-          </em>
-
+          <em data-i18n="hero2">experiences that feel different.</em>
         </h1>
 
-
-        <p
-          class="intro-copy"
-          data-i18n="heroCopy"
-        >
-          A personal portfolio of selected work by Daniel —
-          from AI products to immersive web experiences.
+        <p class="intro-copy" data-i18n="heroCopy">
+          A personal portfolio of selected work by Daniel — from AI products to immersive web experiences.
         </p>
 
-
-        <a
-          href="#work"
-          class="primary-button glass-button"
-        >
-
-          <span data-i18n="explore">
-            Explore my work
-          </span>
-
-          <b>↓</b>
-
+        <a href="#work" class="primary-button glass-button">
+          <span data-i18n="explore">Explore my work</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 5v14"></path>
+            <path d="m19 12-7 7-7-7"></path>
+          </svg>
         </a>
 
       </div>
 
-
-      <div class="scroll-cue">
-
-        <span></span>
-
-        <span data-i18n="scroll">
-          Scroll to explore
-        </span>
-
+      <div class="scroll-cue" aria-hidden="true">
+        <span class="cue-line"></span>
+        <span data-i18n="scroll">Scroll to explore</span>
       </div>
 
     </section>
 
 
     <!-- ==============================
-         ABOUT
+         ABOUT SECTION
     =============================== -->
 
-    <section
-      class="profile section-pad"
-      id="about"
-    >
+    <section class="profile section-pad" id="about">
 
       <div class="profile-grid">
 
-
         <div class="portrait-card glass reveal">
 
-          <div class="portrait-orbit"></div>
-
+          <div class="portrait-orbit" aria-hidden="true"></div>
 
           <div class="portrait-frame">
-
+            <!-- Replace this image with your own image -->
             <img
-              src="assets/daniel.jpg"
+              src="assets/images/profile-placeholder.jpg"
               alt="Daniel"
               class="portrait"
             >
-
           </div>
 
-
           <div class="portrait-badge glass">
-
             <span class="status-dot"></span>
-
-            <span data-i18n="status">
-              Building on the web
-            </span>
-
+            <span data-i18n="status">Building on the web</span>
           </div>
 
         </div>
-
 
         <div class="profile-copy reveal">
 
-          <p
-            class="eyebrow"
-            data-i18n="aboutLabel"
-          >
+          <p class="eyebrow" data-i18n="aboutLabel">
             01 / ABOUT
           </p>
 
-
           <h2>
-
-            <span data-i18n="hi">
-              Hi, I'm
-            </span>
-
-            <em>
-              Daniel.
-            </em>
-
+            <span data-i18n="hi">Hi, I'm</span>
+            <em>Daniel.</em>
           </h2>
 
-
-          <p
-            class="lead"
-            data-i18n="aboutText"
-          >
-            I design and build modern websites,
-            AI-powered products and digital experiences
-            with a focus on clean visuals, motion and
-            strong user experience.
+          <p class="lead" data-i18n="aboutText">
+            I design and build modern websites, AI-powered products and digital experiences with a focus on clean visuals, motion and strong user experience.
           </p>
-
 
           <div class="mini-stats">
 
-
             <div class="stat glass">
-
-              <strong>
-                03+
-              </strong>
-
-              <span data-i18n="selected">
-                Selected projects
-              </span>
-
+              <strong>03+</strong>
+              <span data-i18n="selected">Selected projects</span>
             </div>
 
-
             <div class="stat glass">
-
-              <strong>
-                AI
-              </strong>
-
-              <span data-i18n="focus">
-                Product focus
-              </span>
-
+              <strong>AI</strong>
+              <span data-i18n="focus">Product focus</span>
             </div>
 
-
             <div class="stat glass">
-
-              <strong>
-                Web
-              </strong>
-
-              <span data-i18n="design">
-                Design & development
-              </span>
-
+              <strong>Web</strong>
+              <span data-i18n="design">Design & development</span>
             </div>
-
 
           </div>
 
@@ -504,273 +322,253 @@
 
 
     <!-- ==============================
-         PROJECTS
+         WORK SECTION
     =============================== -->
 
-    <section
-      class="work section-pad"
-      id="work"
-    >
+    <section class="work section-pad" id="work">
 
       <div class="section-heading reveal">
-
         <div>
-
-          <p
-            class="eyebrow"
-            data-i18n="workLabel"
-          >
+          <p class="eyebrow" data-i18n="workLabel">
             02 / SELECTED WORK
           </p>
-
-
           <h2 data-i18n="built">
-            Things I've
-            <em>built.</em>
+            Things I've <em>built.</em>
           </h2>
-
         </div>
 
-
-        <p
-          class="section-note"
-          data-i18n="workNote"
-        >
-          A few projects that represent
-          the direction I like to build in.
+        <p class="section-note" data-i18n="workNote">
+          A few projects that represent the direction I like to build in.
         </p>
-
       </div>
 
+      <div class="projects-editorial">
 
-      <div class="projects-grid">
+        <!-- PROJECT 01 -->
+        <article class="project-item glass reveal" data-tilt>
 
-
-        <!-- PROJECT 1 -->
-
-        <article
-          class="project-card glass reveal"
-          data-tilt
-        >
-
-          <div class="project-visual visual-chocolate">
-
-            <div class="visual-orb orb-one"></div>
-            <div class="visual-orb orb-two"></div>
-
-
-            <div class="visual-window">
-
-              <span>
-                GARAUE
-              </span>
-
-              <b>
-                Chocolate
-              </b>
-
-            </div>
-
-          </div>
-
-
-          <div class="project-meta">
-
-            <div>
-
-              <span class="project-number">
-                01
-              </span>
-
-              <h3>
-                Garaue Chocolate
-              </h3>
-
-            </div>
-
-
-            <a
-              href="https://garaue-chocolate.onrender.com/"
-              target="_blank"
-              rel="noreferrer"
-              class="round-arrow"
+          <div class="project-media">
+            <!-- Replace this image with your own image -->
+            <img
+              src="assets/images/project-01-placeholder.jpg"
+              alt="Garaue Chocolate Showcase"
+              class="project-img"
             >
-              ↗
-            </a>
 
+            <div class="project-media-overlay visual-chocolate">
+              <div class="visual-orb orb-one"></div>
+              <div class="visual-orb orb-two"></div>
+              <div class="visual-window">
+                <span>GARAUE</span>
+                <b>Chocolate</b>
+              </div>
+            </div>
           </div>
 
+          <div class="project-info">
 
-          <p data-i18n="garaueText">
-            Premium product experience
-            with a polished visual identity.
-          </p>
+            <div class="project-header">
+              <div>
+                <span class="project-number">01 — CASE STUDY</span>
+                <h3>Garaue Chocolate</h3>
+              </div>
 
+              <a
+                href="https://garaue-chocolate.onrender.com/"
+                target="_blank"
+                rel="noreferrer"
+                class="round-arrow"
+                aria-label="Visit Garaue Chocolate"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17 17 7"></path>
+                  <path d="M7 7h10v10"></path>
+                </svg>
+              </a>
+            </div>
 
-          <div class="tags">
+            <p data-i18n="garaueText">
+              Premium product experience with a polished visual identity.
+            </p>
 
-            <span>Web</span>
-            <span>Design</span>
-            <span>Experience</span>
+            <div class="tags">
+              <span>Web</span>
+              <span>Design</span>
+              <span>Experience</span>
+            </div>
 
           </div>
 
         </article>
 
 
-        <!-- PROJECT 2 -->
+        <!-- PROJECT 02 -->
+        <article class="project-item glass reveal" data-tilt>
 
-        <article
-          class="project-card glass reveal"
-          data-tilt
-        >
-
-          <div class="project-visual visual-biz">
-
-            <div class="biz-panel">
-
-              <span>
-                AI
-              </span>
-
-              <strong>
-                Biz AI
-              </strong>
-
-              <small>
-                Content intelligence
-              </small>
-
-            </div>
-
-
-            <div class="signal signal-a"></div>
-            <div class="signal signal-b"></div>
-
-          </div>
-
-
-          <div class="project-meta">
-
-            <div>
-
-              <span class="project-number">
-                02
-              </span>
-
-              <h3>
-                Biz AI
-              </h3>
-
-            </div>
-
-
-            <a
-              href="https://biz-ai.onrender.com"
-              target="_blank"
-              rel="noreferrer"
-              class="round-arrow"
+          <div class="project-media">
+            <!-- Replace this image with your own image -->
+            <img
+              src="assets/images/project-02-placeholder.jpg"
+              alt="Biz AI Showcase"
+              class="project-img"
             >
-              ↗
-            </a>
 
+            <div class="project-media-overlay visual-biz">
+              <div class="biz-panel">
+                <span>AI</span>
+                <strong>Biz AI</strong>
+                <small>Content intelligence</small>
+              </div>
+              <div class="signal signal-a"></div>
+              <div class="signal signal-b"></div>
+            </div>
           </div>
 
+          <div class="project-info">
 
-          <p data-i18n="bizText">
-            AI-powered content generation
-            for businesses and creators.
-          </p>
+            <div class="project-header">
+              <div>
+                <span class="project-number">02 — CASE STUDY</span>
+                <h3>Biz AI</h3>
+              </div>
 
+              <a
+                href="https://biz-ai.onrender.com"
+                target="_blank"
+                rel="noreferrer"
+                class="round-arrow"
+                aria-label="Visit Biz AI"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17 17 7"></path>
+                  <path d="M7 7h10v10"></path>
+                </svg>
+              </a>
+            </div>
 
-          <div class="tags">
+            <p data-i18n="bizText">
+              AI-powered content generation for businesses and creators.
+            </p>
 
-            <span>AI</span>
-            <span>SaaS</span>
-            <span>Arabic RTL</span>
+            <div class="tags">
+              <span>AI</span>
+              <span>SaaS</span>
+              <span>Arabic RTL</span>
+            </div>
 
           </div>
 
         </article>
 
 
-        <!-- PROJECT 3 -->
+        <!-- PROJECT 03 -->
+        <article class="project-item glass reveal" data-tilt>
 
-        <article
-          class="project-card glass reveal"
-          data-tilt
-        >
-
-          <div class="project-visual visual-edge">
-
-            <div class="edge-grid"></div>
-
-
-            <div class="edge-card">
-
-              <span>
-                EDGE
-              </span>
-
-              <strong>
-                AI TRADER
-              </strong>
-
-              <small>
-                Forex Intelligence
-              </small>
-
-            </div>
-
-
-            <div class="edge-scan"></div>
-
-          </div>
-
-
-          <div class="project-meta">
-
-            <div>
-
-              <span class="project-number">
-                03
-              </span>
-
-              <h3>
-                EDGE AI Trader
-              </h3>
-
-            </div>
-
-
-            <a
-              href="https://edge-ai-trader.onrender.com"
-              target="_blank"
-              rel="noreferrer"
-              class="round-arrow"
+          <div class="project-media">
+            <!-- Replace this image with your own image -->
+            <img
+              src="assets/images/project-03-placeholder.jpg"
+              alt="EDGE AI Trader Showcase"
+              class="project-img"
             >
-              ↗
-            </a>
 
+            <div class="project-media-overlay visual-edge">
+              <div class="edge-grid"></div>
+              <div class="edge-card">
+                <span>EDGE</span>
+                <strong>AI TRADER</strong>
+                <small>Forex Intelligence</small>
+              </div>
+              <div class="edge-scan"></div>
+            </div>
           </div>
 
+          <div class="project-info">
 
-          <p data-i18n="edgeText">
-            Private AI-powered forex
-            intelligence experience.
-          </p>
+            <div class="project-header">
+              <div>
+                <span class="project-number">03 — CASE STUDY</span>
+                <h3>EDGE AI Trader</h3>
+              </div>
 
+              <a
+                href="https://edge-ai-trader.onrender.com"
+                target="_blank"
+                rel="noreferrer"
+                class="round-arrow"
+                aria-label="Visit EDGE AI Trader"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17 17 7"></path>
+                  <path d="M7 7h10v10"></path>
+                </svg>
+              </a>
+            </div>
 
-          <div class="tags">
+            <p data-i18n="edgeText">
+              Private AI-powered forex intelligence experience.
+            </p>
 
-            <span>AI</span>
-            <span>Finance</span>
-            <span>Web App</span>
+            <div class="tags">
+              <span>AI</span>
+              <span>Finance</span>
+              <span>Web App</span>
+            </div>
 
           </div>
 
         </article>
 
+
+        <!-- PROJECT 04 (PLACEHOLDER FOR FUTURE WORK) -->
+        <article class="project-item glass reveal" data-tilt>
+
+          <div class="project-media">
+            <!-- Replace this image with your own image -->
+            <img
+              src="assets/images/project-04-placeholder.jpg"
+              alt="Creative Lab Showcase"
+              class="project-img"
+            >
+
+            <div class="project-media-overlay visual-lab">
+              <div class="lab-core">
+                <span>EXPERIMENTAL</span>
+                <strong>CREATIVE LAB</strong>
+                <small>Next-Gen Web Interaction</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-info">
+
+            <div class="project-header">
+              <div>
+                <span class="project-number">04 — CONCEPT</span>
+                <h3 data-i18n="p4Title">Creative Lab</h3>
+              </div>
+
+              <span class="round-arrow disabled-arrow" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14"></path>
+                  <path d="M5 12h14"></path>
+                </svg>
+              </span>
+            </div>
+
+            <p data-i18n="p4Text">
+              Upcoming experimental web interactive concepts & digital spatial interfaces.
+            </p>
+
+            <div class="tags">
+              <span>R&D</span>
+              <span>WebGL</span>
+              <span>Motion</span>
+            </div>
+
+          </div>
+
+        </article>
 
       </div>
 
@@ -778,40 +576,24 @@
 
 
     <!-- ==============================
-         STATEMENT
+         STATEMENT SECTION
     =============================== -->
 
     <section class="statement section-pad">
 
       <div class="statement-card glass reveal">
 
-        <p
-          class="eyebrow"
-          data-i18n="approach"
-        >
+        <p class="eyebrow" data-i18n="approach">
           THE APPROACH
         </p>
 
-
         <h2 data-i18n="approachTitle">
-
-          Simple on the surface.
-
-          <br>
-
-          <em>
-            Thoughtful underneath.
-          </em>
-
+          Simple on the surface.<br>
+          <em>Thoughtful underneath.</em>
         </h2>
 
-
         <p data-i18n="approachText">
-
-          Every detail has a reason —
-          from the first interaction
-          to the final pixel.
-
+          Every detail has a reason — from the first interaction to the final pixel.
         </p>
 
       </div>
@@ -820,122 +602,86 @@
 
 
     <!-- ==============================
-         CONTACT
+         CONTACT SECTION
     =============================== -->
 
-    <section
-      class="contact section-pad"
-      id="contact"
-    >
+    <section class="contact section-pad" id="contact">
 
       <div class="contact-card glass reveal">
 
-
         <div>
-
-          <p
-            class="eyebrow"
-            data-i18n="contactLabel"
-          >
+          <p class="eyebrow" data-i18n="contactLabel">
             03 / CONTACT
           </p>
 
-
           <h2 data-i18n="contactTitle">
-
-            Have an idea?
-
-            <br>
-
-            <em>
-              Let's build it.
-            </em>
-
+            Have an idea?<br>
+            <em>Let's build it.</em>
           </h2>
 
-
           <p data-i18n="contactText">
-
-            For projects, collaborations
-            or just a conversation,
-            reach me directly.
-
+            For projects, collaborations or just a conversation, reach me directly.
           </p>
-
         </div>
-
 
         <div class="contact-actions">
 
-
+          <!-- TELEGRAM -->
           <a
             class="contact-link glass-button"
             href="https://t.me/DanielXdev"
             target="_blank"
             rel="noreferrer"
           >
-
-            <span class="contact-icon">
-              ✦
+            <span class="contact-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m22 2-7 20-4-9-9-4Z"></path>
+                <path d="M22 2 11 13"></path>
+              </svg>
             </span>
-
 
             <span>
-
-              <small>
-                Telegram
-              </small>
-
-              <strong>
-                @DanielXdev
-              </strong>
-
+              <small>Telegram</small>
+              <strong>@DanielXdev</strong>
             </span>
 
-
-            <span>
-              ↗
+            <span class="action-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17 17 7"></path>
+                <path d="M7 7h10v10"></path>
+              </svg>
             </span>
-
           </a>
 
-
+          <!-- PHONE -->
           <a
             class="contact-link glass-button"
             href="tel:0951708141"
           >
-
-            <span class="contact-icon">
-              ◌
+            <span class="contact-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
             </span>
-
 
             <span>
-
-              <small data-i18n="phone">
-                Phone
-              </small>
-
-              <strong>
-                0951708141
-              </strong>
-
+              <small data-i18n="phone">Phone</small>
+              <strong>0951708141</strong>
             </span>
 
-
-            <span>
-              ↗
+            <span class="action-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17 17 7"></path>
+                <path d="M7 7h10v10"></path>
+              </svg>
             </span>
-
           </a>
-
 
         </div>
 
       </div>
 
     </section>
-
 
   </main>
 
@@ -945,15 +691,8 @@
   =============================== -->
 
   <footer class="footer">
-
-    <span>
-      © <span id="year"></span> DANIEL
-    </span>
-
-    <span data-i18n="footer">
-      Designed & built with intention.
-    </span>
-
+    <span>© <span id="year">2026</span> DANIEL</span>
+    <span data-i18n="footer">Designed & built with intention.</span>
   </footer>
 
 
