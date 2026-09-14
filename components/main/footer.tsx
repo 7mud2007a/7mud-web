@@ -17,7 +17,7 @@ export const Footer = () => {
         </div>
 
         <p className="text-xs text-slate-500">
-          © {new Date().getFullYear()} Daniel. All rights reserved. Designed with soft futuristic glass aesthetics.
+          © {new Date().getFullYear()} Daniel. All rights reserved.
         </p>
 
         <div className="flex items-center gap-4 text-slate-600">
