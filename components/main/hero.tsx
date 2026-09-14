@@ -1,8 +1,14 @@
-import { HeroContent } from "@/components/sub/hero-content";
+"use client";
+
+import React from "react";
+import { HeroContent } from "../sub/hero-content";
 
 export const Hero = () => {
   return (
-    <section id="hero" className="relative flex flex-col justify-center items-center min-h-screen pt-28 pb-16 px-4 md:px-8 max-w-6xl mx-auto overflow-hidden">
+    <section
+      id="hero"
+      className="relative flex flex-col items-center justify-center min-h-screen w-full pt-20 pb-10 px-4 md:px-8"
+    >
       <HeroContent />
     </section>
   );
