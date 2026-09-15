@@ -61,6 +61,8 @@ space-portfolio/
     |-- index.ts
   |- constants/
     |-- index.ts
+  |- context/
+    |-- theme-context.tsx
   |- lib/
     |-- motion.ts
     |-- utils.ts
