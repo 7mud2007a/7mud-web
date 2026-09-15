@@ -3,82 +3,84 @@
 import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { useTheme } from "@/context/theme-context";
 
-function FloatingParticles({ count = 120 }) {
-  const pointsRef = useRef<THREE.Points>(null!);
+function FloatingParticles({ theme }: { theme: string }) {
+  const count = 70;
+  const meshRef = useRef<THREE.InstancedMesh>(null);
 
-  const [positions, colors] = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    const col = new Float32Array(count * 3);
-
-    const palette = [
-      new THREE.Color("#c084fc"), // soft lavender
-      new THREE.Color("#38bdf8"), // ice blue
-      new THREE.Color("#34d399"), // mint green
-      new THREE.Color("#a855f7"), // subtle violet
-    ];
-
+  const particles = useMemo(() => {
+    const temp = [];
     for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 15;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 15;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 10;
-
-      const color = palette[Math.floor(Math.random() * palette.length)];
-      col[i * 3] = color.r;
-      col[i * 3 + 1] = color.g;
-      col[i * 3 + 2] = color.b;
+      const x = (Math.random() - 0.5) * 20;
+      const y = (Math.random() - 0.5) * 20;
+      const z = (Math.random() - 0.5) * 10;
+      const speed = 0.2 + Math.random() * 0.4;
+      const factor = Math.random() * 2;
+      temp.push({ x, y, z, speed, factor });
     }
-
-    return [pos, col];
+    return temp;
   }, [count]);
 
+  const dummy = useMemo(() => new THREE.Object3D(), []);
+
   useFrame((state) => {
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y = state.clock.getElapsedTime() * 0.03;
-      pointsRef.current.rotation.x = state.clock.getElapsedTime() * 0.015;
-    }
+    if (!meshRef.current) return;
+    const time = state.clock.getElapsedTime();
+
+    particles.forEach((particle, i) => {
+      const { speed, factor } = particle;
+      dummy.position.set(
+        particle.x + Math.sin(time * speed + factor) * 0.5,
+        particle.y + Math.cos(time * speed * 0.8 + factor) * 0.5,
+        particle.z + Math.sin(time * 0.5 + factor) * 0.2
+      );
+      dummy.scale.setScalar(0.04 + Math.sin(time + factor) * 0.015);
+      dummy.updateMatrix();
+      meshRef.current!.setMatrixAt(i, dummy.matrix);
+    });
+    meshRef.current.instanceMatrix.needsUpdate = true;
   });
 
+  const particleColor = theme === "dark" ? "#a855f7" : "#818cf8";
+
   return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          args={[colors, 3]}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.12}
-        vertexColors
+    <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
+      <sphereGeometry args={[1, 16, 16]} />
+      <meshStandardMaterial
+        color={particleColor}
+        roughness={0.2}
+        metalness={0.1}
         transparent
-        opacity={0.65}
-        sizeAttenuation
-        depthWrite={false}
+        opacity={theme === "dark" ? 0.35 : 0.25}
       />
-    </points>
+    </instancedMesh>
   );
 }
 
 export const AmbientBackground = () => {
-  return (
-    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden bg-[#f8fafc]">
-      {/* Soft gradient Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-br from-purple-200/40 via-sky-200/30 to-transparent blur-3xl opacity-70 animate-pulse" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-tl from-emerald-100/40 via-sky-100/40 to-transparent blur-3xl opacity-75" />
-      <div className="absolute top-[35%] right-[5%] w-[40vw] h-[40vw] rounded-full bg-gradient-to-l from-violet-200/30 via-indigo-100/30 to-transparent blur-3xl opacity-60" />
+  const { theme } = useTheme();
 
-      {/* Interactive 3D Canvas */}
+  return (
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden transition-colors duration-500">
+      {/* Dynamic Gradient Atmospheric Orbs */}
+      <div className="absolute -top-[20%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-purple-200/30 dark:bg-purple-900/20 blur-[120px] transition-all duration-700" />
+      <div className="absolute top-[30%] -right-[15%] w-[55vw] h-[55vw] rounded-full bg-sky-200/30 dark:bg-sky-900/20 blur-[130px] transition-all duration-700" />
+      <div className="absolute -bottom-[20%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-emerald-200/20 dark:bg-emerald-900/15 blur-[120px] transition-all duration-700" />
+
+      {/* R3F 3D Canvas */}
       <Canvas
-        camera={{ position: [0, 0, 5], fov: 60 }}
-        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
-        gl={{ antialias: true, alpha: true }}
+        camera={{ position: [0, 0, 8], fov: 60 }}
+        className="w-full h-full opacity-70 dark:opacity-80"
+        gl={{ alpha: true, antialias: true }}
       >
-        <ambientLight intensity={0.8} />
-        <FloatingParticles />
+        <ambientLight intensity={theme === "dark" ? 0.9 : 1.2} />
+        <pointLight
+          position={[10, 10, 10]}
+          intensity={theme === "dark" ? 0.8 : 0.5}
+          color={theme === "dark" ? "#c084fc" : "#a5b4fc"}
+        />
+        <FloatingParticles theme={theme} />
       </Canvas>
     </div>
   );

@@ -1,9 +1,11 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './context/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
@@ -15,6 +17,9 @@ const config: Config = {
         'mint-light': '#e6fffa',
         'cool-gray': '#f1f5f9',
         'slate-dark': '#0f172a',
+        // Dark theme specific soft futuristic palette
+        'dark-bg': '#0a0d14',
+        'dark-card': '#111625',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
