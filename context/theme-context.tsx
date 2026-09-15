@@ -22,9 +22,16 @@ const ThemeContext = createContext<ThemeContextType>({
   isAnimating: false,
 });
 
-const TRANSITION_STYLE_ID = "daniel-theme-view-transition-style";
+const STYLE_ID = "daniel-theme-transition";
 
-const TRANSITION_CSS = `
+const TRANSITION_STYLE = `
+  /*
+   * Daniel Theme Transition
+   *
+   * The NEW theme grows from the theme button.
+   * There is NO black/white fullscreen curtain.
+   */
+
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none !important;
@@ -37,28 +44,50 @@ const TRANSITION_CSS = `
 
   ::view-transition-new(root) {
     z-index: 2;
-    animation: daniel-theme-reveal 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+
+    animation:
+      daniel-theme-reveal
+      900ms
+      cubic-bezier(0.22, 1, 0.36, 1)
+      both;
+
     clip-path: circle(
       0px at var(--theme-x) var(--theme-y)
     );
   }
 
   @keyframes daniel-theme-reveal {
-    from {
+    0% {
       clip-path: circle(
         0px at var(--theme-x) var(--theme-y)
       );
-      filter: blur(7px);
+
+      filter: blur(10px);
     }
 
-    55% {
+    12% {
+      filter: blur(8px);
+    }
+
+    35% {
+      filter: blur(4px);
+    }
+
+    65% {
       filter: blur(1.5px);
     }
 
-    to {
+    85% {
+      filter: blur(0.5px);
+    }
+
+    100% {
       clip-path: circle(
-        var(--theme-radius) at var(--theme-x) var(--theme-y)
+        var(--theme-radius)
+        at var(--theme-x)
+        var(--theme-y)
       );
+
       filter: blur(0);
     }
   }
@@ -81,6 +110,9 @@ export const ThemeProvider = ({
 
   const animatingRef = useRef(false);
 
+  /*
+   * Initial theme
+   */
   useEffect(() => {
     setMounted(true);
 
@@ -101,16 +133,22 @@ export const ThemeProvider = ({
 
     setTheme(initialTheme);
 
-    if (!document.getElementById(TRANSITION_STYLE_ID)) {
+    /*
+     * Add transition CSS only once.
+     */
+    if (!document.getElementById(STYLE_ID)) {
       const style = document.createElement("style");
 
-      style.id = TRANSITION_STYLE_ID;
-      style.textContent = TRANSITION_CSS;
+      style.id = STYLE_ID;
+      style.textContent = TRANSITION_STYLE;
 
       document.head.appendChild(style);
     }
   }, []);
 
+  /*
+   * Actually apply the selected theme.
+   */
   const applyTheme = (nextTheme: Theme) => {
     if (nextTheme === "dark") {
       document.documentElement.classList.add("dark");
@@ -122,12 +160,18 @@ export const ThemeProvider = ({
     setTheme(nextTheme);
   };
 
+  /*
+   * Light <-> Dark transition
+   */
   const toggleTheme = (rect?: DOMRect) => {
     if (!mounted || animatingRef.current) return;
 
     const nextTheme: Theme =
       theme === "light" ? "dark" : "light";
 
+    /*
+     * Get the exact center of the clicked theme button.
+     */
     const x = rect
       ? rect.left + rect.width / 2
       : window.innerWidth / 2;
@@ -136,15 +180,28 @@ export const ThemeProvider = ({
       ? rect.top + rect.height / 2
       : window.innerHeight / 2;
 
-    const radius =
-      Math.hypot(
-        Math.max(x, window.innerWidth - x),
-        Math.max(y, window.innerHeight - y)
-      ) + 40;
+    /*
+     * Calculate the radius required to reach
+     * every corner of the viewport.
+     */
+    const radius = Math.ceil(
+      Math.max(
+        Math.hypot(x, y),
+        Math.hypot(window.innerWidth - x, y),
+        Math.hypot(x, window.innerHeight - y),
+        Math.hypot(
+          window.innerWidth - x,
+          window.innerHeight - y
+        )
+      )
+    );
 
     animatingRef.current = true;
     setIsAnimating(true);
 
+    /*
+     * Give the browser the exact origin of the transition.
+     */
     document.documentElement.style.setProperty(
       "--theme-x",
       `${x}px`
@@ -160,24 +217,35 @@ export const ThemeProvider = ({
       `${radius}px`
     );
 
-    const documentWithTransition = document as Document & {
+    /*
+     * Modern browsers:
+     *
+     * The browser captures:
+     *
+     * OLD PAGE = current theme
+     * NEW PAGE = new theme
+     *
+     * Then CSS reveals the NEW PAGE from the button.
+     */
+    const doc = document as Document & {
       startViewTransition?: (
-        updateCallback: () => void | Promise<void>
+        callback: () => void
       ) => {
         finished: Promise<void>;
-        ready: Promise<void>;
-        updateCallbackDone: Promise<void>;
       };
     };
 
-    if (documentWithTransition.startViewTransition) {
-      const transition =
-        documentWithTransition.startViewTransition(() => {
-          applyTheme(nextTheme);
-        });
+    if (doc.startViewTransition) {
+      const transition = doc.startViewTransition(() => {
+        applyTheme(nextTheme);
+      });
 
       transition.finished
         .catch(() => {
+          /*
+           * Keep the selected theme even if the
+           * browser cancels the visual transition.
+           */
           applyTheme(nextTheme);
         })
         .finally(() => {
@@ -200,9 +268,12 @@ export const ThemeProvider = ({
       return;
     }
 
+    /*
+     * Fallback for browsers without View Transitions.
+     */
     applyTheme(nextTheme);
 
-    window.setTimeout(() => {
+    requestAnimationFrame(() => {
       animatingRef.current = false;
       setIsAnimating(false);
 
@@ -217,7 +288,7 @@ export const ThemeProvider = ({
       document.documentElement.style.removeProperty(
         "--theme-radius"
       );
-    }, 50);
+    });
   };
 
   return (
