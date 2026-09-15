@@ -5,7 +5,7 @@ import Link from "next/link";
 import { FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
 
 // Configuration variable / placeholder for WhatsApp phone number if needed in future
-const WHATSAPP_PHONE_NUMBER = ""; // e.g. "1234567890"
+const WHATSAPP_PHONE_NUMBER = "963951708141"; // e.g. "1234567890"
 
 const PREFILLED_MESSAGE = encodeURIComponent(
   "Hey Daniel, I wanted to ask you about building a website."
