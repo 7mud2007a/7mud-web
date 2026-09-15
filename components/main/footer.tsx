@@ -11,6 +11,7 @@ export const Footer = () => {
               D
             </div>
           </div>
+
           <span className="font-semibold text-slate-800 dark:text-slate-100 tracking-tight text-base">
             Daniel — Web Developer & Website Creator
           </span>
@@ -30,6 +31,7 @@ export const Footer = () => {
           >
             <FaTelegramPlane className="w-5 h-5" />
           </Link>
+
           <Link
             href="https://wa.me/?text=Hey%20Daniel%2C%20I%20wanted%20to%20ask%20you%20about%20building%20a%20website."
             target="_blank"
