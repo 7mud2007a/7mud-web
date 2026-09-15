@@ -1,219 +1,236 @@
 "use client";
 
 import React, {
-createContext,
-useContext,
-useEffect,
-useState,
-useRef,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
 } from "react";
 
 type Theme = "light" | "dark";
 
 interface ThemeContextType {
-theme: Theme;
-toggleTheme: (rect?: DOMRect) => void;
-isAnimating: boolean;
+  theme: Theme;
+  toggleTheme: (rect?: DOMRect) => void;
+  isAnimating: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-theme: "light",
-toggleTheme: () => {},
-isAnimating: false,
+  theme: "light",
+  toggleTheme: () => {},
+  isAnimating: false,
 });
+
+const TRANSITION_STYLE_ID = "daniel-theme-view-transition-style";
+
+const TRANSITION_CSS = `
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+    mix-blend-mode: normal !important;
+  }
+
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+
+  ::view-transition-new(root) {
+    z-index: 2;
+    animation: daniel-theme-reveal 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    clip-path: circle(
+      0px at var(--theme-x) var(--theme-y)
+    );
+  }
+
+  @keyframes daniel-theme-reveal {
+    from {
+      clip-path: circle(
+        0px at var(--theme-x) var(--theme-y)
+      );
+      filter: blur(7px);
+    }
+
+    55% {
+      filter: blur(1.5px);
+    }
+
+    to {
+      clip-path: circle(
+        var(--theme-radius) at var(--theme-x) var(--theme-y)
+      );
+      filter: blur(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-new(root) {
+      animation-duration: 1ms !important;
+    }
+  }
+`;
 
 export const ThemeProvider = ({
-children,
+  children,
 }: {
-children: React.ReactNode;
+  children: React.ReactNode;
 }) => {
-const [theme, setTheme] = useState<Theme>("light");
-const [isAnimating, setIsAnimating] = useState(false);
-const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<Theme>("light");
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-const [transitionState, setTransitionState] = useState<{
-active: boolean;
-targetTheme: Theme;
-x: number;
-y: number;
-progress: number;
-}>({
-active: false,
-targetTheme: "dark",
-x: 0,
-y: 0,
-progress: 0,
-});
+  const animatingRef = useRef(false);
 
-const animFrameRef = useRef<number | null>(null);
+  useEffect(() => {
+    setMounted(true);
 
-useEffect(() => {
-setMounted(true);
+    const savedTheme = localStorage.getItem("theme") as Theme | null;
 
-const savedTheme = localStorage.getItem("theme") as Theme | null;
-const initialTheme =
-  savedTheme ||
-  (document.documentElement.classList.contains("dark")
-    ? "dark"
-    : "light");
+    const initialTheme: Theme =
+      savedTheme === "dark" || savedTheme === "light"
+        ? savedTheme
+        : document.documentElement.classList.contains("dark")
+          ? "dark"
+          : "light";
 
-setTheme(initialTheme);
+    if (initialTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
 
-if (initialTheme === "dark") {
-  document.documentElement.classList.add("dark");
-} else {
-  document.documentElement.classList.remove("dark");
-}
+    setTheme(initialTheme);
 
-}, []);
+    if (!document.getElementById(TRANSITION_STYLE_ID)) {
+      const style = document.createElement("style");
 
-const toggleTheme = (rect?: DOMRect) => {
-if (isAnimating || !mounted) return;
+      style.id = TRANSITION_STYLE_ID;
+      style.textContent = TRANSITION_CSS;
 
-const nextTheme: Theme = theme === "light" ? "dark" : "light";
+      document.head.appendChild(style);
+    }
+  }, []);
 
-let x = window.innerWidth / 2;
-let y = window.innerHeight / 2;
+  const applyTheme = (nextTheme: Theme) => {
+    if (nextTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
 
-if (rect) {
-  x = rect.left + rect.width / 2;
-  y = rect.top + rect.height / 2;
-}
+    localStorage.setItem("theme", nextTheme);
+    setTheme(nextTheme);
+  };
 
-setIsAnimating(true);
+  const toggleTheme = (rect?: DOMRect) => {
+    if (!mounted || animatingRef.current) return;
 
-/*
- * The important difference:
- * The real theme is changed BEFORE the reveal animation.
- *
- * The transition layer is now only a clipped/revealed copy
- * of the new theme instead of an opaque black/white curtain.
- * This keeps the page content visible throughout the animation.
- */
+    const nextTheme: Theme =
+      theme === "light" ? "dark" : "light";
 
-if (nextTheme === "dark") {
-  document.documentElement.classList.add("dark");
-} else {
-  document.documentElement.classList.remove("dark");
-}
+    const x = rect
+      ? rect.left + rect.width / 2
+      : window.innerWidth / 2;
 
-localStorage.setItem("theme", nextTheme);
-setTheme(nextTheme);
+    const y = rect
+      ? rect.top + rect.height / 2
+      : window.innerHeight / 2;
 
-setTransitionState({
-  active: true,
-  targetTheme: nextTheme,
-  x,
-  y,
-  progress: 0,
-});
+    const radius =
+      Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y)
+      ) + 40;
 
-const startTime = performance.now();
-const duration = 800;
+    animatingRef.current = true;
+    setIsAnimating(true);
 
-const ease = (t: number) =>
-  t < 0.5
-    ? 4 * t * t * t
-    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    document.documentElement.style.setProperty(
+      "--theme-x",
+      `${x}px`
+    );
 
-const animate = (now: number) => {
-  const elapsed = now - startTime;
-  const progress = Math.min(elapsed / duration, 1);
+    document.documentElement.style.setProperty(
+      "--theme-y",
+      `${y}px`
+    );
 
-  setTransitionState((prev) => ({
-    ...prev,
-    progress: ease(progress),
-  }));
+    document.documentElement.style.setProperty(
+      "--theme-radius",
+      `${radius}px`
+    );
 
-  if (progress < 1) {
-    animFrameRef.current = requestAnimationFrame(animate);
-  } else {
-    setTransitionState((prev) => ({
-      ...prev,
-      active: false,
-    }));
+    const documentWithTransition = document as Document & {
+      startViewTransition?: (
+        updateCallback: () => void | Promise<void>
+      ) => {
+        finished: Promise<void>;
+        ready: Promise<void>;
+        updateCallbackDone: Promise<void>;
+      };
+    };
 
-    setIsAnimating(false);
-  }
-};
+    if (documentWithTransition.startViewTransition) {
+      const transition =
+        documentWithTransition.startViewTransition(() => {
+          applyTheme(nextTheme);
+        });
 
-animFrameRef.current = requestAnimationFrame(animate);
+      transition.finished
+        .catch(() => {
+          applyTheme(nextTheme);
+        })
+        .finally(() => {
+          animatingRef.current = false;
+          setIsAnimating(false);
 
-};
+          document.documentElement.style.removeProperty(
+            "--theme-x"
+          );
 
-useEffect(() => {
-return () => {
-if (animFrameRef.current) {
-cancelAnimationFrame(animFrameRef.current);
-}
-};
-}, []);
+          document.documentElement.style.removeProperty(
+            "--theme-y"
+          );
 
-const maxRadius = transitionState.active
-? Math.hypot(
-Math.max(
-transitionState.x,
-window.innerWidth - transitionState.x
-),
-Math.max(
-transitionState.y,
-window.innerHeight - transitionState.y
-)
-) + 80
-: 0;
+          document.documentElement.style.removeProperty(
+            "--theme-radius"
+          );
+        });
 
-const currentRadius =
-maxRadius * transitionState.progress;
+      return;
+    }
 
-return (
-<ThemeContext.Provider
-value={{
-theme,
-toggleTheme,
-isAnimating,
-}}
->
-{children}
+    applyTheme(nextTheme);
 
-  {/*
-   * Soft reveal edge only.
-   *
-   * There is intentionally NO solid black/white fullscreen
-   * overlay anymore. The actual page theme is already active,
-   * and this layer only creates the smooth expanding edge.
-   */}
-  {transitionState.active && (
-    <div
-      className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden"
-      style={{
-        background:
-          transitionState.targetTheme === "dark"
-            ? "radial-gradient(circle, rgba(139,92,246,0.18) 0%, rgba(56,189,248,0.08) 35%, transparent 70%)"
-            : "radial-gradient(circle, rgba(167,139,250,0.20) 0%, rgba(125,211,252,0.10) 35%, transparent 70%)",
+    window.setTimeout(() => {
+      animatingRef.current = false;
+      setIsAnimating(false);
 
-        WebkitMaskImage: `radial-gradient(
-          circle ${currentRadius}px at
-          ${transitionState.x}px ${transitionState.y}px,
-          black 0%,
-          black calc(100% - 70px),
-          transparent 100%
-        )`,
+      document.documentElement.style.removeProperty(
+        "--theme-x"
+      );
 
-        maskImage: `radial-gradient(
-          circle ${currentRadius}px at
-          ${transitionState.x}px ${transitionState.y}px,
-          black 0%,
-          black calc(100% - 70px),
-          transparent 100%
-        )`,
+      document.documentElement.style.removeProperty(
+        "--theme-y"
+      );
 
-        filter: "blur(18px)",
+      document.documentElement.style.removeProperty(
+        "--theme-radius"
+      );
+    }, 50);
+  };
+
+  return (
+    <ThemeContext.Provider
+      value={{
+        theme,
+        toggleTheme,
+        isAnimating,
       }}
-    />
-  )}
-</ThemeContext.Provider>
-
-);
+    >
+      {children}
+    </ThemeContext.Provider>
+  );
 };
 
 export const useTheme = () => useContext(ThemeContext);
