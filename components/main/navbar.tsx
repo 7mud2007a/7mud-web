@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTelegramPlane } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
@@ -66,9 +67,15 @@ export const Navbar = () => {
           href="#hero"
           className="flex items-center gap-2 group cursor-pointer"
         >
-          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-500 via-sky-400 to-emerald-400 p-[2px]">
-            <div className="w-full h-full bg-white dark:bg-slate-900 rounded-full flex items-center justify-center font-bold text-slate-800 dark:text-slate-100 text-sm group-hover:scale-105 transition-transform">
-              D
+          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-500 via-sky-400 to-emerald-400 p-[2px] flex items-center justify-center">
+            <div className="w-full h-full bg-white dark:bg-slate-900 rounded-full flex items-center justify-center p-1.5 group-hover:scale-105 transition-transform overflow-hidden">
+              <Image
+                src="/logo.png"
+                alt="Daniel Logo"
+                width={24}
+                height={24}
+                className="w-full h-full object-contain brightness-0 dark:invert"
+              />
             </div>
           </div>
           <span className="font-semibold text-slate-800 dark:text-slate-100 tracking-tight text-lg group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
+import { FaTelegramPlane, FaWhatsapp, FaInstagram } from "react-icons/fa";
 
 // Configuration variable / placeholder for WhatsApp phone number if needed in future
 const WHATSAPP_PHONE_NUMBER = "963951708141"; // e.g. "1234567890"
@@ -42,20 +42,20 @@ export const Contact = () => {
         </div>
 
         {/* Contact Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-5 w-full max-w-lg mt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl mt-2">
           {/* Telegram Button */}
           <Link
             href="https://t.me/DanielXdev"
             target="_blank"
             rel="noreferrer"
-            className="group w-full sm:w-1/2 glass-button px-6 py-4 rounded-2xl flex items-center justify-center gap-3 border border-purple-200/80 dark:border-purple-800/80 hover:border-purple-300 dark:hover:border-purple-600 bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 shadow-sm hover:shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="group w-full glass-button px-5 py-4 rounded-2xl flex items-center justify-center gap-3 border border-purple-200/80 dark:border-purple-800/80 hover:border-purple-300 dark:hover:border-purple-600 bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 shadow-sm hover:shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
-            <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950/60 flex items-center justify-center text-purple-600 dark:text-purple-400 text-lg group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950/60 flex items-center justify-center text-purple-600 dark:text-purple-400 text-lg group-hover:scale-110 transition-transform flex-shrink-0">
               <FaTelegramPlane />
             </div>
-            <div className="flex flex-col text-left">
+            <div className="flex flex-col text-left min-w-0">
               <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Telegram</span>
-              <span className="text-sm font-bold text-slate-800 dark:text-slate-100">@DanielXdev</span>
+              <span className="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">@DanielXdev</span>
             </div>
           </Link>
 
@@ -64,14 +64,30 @@ export const Contact = () => {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noreferrer"
-            className="group w-full sm:w-1/2 glass-button px-6 py-4 rounded-2xl flex items-center justify-center gap-3 border border-emerald-200/80 dark:border-emerald-800/80 hover:border-emerald-300 dark:hover:border-emerald-600 bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 shadow-sm hover:shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="group w-full glass-button px-5 py-4 rounded-2xl flex items-center justify-center gap-3 border border-emerald-200/80 dark:border-emerald-800/80 hover:border-emerald-300 dark:hover:border-emerald-600 bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 shadow-sm hover:shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-lg group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-lg group-hover:scale-110 transition-transform flex-shrink-0">
               <FaWhatsapp />
             </div>
-            <div className="flex flex-col text-left">
+            <div className="flex flex-col text-left min-w-0">
               <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">WhatsApp</span>
-              <span className="text-sm font-bold text-slate-800 dark:text-slate-100">Chat with Daniel</span>
+              <span className="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">Chat with Daniel</span>
+            </div>
+          </Link>
+
+          {/* Instagram Button */}
+          <Link
+            href="https://www.instagram.com/danielxdev_/"
+            target="_blank"
+            rel="noreferrer"
+            className="group w-full glass-button px-5 py-4 rounded-2xl flex items-center justify-center gap-3 border border-pink-200/80 dark:border-pink-800/80 hover:border-pink-300 dark:hover:border-pink-600 bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 shadow-sm hover:shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <div className="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-950/60 flex items-center justify-center text-pink-600 dark:text-pink-400 text-lg group-hover:scale-110 transition-transform flex-shrink-0">
+              <FaInstagram />
+            </div>
+            <div className="flex flex-col text-left min-w-0">
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Instagram</span>
+              <span className="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">@danielxdev_</span>
             </div>
           </Link>
         </div>

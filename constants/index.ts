@@ -1,4 +1,4 @@
-import { FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
+import { FaTelegramPlane, FaWhatsapp, FaInstagram } from "react-icons/fa";
 import {
   RxDiscordLogo,
   RxGithubLogo,
@@ -92,6 +92,11 @@ export const SOCIALS = [
     name: "WhatsApp",
     icon: FaWhatsapp,
     link: "https://wa.me/?text=Hey%20Daniel%2C%20I%20wanted%20to%20ask%20you%20about%20building%20a%20website.",
+  },
+  {
+    name: "Instagram",
+    icon: FaInstagram,
+    link: "https://www.instagram.com/danielxdev_/",
   },
 ] as const;
 
@@ -228,6 +233,11 @@ export const FOOTER_DATA = [
         icon: FaWhatsapp,
         link: "https://wa.me/?text=Hey%20Daniel%2C%20I%20wanted%20to%20ask%20you%20about%20building%20a%20website.",
       },
+      {
+        name: "Instagram (@danielxdev_)",
+        icon: FaInstagram,
+        link: "https://www.instagram.com/danielxdev_/",
+      },
     ],
   },
   {
@@ -270,4 +280,5 @@ export const NAV_LINKS = [
 export const LINKS = {
   telegram: "https://t.me/DanielXdev",
   whatsapp: "https://wa.me/?text=Hey%20Daniel%2C%20I%20wanted%20to%20ask%20you%20about%20building%20a%20website.",
+  instagram: "https://www.instagram.com/danielxdev_/",
 };
