@@ -3,20 +3,21 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useApp } from "@/context/AppContext";
-import { translations } from "@/data/translations";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import { Check, ArrowUpRight } from "lucide-react";
+import { translations } from "@/data/translations";
 
 export const PricingSection: React.FC = () => {
-  const { language } = useApp();
+  const { language, contactInfo } = useApp();
   const t = translations[language].pricing;
 
+  const cleanWhatsapp = (contactInfo.whatsapp_number || "963951708141").replace(/[^0-9]/g, "");
   const whatsappMessage =
     language === "ar"
-      ? encodeURIComponent("مرحبا حمود أريد الاستفسار عن تصميم موقع")
-      : encodeURIComponent("Hello 7mud, I'd like to inquire about building a website");
+      ? encodeURIComponent("مرحبا أريد الاستفسار عن باقات تصميم المواقع")
+      : encodeURIComponent("Hello, I'd like to inquire about website packages");
 
-  const whatsappUrl = `https://wa.me/963951708141?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/${cleanWhatsapp}?text=${whatsappMessage}`;
 
   return (
     <section id="pricing" className="py-20 px-4 sm:px-8 relative overflow-hidden bg-neutral-100/60 dark:bg-black border-t border-neutral-200 dark:border-neutral-900">

@@ -2,14 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
-import { translations } from "@/data/translations";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import { Sun, Moon, Globe, Menu, X, ArrowUpRight } from "lucide-react";
 
 export const Navbar: React.FC = () => {
-  const { language, theme, toggleLanguage, toggleTheme } = useApp();
-  const t = translations[language].nav;
+  const { language, theme, toggleLanguage, toggleTheme, navigation } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -21,12 +19,12 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navItems = [
-    { label: t.home, href: "#hero" },
-    { label: t.services, href: "#services" },
-    { label: t.pricing, href: "#pricing" },
-    { label: t.contact, href: "#contact" },
-  ];
+  const visibleNavItems = navigation
+    .filter((item) => item.enabled)
+    .map((item) => ({
+      label: language === "ar" ? item.label_ar : item.label_en,
+      href: item.href,
+    }));
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 px-4 sm:px-8 py-4 transition-all duration-300">
@@ -44,7 +42,7 @@ export const Navbar: React.FC = () => {
 
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item, idx) => (
+          {visibleNavItems.map((item, idx) => (
             <a
               key={idx}
               href={item.href}
@@ -82,8 +80,12 @@ export const Navbar: React.FC = () => {
 
           {/* CTA Button */}
           <a href="#contact">
-            <ShimmerButton variant="primary" className="!py-2 !px-4 !text-xs" icon={<ArrowUpRight className="w-3.5 h-3.5" />}>
-              {t.startProject}
+            <ShimmerButton
+              variant="primary"
+              className="!py-2 !px-4 !text-xs"
+              icon={<ArrowUpRight className="w-3.5 h-3.5" />}
+            >
+              {language === "ar" ? "تواصل معي" : "Contact Me"}
             </ShimmerButton>
           </a>
         </div>
@@ -119,7 +121,7 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="sm:hidden mt-3 max-w-7xl mx-auto rounded-2xl p-6 shadow-xl bg-white dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800">
           <nav className="flex flex-col gap-4">
-            {navItems.map((item, idx) => (
+            {visibleNavItems.map((item, idx) => (
               <a
                 key={idx}
                 href={item.href}
@@ -135,7 +137,7 @@ export const Navbar: React.FC = () => {
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 font-bold text-sm"
               >
-                <span>{t.startProject}</span>
+                <span>{language === "ar" ? "تواصل معي" : "Contact Me"}</span>
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
