@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FaTelegramPlane, FaArrowRight } from "react-icons/fa";
@@ -8,6 +9,18 @@ import { SparklesIcon } from "@heroicons/react/24/solid";
 export const HeroContent = () => {
   return (
     <div className="w-full flex flex-col items-center text-center gap-8 z-10">
+      {/* Logo */}
+      <div className="relative w-28 h-28 sm:w-36 sm:h-36">
+        <Image
+          src="/logo.png"
+          alt="Daniel Logo"
+          width={144}
+          height={144}
+          priority
+          className="object-contain w-full h-full brightness-0 dark:invert"
+        />
+      </div>
+
       {/* Badge */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
