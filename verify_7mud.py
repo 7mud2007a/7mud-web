@@ -1,8 +1,10 @@
+import os
 from playwright.sync_api import sync_playwright
-import time
 
 def run_verification(page):
-    # Set viewport
+    os.makedirs("/home/jules/verification/screenshots", exist_ok=True)
+    os.makedirs("/home/jules/verification/videos", exist_ok=True)
+
     page.set_viewport_size({"width": 1280, "height": 800})
     page.goto("http://localhost:3000")
     page.wait_for_timeout(1000)
@@ -27,30 +29,26 @@ def run_verification(page):
     page.screenshot(path="/home/jules/verification/screenshots/verification_en_light.png")
     page.wait_for_timeout(800)
 
-    # 4. Scroll down to Estimator section and interact
-    estimator = page.locator("#estimator")
-    if estimator.is_visible():
-        estimator.scroll_into_view_if_needed()
+    # 4. Scroll down to Services section
+    services = page.locator("#services")
+    if services.is_visible():
+        services.scroll_into_view_if_needed()
         page.wait_for_timeout(800)
 
-    # 5. Scroll down to Projects and open a project modal
-    projects = page.locator("#projects")
-    if projects.is_visible():
-        projects.scroll_into_view_if_needed()
+    # 5. Scroll down to Pricing section
+    pricing = page.locator("#pricing")
+    if pricing.is_visible():
+        pricing.scroll_into_view_if_needed()
         page.wait_for_timeout(800)
-        details_btn = page.locator("button:has-text('Details')").first
-        if details_btn.is_visible():
-            details_btn.click()
-            page.wait_for_timeout(800)
-            page.screenshot(path="/home/jules/verification/screenshots/verification.png")
-            page.wait_for_timeout(800)
-            # Close modal
-            close_btn = page.locator("button[aria-label='Close']").first
-            if close_btn.is_visible():
-                close_btn.click()
-                page.wait_for_timeout(800)
 
-    page.wait_for_timeout(1000)
+    # 6. Scroll down to Contact section and take final verification screenshot
+    contact = page.locator("#contact")
+    if contact.is_visible():
+        contact.scroll_into_view_if_needed()
+        page.wait_for_timeout(800)
+
+    page.screenshot(path="/home/jules/verification/screenshots/verification.png")
+    page.wait_for_timeout(800)
 
 if __name__ == "__main__":
     with sync_playwright() as p:

@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "7mud — Ultra-Luxury Web Developer & Digital Agency (@DanielXdev)",
+  title: "حمود — 7mud | تصميم وتطوير مواقع الويب",
   description:
-    "Ultra-luxury web application development, HyperOS liquid glassmorphism, and engineering performance by Daniel (@DanielXdev).",
+    "أصمم وأطور مواقع ويب عصرية، سريعة، ومخصصة لهوية مشروعك بالكامل.",
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl" className={`${geistSans.variable} ${geistMono.variable} dark`}>
-      <body className="min-h-screen bg-slate-50 dark:bg-[#08080a] text-slate-900 dark:text-slate-100 antialiased font-sans selection:bg-purple-500/30">
+      <body className="min-h-screen bg-white dark:bg-[#000000] text-neutral-950 dark:text-neutral-100 antialiased font-sans selection:bg-neutral-800 selection:text-white dark:selection:bg-neutral-200 dark:selection:text-black">
         <AppProvider>{children}</AppProvider>
       </body>
     </html>

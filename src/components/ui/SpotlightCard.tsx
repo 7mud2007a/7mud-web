@@ -11,7 +11,7 @@ interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export const SpotlightCard: React.FC<SpotlightCardProps> = ({
   children,
   className = "",
-  spotlightColor = "rgba(168, 85, 247, 0.12)",
+  spotlightColor = "rgba(160, 160, 160, 0.1)",
   ...props
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
@@ -42,7 +42,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative overflow-hidden rounded-3xl glass-panel glass-panel-hover p-6 sm:p-8 ${className}`}
+      className={`relative overflow-hidden rounded-3xl bg-white dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800 p-6 sm:p-8 ${className}`}
       {...props}
     >
       {/* Spotlight Radial Glow */}
@@ -51,17 +51,6 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
         style={{
           opacity,
           background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 40%)`,
-        }}
-      />
-
-      {/* Spotlight Border Glow Overlay */}
-      <div
-        className="pointer-events-none absolute -inset-px rounded-3xl transition-opacity duration-300"
-        style={{
-          opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(255, 255, 255, 0.2), transparent 40%)`,
-          maskImage: "linear-gradient(#black, #black) content-box, linear-gradient(#black, #black)",
-          maskComposite: "exclude",
         }}
       />
 
