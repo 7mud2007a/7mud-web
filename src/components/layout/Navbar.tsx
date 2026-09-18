@@ -23,21 +23,18 @@ export const Navbar: React.FC = () => {
 
   const navItems = [
     { label: t.home, href: "#hero" },
-    { label: t.stack, href: "#stack" },
     { label: t.services, href: "#services" },
-    { label: t.projects, href: "#projects" },
-    { label: t.estimator, href: "#estimator" },
-    { label: t.testimonials, href: "#testimonials" },
+    { label: t.pricing, href: "#pricing" },
     { label: t.contact, href: "#contact" },
   ];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 px-4 sm:px-8 py-4 transition-all duration-300">
       <div
-        className={`max-w-7xl mx-auto rounded-2xl transition-all duration-300 px-4 sm:px-6 py-3 flex items-center justify-between ${
+        className={`max-w-7xl mx-auto rounded-2xl transition-all duration-300 px-4 sm:px-6 py-3 flex items-center justify-between border ${
           scrolled
-            ? "glass-panel shadow-lg shadow-black/5 dark:shadow-black/20 backdrop-blur-2xl"
-            : "bg-white/40 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-white/10"
+            ? "bg-white/90 dark:bg-black/90 backdrop-blur-md border-neutral-300 dark:border-neutral-800 shadow-md"
+            : "bg-white/70 dark:bg-black/70 backdrop-blur-sm border-neutral-200 dark:border-neutral-800"
         }`}
       >
         {/* Brand Logo */}
@@ -46,12 +43,12 @@ export const Navbar: React.FC = () => {
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-8">
           {navItems.map((item, idx) => (
             <a
               key={idx}
               href={item.href}
-              className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-colors"
+              className="text-sm font-semibold text-neutral-800 dark:text-neutral-200 hover:text-black dark:hover:text-white transition-colors"
             >
               {item.label}
             </a>
@@ -63,7 +60,7 @@ export const Navbar: React.FC = () => {
           {/* Language Toggle */}
           <button
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold glass-panel hover:bg-slate-200/50 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-900 dark:text-neutral-100 transition-colors"
             aria-label="Toggle Language"
           >
             <Globe className="w-3.5 h-3.5" />
@@ -73,13 +70,13 @@ export const Navbar: React.FC = () => {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl glass-panel hover:bg-slate-200/50 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 transition-colors"
+            className="p-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-900 dark:text-neutral-100 transition-colors"
             aria-label="Toggle Theme"
           >
             {theme === "dark" ? (
-              <Sun className="w-4 h-4 text-amber-400" />
+              <Sun className="w-4 h-4 text-neutral-100" />
             ) : (
-              <Moon className="w-4 h-4 text-slate-700" />
+              <Moon className="w-4 h-4 text-neutral-900" />
             )}
           </button>
 
@@ -95,21 +92,22 @@ export const Navbar: React.FC = () => {
         <div className="flex sm:hidden items-center gap-2">
           <button
             onClick={toggleLanguage}
-            className="px-2.5 py-1.5 rounded-xl text-xs font-semibold glass-panel text-slate-800 dark:text-slate-200"
+            className="px-2.5 py-1.5 rounded-xl text-xs font-bold border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
           >
             {language === "ar" ? "EN" : "عربي"}
           </button>
 
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl glass-panel text-slate-800 dark:text-slate-200"
+            className="p-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
+            aria-label="Toggle Theme"
           >
-            {theme === "dark" ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
+            {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl glass-panel text-slate-800 dark:text-slate-200"
+            className="p-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
             aria-label="Open Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -119,14 +117,14 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-3 max-w-7xl mx-auto glass-panel rounded-2xl p-6 shadow-2xl border border-white/20 dark:border-white/10">
+        <div className="sm:hidden mt-3 max-w-7xl mx-auto rounded-2xl p-6 shadow-xl bg-white dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800">
           <nav className="flex flex-col gap-4">
             {navItems.map((item, idx) => (
               <a
                 key={idx}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-base font-medium text-slate-800 dark:text-slate-200 hover:text-purple-500 py-1 border-b border-slate-200/50 dark:border-white/5"
+                className="text-base font-bold text-neutral-900 dark:text-neutral-100 hover:text-neutral-600 dark:hover:text-neutral-400 py-2 border-b border-neutral-200 dark:border-neutral-800"
               >
                 {item.label}
               </a>
@@ -135,7 +133,7 @@ export const Navbar: React.FC = () => {
               <a
                 href="#contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-semibold text-sm"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 font-bold text-sm"
               >
                 <span>{t.startProject}</span>
                 <ArrowUpRight className="w-4 h-4" />
