@@ -1,0 +1,13 @@
+
+> space-portfolio@1.0.1 dev
+> next dev
+
+▲ Next.js 16.3.3 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+✓ Ready in 658ms
+✓ Running next.config.js took 47ms
+
+○ Compiling / ...
+ GET / 200 in 6.7s (next.js: 5.7s, application-code: 952ms)
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
