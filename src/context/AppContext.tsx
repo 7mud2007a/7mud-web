@@ -1,6 +1,29 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
+import {
+  SiteSettings,
+  NavigationItem,
+  HeroContent,
+  AboutContent,
+  ServiceItem,
+  ProjectItem,
+  ContactInfo,
+  defaultSiteSettings,
+  defaultNavigation,
+  defaultHeroContent,
+  defaultAboutContent,
+  defaultServices,
+  defaultProjects,
+  defaultContactInfo,
+  getSiteSettings,
+  getNavigation,
+  getHeroContent,
+  getAboutContent,
+  getServices,
+  getProjects,
+  getContactInfo,
+} from "@/lib/supabase/data";
 
 export type Language = "ar" | "en";
 export type Theme = "dark" | "light";
@@ -13,6 +36,17 @@ interface AppContextType {
   setTheme: (theme: Theme) => void;
   toggleLanguage: () => void;
   toggleTheme: () => void;
+
+  // Supabase dynamic content state
+  siteSettings: SiteSettings;
+  navigation: NavigationItem[];
+  heroContent: HeroContent;
+  aboutContent: AboutContent;
+  services: ServiceItem[];
+  projects: ProjectItem[];
+  contactInfo: ContactInfo;
+  refreshContent: () => Promise<void>;
+  isLoadingContent: boolean;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -22,9 +56,58 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
+  // Dynamic Content States
+  const [siteSettings, setSiteSettings] = useState<SiteSettings>(defaultSiteSettings);
+  const [navigation, setNavigation] = useState<NavigationItem[]>(defaultNavigation);
+  const [heroContent, setHeroContent] = useState<HeroContent>(defaultHeroContent);
+  const [aboutContent, setAboutContent] = useState<AboutContent>(defaultAboutContent);
+  const [services, setServices] = useState<ServiceItem[]>(defaultServices);
+  const [projects, setProjects] = useState<ProjectItem[]>(defaultProjects);
+  const [contactInfo, setContactInfo] = useState<ContactInfo>(defaultContactInfo);
+  const [isLoadingContent, setIsLoadingContent] = useState<boolean>(true);
+
+  const fetchAllData = useCallback(async () => {
+    setIsLoadingContent(true);
+    try {
+      const [
+        settingsData,
+        navData,
+        heroData,
+        aboutData,
+        servicesData,
+        projectsData,
+        contactData,
+      ] = await Promise.all([
+        getSiteSettings(),
+        getNavigation(),
+        getHeroContent(),
+        getAboutContent(),
+        getServices(),
+        getProjects(),
+        getContactInfo(),
+      ]);
+
+      setSiteSettings(settingsData);
+      setNavigation(navData);
+      setHeroContent(heroData);
+      setAboutContent(aboutData);
+      setServices(servicesData);
+      setProjects(projectsData);
+      setContactInfo(contactData);
+
+      if (settingsData.theme) {
+        setThemeState(settingsData.theme);
+      }
+    } catch (err) {
+      console.error("Error fetching site content from Supabase:", err);
+    } finally {
+      setIsLoadingContent(false);
+    }
+  }, []);
+
   useEffect(() => {
     setMounted(true);
-    // Load persisted settings or system preference
+
     const savedLang = localStorage.getItem("7mud_lang") as Language;
     if (savedLang === "ar" || savedLang === "en") {
       setLanguageState(savedLang);
@@ -33,10 +116,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const savedTheme = localStorage.getItem("7mud_theme") as Theme;
     if (savedTheme === "dark" || savedTheme === "light") {
       setThemeState(savedTheme);
-    } else {
-      setThemeState("dark");
     }
-  }, []);
+
+    fetchAllData();
+  }, [fetchAllData]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -80,6 +163,15 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setTheme,
         toggleLanguage,
         toggleTheme,
+        siteSettings,
+        navigation,
+        heroContent,
+        aboutContent,
+        services,
+        projects,
+        contactInfo,
+        refreshContent: fetchAllData,
+        isLoadingContent,
       }}
     >
       {children}

@@ -2,13 +2,16 @@
 
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
-import { translations } from "@/data/translations";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import { Send, MessageCircle, CheckCircle, ArrowUpRight } from "lucide-react";
 
 export const ContactSection: React.FC = () => {
-  const { language } = useApp();
-  const t = translations[language].contact;
+  const { language, contactInfo } = useApp();
+  const isAr = language === "ar";
+
+  const badge = isAr ? contactInfo.badge_ar : contactInfo.badge_en;
+  const title = isAr ? contactInfo.title_ar : contactInfo.title_en;
+  const subtitle = isAr ? contactInfo.subtitle_ar : contactInfo.subtitle_en;
 
   const [formState, setFormState] = useState({
     name: "",
@@ -23,12 +26,18 @@ export const ContactSection: React.FC = () => {
     setSubmitted(true);
   };
 
-  const whatsappMessage =
-    language === "ar"
-      ? encodeURIComponent("مرحبا حمود أريد الاستفسار عن تصميم موقع")
-      : encodeURIComponent("Hello 7mud, I'd like to inquire about building a website");
+  const cleanWhatsapp = (contactInfo.whatsapp_number || "963951708141").replace(/[^0-9]/g, "");
+  const whatsappMessage = isAr
+    ? encodeURIComponent("مرحبا أريد الاستفسار عن خدماتك")
+    : encodeURIComponent("Hello, I'd like to inquire about your services");
 
-  const whatsappUrl = `https://wa.me/963951708141?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/${cleanWhatsapp}?text=${whatsappMessage}`;
+
+  const cleanTelegram = (contactInfo.telegram_username || "@Dev7mud").replace("@", "");
+  const telegramUrl = `https://t.me/${cleanTelegram}`;
+
+  const cleanInstagram = (contactInfo.instagram_username || "@dev7mud").replace("@", "");
+  const instagramUrl = `https://instagram.com/${cleanInstagram}`;
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-8 relative overflow-hidden bg-neutral-50 dark:bg-black border-t border-neutral-200 dark:border-neutral-900">
@@ -36,13 +45,13 @@ export const ContactSection: React.FC = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-xs font-mono tracking-widest text-neutral-800 dark:text-neutral-300 uppercase bg-neutral-200/80 dark:bg-neutral-800/80 border border-neutral-300 dark:border-neutral-700 px-3 py-1 rounded-full">
-            {t.badge}
+            {badge}
           </span>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-neutral-950 dark:text-white mt-4 mb-4">
-            {t.title}
+            {title}
           </h2>
           <p className="text-neutral-600 dark:text-neutral-400 text-base sm:text-lg">
-            {t.subtitle}
+            {subtitle}
           </p>
         </div>
 
@@ -50,7 +59,7 @@ export const ContactSection: React.FC = () => {
           {/* Direct Channels Cards (Spans 5 cols) */}
           <div className="lg:col-span-5 space-y-4">
             <h3 className="text-xl font-bold text-neutral-950 dark:text-white mb-6">
-              {t.quickConnect}
+              {isAr ? "وسائل التواصل المباشر" : "Direct Contact Channels"}
             </h3>
 
             {/* WhatsApp Card */}
@@ -66,10 +75,10 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-base font-bold text-neutral-950 dark:text-white">
-                    {t.whatsappLabel}
+                    {isAr ? "واتساب" : "WhatsApp"}
                   </h4>
                   <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400 mt-0.5">
-                    {t.whatsappSub}
+                    {contactInfo.whatsapp_number}
                   </p>
                 </div>
               </div>
@@ -78,7 +87,7 @@ export const ContactSection: React.FC = () => {
 
             {/* Telegram Card */}
             <a
-              href="https://t.me/Dev7mud"
+              href={telegramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 flex items-center justify-between group hover:border-neutral-400 dark:hover:border-neutral-600 transition-all duration-300 block shadow-sm"
@@ -89,10 +98,10 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-base font-bold text-neutral-950 dark:text-white">
-                    {t.telegramLabel}
+                    {isAr ? "تيليجرام" : "Telegram"}
                   </h4>
                   <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400 mt-0.5">
-                    {t.telegramSub}
+                    {contactInfo.telegram_username}
                   </p>
                 </div>
               </div>
@@ -101,7 +110,7 @@ export const ContactSection: React.FC = () => {
 
             {/* Instagram Card */}
             <a
-              href="https://instagram.com/dev7mud"
+              href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 flex items-center justify-between group hover:border-neutral-400 dark:hover:border-neutral-600 transition-all duration-300 block shadow-sm"
@@ -114,10 +123,10 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-base font-bold text-neutral-950 dark:text-white">
-                    {t.instagramLabel}
+                    {isAr ? "إنستغرام" : "Instagram"}
                   </h4>
                   <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400 mt-0.5">
-                    {t.instagramSub}
+                    {contactInfo.instagram_username}
                   </p>
                 </div>
               </div>
@@ -133,52 +142,58 @@ export const ContactSection: React.FC = () => {
                   <CheckCircle className="w-8 h-8" />
                 </div>
                 <h3 className="text-2xl font-bold text-neutral-950 dark:text-white mb-2">
-                  {language === "ar" ? "شكراً لك!" : "Thank You!"}
+                  {isAr ? "شكراً لك!" : "Thank You!"}
                 </h3>
                 <p className="text-neutral-600 dark:text-neutral-400 text-sm max-w-md">
-                  {t.successMsg}
+                  {isAr
+                    ? "تم إرسال رسالتك بنجاح! سأتواصل معك في أقرب وقت ممكن."
+                    : "Message sent successfully! I will respond promptly."}
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-xs font-mono uppercase tracking-wider text-neutral-800 dark:text-neutral-300 mb-2">
-                    {t.nameLabel}
+                    {isAr ? "الاسم الكامل" : "Full Name"}
                   </label>
                   <input
                     type="text"
                     required
                     value={formState.name}
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    placeholder={t.namePlaceholder}
+                    placeholder={isAr ? "اكتب اسمك هنا..." : "Enter your name..."}
                     className="w-full px-4 py-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 text-neutral-950 dark:text-white text-sm focus:outline-none focus:border-neutral-950 dark:focus:border-white transition-all"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-mono uppercase tracking-wider text-neutral-800 dark:text-neutral-300 mb-2">
-                    {t.emailLabel}
+                    {isAr ? "البريد الإلكتروني" : "Email Address"}
                   </label>
                   <input
                     type="email"
                     required
                     value={formState.email}
                     onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    placeholder={t.emailPlaceholder}
+                    placeholder="name@example.com"
                     className="w-full px-4 py-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 text-neutral-950 dark:text-white text-sm focus:outline-none focus:border-neutral-950 dark:focus:border-white transition-all"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-mono uppercase tracking-wider text-neutral-800 dark:text-neutral-300 mb-2">
-                    {t.messageLabel}
+                    {isAr ? "تفاصيل المشروع أو الاستفسار" : "Project Details or Inquiry"}
                   </label>
                   <textarea
                     required
                     rows={4}
                     value={formState.message}
                     onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    placeholder={t.messagePlaceholder}
+                    placeholder={
+                      isAr
+                        ? "تحدث عن موقعك المطلوب، أهدافه، وأي تفاصيل أخرى..."
+                        : "Describe your project goals, scope, and requirements..."
+                    }
                     className="w-full px-4 py-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 text-neutral-950 dark:text-white text-sm focus:outline-none focus:border-neutral-950 dark:focus:border-white transition-all resize-none"
                   />
                 </div>
@@ -189,7 +204,7 @@ export const ContactSection: React.FC = () => {
                   className="w-full !py-4 text-base"
                   icon={<Send className="w-4 h-4" />}
                 >
-                  {t.sendBtn}
+                  {isAr ? "إرسال الرسالة" : "Send Message"}
                 </ShimmerButton>
               </form>
             )}
