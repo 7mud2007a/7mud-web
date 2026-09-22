@@ -7,7 +7,7 @@ import { BrandLogo } from "@/components/ui/BrandLogo";
 import { ArrowUp, Send, MessageCircle } from "lucide-react";
 
 export const Footer: React.FC = () => {
-  const { language } = useApp();
+  const { language, contactInfo } = useApp();
   const t = translations[language].footer;
   const nav = translations[language].nav;
 
@@ -15,12 +15,15 @@ export const Footer: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const rawWhatsapp = contactInfo.whatsapp_number || "0930431817";
+  const cleanWhatsapp = rawWhatsapp.replace(/[^0-9]/g, "").replace(/^0/, "963");
+
   const whatsappMessage =
     language === "ar"
       ? encodeURIComponent("مرحبا حمود أريد الاستفسار عن تصميم موقع")
       : encodeURIComponent("Hello 7mud, I'd like to inquire about building a website");
 
-  const whatsappUrl = `https://wa.me/963951708141?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/${cleanWhatsapp}?text=${whatsappMessage}`;
 
   return (
     <footer className="relative border-t border-neutral-200 dark:border-neutral-900 bg-white dark:bg-black py-12 px-4 sm:px-8 overflow-hidden">
