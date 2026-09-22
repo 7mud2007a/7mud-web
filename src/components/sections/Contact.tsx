@@ -26,7 +26,8 @@ export const ContactSection: React.FC = () => {
     setSubmitted(true);
   };
 
-  const cleanWhatsapp = (contactInfo.whatsapp_number || "963951708141").replace(/[^0-9]/g, "");
+  const rawWhatsapp = contactInfo.whatsapp_number || "0930431817";
+  const cleanWhatsapp = rawWhatsapp.replace(/[^0-9]/g, "").replace(/^0/, "963");
   const whatsappMessage = isAr
     ? encodeURIComponent("مرحبا أريد الاستفسار عن خدماتك")
     : encodeURIComponent("Hello, I'd like to inquire about your services");

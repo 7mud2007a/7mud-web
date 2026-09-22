@@ -248,7 +248,7 @@ export const defaultContactInfo: ContactInfo = {
   title_en: "Let's Build Your Website",
   subtitle_ar: "تواصل معي مباشرة عبر إحدى الوسائل التالية أو أرسل رسالتك هنا.",
   subtitle_en: "Reach out directly via social channels or send a message below.",
-  whatsapp_number: "963951708141",
+  whatsapp_number: "0930431817",
   telegram_username: "@Dev7mud",
   instagram_username: "@dev7mud",
   contact_text_ar: "تواصل معي مباشرة لتنفيذ موقعك بأعلى جودة.",

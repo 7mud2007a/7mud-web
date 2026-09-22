@@ -11,17 +11,18 @@ export const PricingSection: React.FC = () => {
   const { language, contactInfo } = useApp();
   const t = translations[language].pricing;
 
-  const cleanWhatsapp = (contactInfo.whatsapp_number || "963951708141").replace(/[^0-9]/g, "");
+  const rawWhatsapp = contactInfo.whatsapp_number || "0930431817";
+  const cleanWhatsapp = rawWhatsapp.replace(/[^0-9]/g, "").replace(/^0/, "963");
   const whatsappMessage =
     language === "ar"
-      ? encodeURIComponent("مرحبا أريد الاستفسار عن باقات تصميم المواقع")
-      : encodeURIComponent("Hello, I'd like to inquire about website packages");
+      ? encodeURIComponent("مرحبا أريد الاستفسار عن خدمة تصميم وتطوير المواقع")
+      : encodeURIComponent("Hello, I'd like to inquire about website development services");
 
   const whatsappUrl = `https://wa.me/${cleanWhatsapp}?text=${whatsappMessage}`;
 
   return (
     <section id="pricing" className="py-20 px-4 sm:px-8 relative overflow-hidden bg-neutral-100/60 dark:bg-black border-t border-neutral-200 dark:border-neutral-900">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-xs font-mono tracking-widest text-neutral-800 dark:text-neutral-300 uppercase bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 px-3 py-1 rounded-full">
@@ -35,107 +36,66 @@ export const PricingSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Pricing 3-Card Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-          {t.packages.map((pkg, idx) => {
-            const isPopular = pkg.isPopular;
+        {/* Single Pricing Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="relative max-w-3xl mx-auto rounded-3xl p-8 sm:p-10 flex flex-col justify-between transition-all duration-300 shadow-lg bg-neutral-950 text-white dark:bg-neutral-900 dark:text-white border-2 border-neutral-950 dark:border-neutral-700 ring-2 ring-neutral-400/20"
+        >
+          <div>
+            {/* Card Header & Price */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-8 mb-8 border-b border-neutral-800">
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
+                  {t.cardTitle}
+                </h3>
+              </div>
+              <div className="flex items-baseline">
+                <span className="text-5xl sm:text-6xl font-black tracking-tight text-white">
+                  {t.price}
+                </span>
+              </div>
+            </div>
 
-            return (
-              <motion.div
-                key={pkg.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                className={`relative rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 shadow-sm ${
-                  isPopular
-                    ? "bg-neutral-950 text-white dark:bg-neutral-900 dark:text-white border-2 border-neutral-950 dark:border-neutral-700 ring-2 ring-neutral-400/20"
-                    : "bg-white dark:bg-neutral-900/60 text-neutral-950 dark:text-white border border-neutral-200 dark:border-neutral-800"
-                }`}
+            {/* Features List (2-column layout on sm+) */}
+            <div className="mb-8">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {t.features.map((feature, fIdx) => (
+                  <li key={fIdx} className="flex items-start gap-3 text-sm font-medium">
+                    <span className="p-1 rounded-full mt-0.5 bg-neutral-800 text-white shrink-0">
+                      <Check className="w-4 h-4 text-neutral-200" />
+                    </span>
+                    <span className="text-neutral-200 leading-snug">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom Note & CTA */}
+          <div className="pt-6 border-t border-neutral-800 flex flex-col gap-6">
+            <p className="text-xs sm:text-sm text-neutral-400 font-mono text-center">
+              {t.note}
+            </p>
+
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full block"
+            >
+              <ShimmerButton
+                variant="secondary"
+                className="w-full !py-4 text-base"
+                icon={<ArrowUpRight className="w-5 h-5" />}
               >
-                {/* Popular Badge */}
-                {pkg.badge && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                    <span
-                      className={`text-[11px] font-bold font-mono tracking-wider uppercase px-3.5 py-1 rounded-full border shadow-sm ${
-                        isPopular
-                          ? "bg-white text-neutral-950 border-neutral-300"
-                          : "bg-neutral-900 text-white border-neutral-700"
-                      }`}
-                    >
-                      {pkg.badge}
-                    </span>
-                  </div>
-                )}
-
-                <div>
-                  {/* Card Title & Subtitle */}
-                  <div className="mb-6 pt-2">
-                    <h3 className="text-xl font-bold mb-1">{pkg.title}</h3>
-                    <p
-                      className={`text-xs font-mono ${
-                        isPopular ? "text-neutral-400" : "text-neutral-500 dark:text-neutral-400"
-                      }`}
-                    >
-                      {pkg.subtitle}
-                    </p>
-                  </div>
-
-                  {/* Price Display */}
-                  <div className="mb-8">
-                    <span className="text-4xl sm:text-5xl font-black tracking-tight">
-                      {pkg.price}
-                    </span>
-                  </div>
-
-                  {/* Features List */}
-                  <ul className="space-y-3.5 mb-8">
-                    {pkg.features.map((feature, fIdx) => (
-                      <li key={fIdx} className="flex items-start gap-3 text-sm font-medium">
-                        <span
-                          className={`p-1 rounded-full mt-0.5 ${
-                            isPopular
-                              ? "bg-neutral-800 text-white dark:bg-neutral-800 dark:text-neutral-200"
-                              : "bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-200"
-                          }`}
-                        >
-                          <Check className="w-3.5 h-3.5" />
-                        </span>
-                        <span
-                          className={
-                            isPopular
-                              ? "text-neutral-200"
-                              : "text-neutral-700 dark:text-neutral-300"
-                          }
-                        >
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* CTA Button */}
-                <div className="pt-4 border-t border-neutral-200/20 dark:border-neutral-800">
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full block"
-                  >
-                    <ShimmerButton
-                      variant={isPopular ? "secondary" : "primary"}
-                      className="w-full !py-3.5 text-sm"
-                      icon={<ArrowUpRight className="w-4 h-4" />}
-                    >
-                      {t.ctaBtn}
-                    </ShimmerButton>
-                  </a>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                {t.ctaBtn}
+              </ShimmerButton>
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

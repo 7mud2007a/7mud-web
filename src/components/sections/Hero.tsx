@@ -18,7 +18,8 @@ export const Hero: React.FC = () => {
   const ctaPrimary = isAr ? heroContent.cta_primary_ar : heroContent.cta_primary_en;
   const ctaSecondary = isAr ? heroContent.cta_secondary_ar : heroContent.cta_secondary_en;
 
-  const cleanWhatsappNumber = (contactInfo.whatsapp_number || "963951708141").replace(/[^0-9]/g, "");
+  const rawWhatsapp = contactInfo.whatsapp_number || "0930431817";
+  const cleanWhatsappNumber = rawWhatsapp.replace(/[^0-9]/g, "").replace(/^0/, "963");
   const whatsappMessage = isAr
     ? encodeURIComponent("مرحبا أريد الاستفسار عن تصميم موقع")
     : encodeURIComponent("Hello, I'd like to inquire about building a website");
