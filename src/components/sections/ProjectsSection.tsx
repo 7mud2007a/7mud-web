@@ -6,10 +6,24 @@ import { useApp } from "@/context/AppContext";
 import { ExternalLink, FolderGit2 } from "lucide-react";
 
 export const ProjectsSection: React.FC = () => {
-  const { language, projects } = useApp();
+  const { language } = useApp();
   const isAr = language === "ar";
 
-  if (!projects || projects.length === 0) return null;
+  // Show the owner's current live project instead of legacy Supabase project entries.
+  const projects = [
+    {
+      id: "r2-car",
+      title_ar: "R2 Car",
+      title_en: "R2 Car",
+      description_ar: "موقع R2 Car من تطويري — تجربة ويب عصرية لعرض خدمات السيارات بشكل احترافي.",
+      description_en: "R2 Car — a modern web experience I developed for presenting car services professionally.",
+      technologies: ["Next.js", "React", "Responsive Design"],
+      project_url: "https://r2-car.onrender.com/",
+      github_url: "",
+      image_url: "https://image.thum.io/get/width/1200/crop/800/https://r2-car.onrender.com/",
+      is_featured: true,
+    },
+  ];
 
   const badgeText = isAr ? "أعمالي ومشاريعي" : "FEATURED PROJECTS";
   const titleText = isAr ? "مشاريع قمت بتطويرها حديثاً" : "Recent Work & Web Applications";
