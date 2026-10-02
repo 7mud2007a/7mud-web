@@ -21,26 +21,10 @@ export const translations = {
       title: "ما الذي تحصل عليه عند العمل معي؟",
       subtitle: "خدمات متكاملة تضمن حصولك على موقع ويب احترافي يدعم نمو أعمالك.",
       items: [
-        {
-          id: "design",
-          title: "تصميم عصري وحصري",
-          desc: "واجهات جذابة وسهلة الاستخدام تناسب هاتف وحاسوب العميل.",
-        },
-        {
-          id: "cms",
-          title: "لوحة تحكم خاصة",
-          desc: "تمكّنك من إدارة محتوى موقعك بنفسك بكل بساطة.",
-        },
-        {
-          id: "db",
-          title: "قاعدة بيانات وتسجيل دخول",
-          desc: "لحفظ بياناتك وعملائك بشكل آمن وسريع.",
-        },
-        {
-          id: "speed",
-          title: "سرعة وتوافق عالي",
-          desc: "موقع سريع التصفح ومهيأ للظهور في محركات البحث.",
-        },
+        { id: "design", title: "تصميم عصري وحصري", desc: "واجهات جذابة وسهلة الاستخدام تناسب هاتف وحاسوب العميل." },
+        { id: "cms", title: "لوحة تحكم خاصة", desc: "تمكّنك من إدارة محتوى موقعك بنفسك بكل بساطة." },
+        { id: "db", title: "قاعدة بيانات وتسجيل دخول", desc: "لحفظ بياناتك وعملائك بشكل آمن وسريع." },
+        { id: "speed", title: "سرعة وتوافق عالي", desc: "موقع سريع التصفح ومهيأ للظهور في محركات البحث." },
       ],
     },
     pricing: {
@@ -49,8 +33,8 @@ export const translations = {
       subtitle: "خطة مخصصة تلبي كافة احتياجاتك البرمجية بوضوح وشفافية.",
       ctaBtn: "اطلب مشروعك الآن",
       cardTitle: "موقع مخصص — مبني خصيصاً لاحتياجاتك",
-      price: "200$+",
-      note: "يبدأ من 200$ — السعر النهائي يعتمد على حجم المشروع ومتطلباته.",
+      price: "400$+",
+      note: "يبدأ من 400$ — السعر النهائي يعتمد على حجم المشروع ومتطلباته.",
       features: [
         "تصميم وتطوير موقع مخصص بالكامل",
         "ربط كامل مع قاعدة البيانات",
@@ -114,26 +98,10 @@ export const translations = {
       title: "Key Features & Advantages",
       subtitle: "Comprehensive web development services ensuring a professional site that grows your business.",
       items: [
-        {
-          id: "design",
-          title: "Modern & Exclusive Design",
-          desc: "Attractive, user-friendly interfaces tailored for both mobile and desktop.",
-        },
-        {
-          id: "cms",
-          title: "Custom Control Panel",
-          desc: "Easily manage your website content independently with simplicity.",
-        },
-        {
-          id: "db",
-          title: "Database & Authentication",
-          desc: "Store your data and user information safely and quickly.",
-        },
-        {
-          id: "speed",
-          title: "High Speed & SEO",
-          desc: "Fast-browsing website optimized for search engines and performance.",
-        },
+        { id: "design", title: "Modern & Exclusive Design", desc: "Attractive, user-friendly interfaces tailored for both mobile and desktop." },
+        { id: "cms", title: "Custom Control Panel", desc: "Easily manage your website content independently with simplicity." },
+        { id: "db", title: "Database & Authentication", desc: "Store your data and user information safely and quickly." },
+        { id: "speed", title: "High Speed & SEO", desc: "Fast-browsing website optimized for search engines and performance." },
       ],
     },
     pricing: {
@@ -142,8 +110,8 @@ export const translations = {
       subtitle: "A complete custom plan designed to cover all your digital requirements.",
       ctaBtn: "Start Your Project",
       cardTitle: "Custom Website — Built For Your Needs",
-      price: "$200+",
-      note: "Starting from $200 — Final price depends on the project's size and requirements.",
+      price: "$400+",
+      note: "Starting from $400 — Final price depends on the project's size and requirements.",
       features: [
         "Fully custom website design & development",
         "Complete database integration",
