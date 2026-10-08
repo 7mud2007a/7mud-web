@@ -78,6 +78,7 @@ export default function AdminDashboardPage() {
   const [siteCopyForm, setSiteCopyForm] = useState(JSON.stringify(siteCopy, null, 2));
   const [servicesList, setServicesList] = useState<ServiceItem[]>(services);
   const [projectsList, setProjectsList] = useState<ProjectItem[]>(projects);
+  const [messages, setMessages] = useState<Array<{ id: string; name: string; email: string; message: string; read: boolean; created_at: string }>>([]);
 
   // Modal / Form state for Service CRUD
   const [editingService, setEditingService] = useState<Partial<ServiceItem> | null>(null);
@@ -98,6 +99,20 @@ export default function AdminDashboardPage() {
     setServicesList(services);
     setProjectsList(projects);
   }, [heroContent, aboutContent, contactInfo, siteSettings, navigation, siteCopy, services, projects]);
+
+  useEffect(() => {
+    if (activeTab !== "messages") return;
+    const loadMessages = async () => {
+      const supabase = createClient();
+      const { data, error } = await supabase.from("contact_messages").select("*").order("created_at", { ascending: false });
+      if (error) {
+        showToast("error", error.message);
+        return;
+      }
+      setMessages(data || []);
+    };
+    loadMessages();
+  }, [activeTab]);
 
   const showToast = (type: "success" | "error", message: string) => {
     setNotification({ type, message });
@@ -330,6 +345,7 @@ export default function AdminDashboardPage() {
     { id: "appearance", label: "المظهر والألوان", icon: Palette },
     { id: "navigation", label: "القائمة والنظام", icon: NavIcon },
     { id: "content", label: "كل النصوص والمحتوى", icon: Edit2 },
+    { id: "messages", label: "رسائل العملاء", icon: PhoneCall },
   ];
 
   return (
@@ -506,6 +522,59 @@ export default function AdminDashboardPage() {
                 </button>
               </div>
             </div>
+          </div>
+        )}
+
+
+        {/* TAB: CONTACT MESSAGES */}
+        {activeTab === "messages" && (
+          <div className="space-y-5">
+            <div className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6">
+              <h2 className="text-lg font-black text-white mb-2">رسائل العملاء</h2>
+              <p className="text-xs text-neutral-400">كل رسالة من نموذج التواصل محفوظة في Supabase وتظهر هنا مباشرة.</p>
+            </div>
+            {messages.length === 0 ? (
+              <div className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-10 text-center text-sm text-neutral-500">لا توجد رسائل حتى الآن.</div>
+            ) : (
+              <div className="space-y-4">
+                {messages.map((item) => (
+                  <div key={item.id} className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-5 sm:p-6">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                      <div>
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <h3 className="font-bold text-white">{item.name}</h3>
+                          {!item.read && <span className="px-2 py-1 rounded-full bg-white text-black text-[10px] font-bold">جديدة</span>}
+                        </div>
+                        <a href={\`mailto:\${item.email}\`} className="text-xs text-neutral-400 hover:text-white">{item.email}</a>
+                      </div>
+                      <span className="text-[11px] text-neutral-500 font-mono">{new Date(item.created_at).toLocaleString("ar")}</span>
+                    </div>
+                    <p className="mt-5 text-sm text-neutral-200 whitespace-pre-wrap leading-7">{item.message}</p>
+                    <div className="mt-5 flex gap-2">
+                      <button
+                        onClick={async () => {
+                          const supabase = createClient();
+                          const { error } = await supabase.from("contact_messages").update({ read: true }).eq("id", item.id);
+                          if (error) return showToast("error", error.message);
+                          setMessages((prev) => prev.map((m) => m.id === item.id ? { ...m, read: true } : m));
+                        }}
+                        className="px-4 py-2 rounded-xl border border-neutral-800 bg-neutral-950 text-xs font-bold text-neutral-300 hover:text-white"
+                      >تعليم كمقروء</button>
+                      <button
+                        onClick={async () => {
+                          if (!confirm("هل أنت متأكد من حذف هذه الرسالة؟")) return;
+                          const supabase = createClient();
+                          const { error } = await supabase.from("contact_messages").delete().eq("id", item.id);
+                          if (error) return showToast("error", error.message);
+                          setMessages((prev) => prev.filter((m) => m.id !== item.id));
+                        }}
+                        className="px-4 py-2 rounded-xl border border-red-900/60 bg-red-950/20 text-xs font-bold text-red-300 hover:bg-red-950/40"
+                      >حذف</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
