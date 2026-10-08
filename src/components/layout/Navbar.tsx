@@ -7,7 +7,7 @@ import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import { Sun, Moon, Globe, Menu, X, ArrowUpRight } from "lucide-react";
 
 export const Navbar: React.FC = () => {
-  const { language, theme, toggleLanguage, toggleTheme, navigation } = useApp();
+  const { language, theme, toggleLanguage, toggleTheme, navigation, siteCopy } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -85,7 +85,7 @@ export const Navbar: React.FC = () => {
               className="!py-2 !px-4 !text-xs"
               icon={<ArrowUpRight className="w-3.5 h-3.5" />}
             >
-              {language === "ar" ? "تواصل معي" : "Contact Me"}
+              {language === "ar" ? siteCopy.nav_cta_ar : siteCopy.nav_cta_en}
             </ShimmerButton>
           </a>
         </div>
