@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
+import { SiteCopy, defaultSiteCopy } from "@/lib/site-copy";
 
 export interface SiteSettings {
   id: string;
@@ -256,6 +257,17 @@ export const defaultContactInfo: ContactInfo = {
 };
 
 // Data Fetching Functions
+export async function getSiteCopy(): Promise<SiteCopy> {
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase.from("site_content").select("content").eq("id", "default").single();
+    if (error || !data?.content) return defaultSiteCopy;
+    return { ...defaultSiteCopy, ...(data.content as Partial<SiteCopy>) };
+  } catch {
+    return defaultSiteCopy;
+  }
+}
+
 export async function getSiteSettings(): Promise<SiteSettings> {
   try {
     const supabase = createClient();
