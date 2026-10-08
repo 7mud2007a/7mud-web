@@ -1,6 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
+import type { SiteCopy } from "@/lib/site-copy";
+import { defaultSiteCopy } from "@/lib/site-copy";
 import {
   SiteSettings,
   NavigationItem,
@@ -10,6 +12,7 @@ import {
   ProjectItem,
   ContactInfo,
   getSiteCopy,
+  defaultSiteCopy,
   defaultSiteSettings,
   defaultNavigation,
   defaultHeroContent,
@@ -47,7 +50,7 @@ interface AppContextType {
   projects: ProjectItem[];
   contactInfo: ContactInfo;
   refreshContent: () => Promise<void>;
-  siteCopy: import("@/lib/site-copy").SiteCopy;
+  siteCopy: SiteCopy;
   isLoadingContent: boolean;
 }
 
@@ -66,7 +69,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [services, setServices] = useState<ServiceItem[]>(defaultServices);
   const [projects, setProjects] = useState<ProjectItem[]>(defaultProjects);
   const [contactInfo, setContactInfo] = useState<ContactInfo>(defaultContactInfo);
-  const [siteCopy, setSiteCopy] = useState<import("@/lib/site-copy").SiteCopy>(import("@/lib/site-copy").defaultSiteCopy);
+  const [siteCopy, setSiteCopy] = useState<SiteCopy>(defaultSiteCopy);
   const [isLoadingContent, setIsLoadingContent] = useState<boolean>(true);
 
   const fetchAllData = useCallback(async () => {
