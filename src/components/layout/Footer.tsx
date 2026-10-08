@@ -2,14 +2,17 @@
 
 import React from "react";
 import { useApp } from "@/context/AppContext";
-import { translations } from "@/data/translations";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { ArrowUp, Send, MessageCircle } from "lucide-react";
 
 export const Footer: React.FC = () => {
-  const { language, contactInfo } = useApp();
-  const t = translations[language].footer;
-  const nav = translations[language].nav;
+  const { language, contactInfo, navigation, siteCopy } = useApp();
+  const isAr = language === "ar";
+  const t = {
+    tagline: isAr ? siteCopy.footer_tagline_ar : siteCopy.footer_tagline_en,
+    rights: isAr ? siteCopy.footer_rights_ar : siteCopy.footer_rights_en,
+    scrollTop: isAr ? siteCopy.footer_scroll_top_ar : siteCopy.footer_scroll_top_en,
+  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -20,8 +23,8 @@ export const Footer: React.FC = () => {
 
   const whatsappMessage =
     language === "ar"
-      ? encodeURIComponent("مرحبا حمود أريد الاستفسار عن تصميم موقع")
-      : encodeURIComponent("Hello 7mud, I'd like to inquire about building a website");
+      ? encodeURIComponent(siteCopy.whatsapp_footer_message_ar)
+      : encodeURIComponent(siteCopy.whatsapp_footer_message_en);
 
   const whatsappUrl = `https://wa.me/${cleanWhatsapp}?text=${whatsappMessage}`;
 
@@ -40,16 +43,16 @@ export const Footer: React.FC = () => {
           {/* Nav Quick Links */}
           <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-neutral-700 dark:text-neutral-300">
             <a href="#hero" className="hover:text-neutral-950 dark:hover:text-white transition-colors">
-              {nav.home}
+              {navigation.find((x) => x.id === "home")?.[isAr ? "label_ar" : "label_en"] || (isAr ? "الرئيسية" : "Home")}
             </a>
             <a href="#services" className="hover:text-neutral-950 dark:hover:text-white transition-colors">
-              {nav.services}
+              {navigation.find((x) => x.id === "services")?.[isAr ? "label_ar" : "label_en"] || (isAr ? "مميزات العمل" : "Features")}
             </a>
             <a href="#pricing" className="hover:text-neutral-950 dark:hover:text-white transition-colors">
-              {nav.pricing}
+              {navigation.find((x) => x.id === "pricing")?.[isAr ? "label_ar" : "label_en"] || (isAr ? "الباقات" : "Pricing")}
             </a>
             <a href="#contact" className="hover:text-neutral-950 dark:hover:text-white transition-colors">
-              {nav.contact}
+              {navigation.find((x) => x.id === "contact")?.[isAr ? "label_ar" : "label_en"] || (isAr ? "تواصل معي" : "Contact")}
             </a>
           </div>
 
