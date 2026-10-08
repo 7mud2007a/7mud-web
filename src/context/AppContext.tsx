@@ -12,7 +12,6 @@ import {
   ProjectItem,
   ContactInfo,
   getSiteCopy,
-  defaultSiteCopy,
   defaultSiteSettings,
   defaultNavigation,
   defaultHeroContent,
