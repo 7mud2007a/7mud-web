@@ -547,7 +547,7 @@ export default function AdminDashboardPage() {
                           <h3 className="font-bold text-white">{item.name}</h3>
                           {!item.read && <span className="px-2 py-1 rounded-full bg-white text-black text-[10px] font-bold">جديدة</span>}
                         </div>
-                        <a href={\`mailto:\${item.email}\`} className="text-xs text-neutral-400 hover:text-white">{item.email}</a>
+                        <a href={`mailto:${item.email}`} className="text-xs text-neutral-400 hover:text-white">{item.email}</a>
                       </div>
                       <span className="text-[11px] text-neutral-500 font-mono">{new Date(item.created_at).toLocaleString("ar")}</span>
                     </div>
