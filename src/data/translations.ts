@@ -33,8 +33,8 @@ export const translations = {
       subtitle: "خطة مخصصة تلبي كافة احتياجاتك البرمجية بوضوح وشفافية.",
       ctaBtn: "اطلب مشروعك الآن",
       cardTitle: "موقع مخصص — مبني خصيصاً لاحتياجاتك",
-      price: "400$+",
-      note: "يبدأ من 400$ — السعر النهائي يعتمد على حجم المشروع ومتطلباته.",
+      price: "299$+",
+      note: "يبدأ من 299$ — السعر النهائي يعتمد على حجم المشروع ومتطلباته.",
       features: [
         "تصميم وتطوير موقع مخصص بالكامل",
         "ربط كامل مع قاعدة البيانات",
@@ -110,8 +110,8 @@ export const translations = {
       subtitle: "A complete custom plan designed to cover all your digital requirements.",
       ctaBtn: "Start Your Project",
       cardTitle: "Custom Website — Built For Your Needs",
-      price: "$400+",
-      note: "Starting from $400 — Final price depends on the project's size and requirements.",
+      price: "$299+",
+      note: "Starting from $299 — Final price depends on the project's size and requirements.",
       features: [
         "Fully custom website design & development",
         "Complete database integration",
