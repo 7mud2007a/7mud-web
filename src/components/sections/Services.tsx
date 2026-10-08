@@ -6,14 +6,12 @@ import { useApp } from "@/context/AppContext";
 import { Layout, Sliders, Database, Zap, Sparkles, Code2, ShoppingBag, Palette } from "lucide-react";
 
 export const ServicesSection: React.FC = () => {
-  const { language, services } = useApp();
+  const { language, services, siteCopy } = useApp();
   const isAr = language === "ar";
 
-  const badgeText = isAr ? "مميزات العمل معي" : "WHAT YOU GET";
-  const titleText = isAr ? "ما الذي تحصل عليه عند العمل معي؟" : "Key Features & Advantages";
-  const subtitleText = isAr
-    ? "خدمات متكاملة تضمن حصولك على موقع ويب احترافي يدعم نمو أعمالك."
-    : "Comprehensive web development services ensuring a professional site that grows your business.";
+  const badgeText = isAr ? siteCopy.services_badge_ar : siteCopy.services_badge_en;
+  const titleText = isAr ? siteCopy.services_title_ar : siteCopy.services_title_en;
+  const subtitleText = isAr ? siteCopy.services_subtitle_ar : siteCopy.services_subtitle_en;
 
   const iconMap: Record<string, React.ReactNode> = {
     Code2: <Code2 className="w-6 h-6 text-neutral-900 dark:text-white" />,
