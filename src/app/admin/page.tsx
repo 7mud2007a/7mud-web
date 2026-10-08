@@ -57,6 +57,7 @@ export default function AdminDashboardPage() {
     services,
     projects,
     contactInfo,
+    siteCopy,
     refreshContent,
   } = useApp();
 
@@ -74,6 +75,7 @@ export default function AdminDashboardPage() {
   const [contactForm, setContactForm] = useState(contactInfo);
   const [seoForm, setSeoForm] = useState(siteSettings);
   const [navForm, setNavForm] = useState(navigation);
+  const [siteCopyForm, setSiteCopyForm] = useState(JSON.stringify(siteCopy, null, 2));
   const [servicesList, setServicesList] = useState<ServiceItem[]>(services);
   const [projectsList, setProjectsList] = useState<ProjectItem[]>(projects);
 
@@ -92,9 +94,10 @@ export default function AdminDashboardPage() {
     setContactForm(contactInfo);
     setSeoForm(siteSettings);
     setNavForm(navigation);
+    setSiteCopyForm(JSON.stringify(siteCopy, null, 2));
     setServicesList(services);
     setProjectsList(projects);
-  }, [heroContent, aboutContent, contactInfo, siteSettings, navigation, services, projects]);
+  }, [heroContent, aboutContent, contactInfo, siteSettings, navigation, siteCopy, services, projects]);
 
   const showToast = (type: "success" | "error", message: string) => {
     setNotification({ type, message });
@@ -179,6 +182,30 @@ export default function AdminDashboardPage() {
       showToast("success", "تم حفظ إعدادات SEO والمظهر بنجاح");
     } catch (err: unknown) {
       showToast("error", err instanceof Error ? err.message : "فشل حفظ البيانات");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+
+  const saveSiteCopy = async () => {
+    setSaving(true);
+    try {
+      const parsed = JSON.parse(siteCopyForm);
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        throw new Error("محتوى النصوص يجب أن يكون JSON صالحًا");
+      }
+      const supabase = createClient();
+      const { error } = await supabase.from("site_content").upsert({
+        id: "default",
+        content: parsed,
+        updated_at: new Date().toISOString(),
+      });
+      if (error) throw error;
+      await refreshContent();
+      showToast("success", "تم حفظ كل النصوص والمحتوى في Supabase بنجاح");
+    } catch (err: unknown) {
+      showToast("error", err instanceof Error ? err.message : "JSON غير صالح أو فشل الحفظ");
     } finally {
       setSaving(false);
     }
@@ -302,6 +329,7 @@ export default function AdminDashboardPage() {
     { id: "seo", label: "إعدادات SEO", icon: Search },
     { id: "appearance", label: "المظهر والألوان", icon: Palette },
     { id: "navigation", label: "القائمة والنظام", icon: NavIcon },
+    { id: "content", label: "كل النصوص والمحتوى", icon: Edit2 },
   ];
 
   return (
@@ -442,6 +470,44 @@ export default function AdminDashboardPage() {
             </a>
           </div>
         </div>
+
+
+        {/* TAB: ALL EDITABLE COPY */}
+        {activeTab === "content" && (
+          <div className="space-y-6">
+            <div className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6">
+              <h2 className="text-lg font-black text-white mb-2">التحكم الكامل بالمحتوى</h2>
+              <p className="text-xs text-neutral-400 leading-6">
+                هذه البيانات هي النصوص العامة التي تظهر في الموقع. أي تعديل وحفظ هنا ينعكس مباشرة على الموقع بدون تعديل الكود.
+                يمكنك تعديل العربية والإنجليزية والأسعار والقوائم والرسائل كلها من مكان واحد.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-4 sm:p-6">
+              <textarea
+                value={siteCopyForm}
+                onChange={(e) => setSiteCopyForm(e.target.value)}
+                spellCheck={false}
+                className="w-full min-h-[70vh] rounded-2xl bg-neutral-950 border border-neutral-800 p-5 text-xs sm:text-sm text-neutral-100 font-mono leading-6 focus:outline-none focus:border-neutral-500 resize-y"
+              />
+              <div className="flex flex-wrap items-center gap-3 mt-4">
+                <button
+                  onClick={saveSiteCopy}
+                  disabled={saving}
+                  className="px-6 py-3.5 rounded-2xl bg-white text-black font-bold text-sm hover:bg-neutral-200 transition-all flex items-center gap-2 disabled:opacity-50"
+                >
+                  {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                  <span>حفظ كل المحتوى</span>
+                </button>
+                <button
+                  onClick={() => setSiteCopyForm(JSON.stringify(siteCopy, null, 2))}
+                  className="px-5 py-3.5 rounded-2xl bg-neutral-950 border border-neutral-800 text-neutral-300 font-bold text-sm hover:text-white transition-colors"
+                >
+                  تراجع عن التعديلات
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* TAB 1: OVERVIEW */}
         {activeTab === "overview" && (
