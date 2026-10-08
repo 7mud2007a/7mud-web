@@ -9,6 +9,7 @@ import {
   ServiceItem,
   ProjectItem,
   ContactInfo,
+  getSiteCopy,
   defaultSiteSettings,
   defaultNavigation,
   defaultHeroContent,
@@ -46,6 +47,7 @@ interface AppContextType {
   projects: ProjectItem[];
   contactInfo: ContactInfo;
   refreshContent: () => Promise<void>;
+  siteCopy: import("@/lib/site-copy").SiteCopy;
   isLoadingContent: boolean;
 }
 
@@ -64,6 +66,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [services, setServices] = useState<ServiceItem[]>(defaultServices);
   const [projects, setProjects] = useState<ProjectItem[]>(defaultProjects);
   const [contactInfo, setContactInfo] = useState<ContactInfo>(defaultContactInfo);
+  const [siteCopy, setSiteCopy] = useState<import("@/lib/site-copy").SiteCopy>(import("@/lib/site-copy").defaultSiteCopy);
   const [isLoadingContent, setIsLoadingContent] = useState<boolean>(true);
 
   const fetchAllData = useCallback(async () => {
@@ -77,6 +80,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         servicesData,
         projectsData,
         contactData,
+        copyData,
       ] = await Promise.all([
         getSiteSettings(),
         getNavigation(),
@@ -85,6 +89,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         getServices(),
         getProjects(),
         getContactInfo(),
+        getSiteCopy(),
       ]);
 
       setSiteSettings(settingsData);
@@ -94,6 +99,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setServices(servicesData);
       setProjects(projectsData);
       setContactInfo(contactData);
+      setSiteCopy(copyData);
 
       if (settingsData.theme) {
         setThemeState(settingsData.theme);
@@ -170,6 +176,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         services,
         projects,
         contactInfo,
+        siteCopy,
         refreshContent: fetchAllData,
         isLoadingContent,
       }}
