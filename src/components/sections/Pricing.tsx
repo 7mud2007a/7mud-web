@@ -5,18 +5,27 @@ import { motion } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import { Check, ArrowUpRight } from "lucide-react";
-import { translations } from "@/data/translations";
 
 export const PricingSection: React.FC = () => {
-  const { language, contactInfo } = useApp();
-  const t = translations[language].pricing;
+  const { language, contactInfo, siteCopy } = useApp();
+  const isAr = language === "ar";
+  const t = {
+    badge: isAr ? siteCopy.pricing_badge_ar : siteCopy.pricing_badge_en,
+    title: isAr ? siteCopy.pricing_title_ar : siteCopy.pricing_title_en,
+    subtitle: isAr ? siteCopy.pricing_subtitle_ar : siteCopy.pricing_subtitle_en,
+    cardTitle: isAr ? siteCopy.pricing_card_title_ar : siteCopy.pricing_card_title_en,
+    price: isAr ? siteCopy.pricing_price_ar : siteCopy.pricing_price_en,
+    note: isAr ? siteCopy.pricing_note_ar : siteCopy.pricing_note_en,
+    ctaBtn: isAr ? siteCopy.pricing_cta_ar : siteCopy.pricing_cta_en,
+    features: isAr ? siteCopy.pricing_features_ar : siteCopy.pricing_features_en,
+  };
 
   const rawWhatsapp = contactInfo.whatsapp_number || "0930431817";
   const cleanWhatsapp = rawWhatsapp.replace(/[^0-9]/g, "").replace(/^0/, "963");
   const whatsappMessage =
     language === "ar"
-      ? encodeURIComponent("مرحبا أريد الاستفسار عن خدمة تصميم وتطوير المواقع")
-      : encodeURIComponent("Hello, I'd like to inquire about website development services");
+      ? encodeURIComponent(siteCopy.whatsapp_pricing_message_ar)
+      : encodeURIComponent(siteCopy.whatsapp_pricing_message_en);
 
   const whatsappUrl = `https://wa.me/${cleanWhatsapp}?text=${whatsappMessage}`;
 
