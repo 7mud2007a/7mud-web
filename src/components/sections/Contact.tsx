@@ -20,10 +20,22 @@ export const ContactSection: React.FC = () => {
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.message) return;
+    const { createClient } = await import("@/lib/supabase/client");
+    const supabase = createClient();
+    const { error } = await supabase.from("contact_messages").insert({
+      name: formState.name,
+      email: formState.email,
+      message: formState.message,
+    });
+    if (error) {
+      console.error("Failed to save contact message:", error);
+      return;
+    }
     setSubmitted(true);
+    setFormState({ name: "", email: "", message: "" });
   };
 
   const rawWhatsapp = contactInfo.whatsapp_number || "0930431817";
