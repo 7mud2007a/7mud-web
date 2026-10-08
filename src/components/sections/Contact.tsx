@@ -6,7 +6,7 @@ import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import { Send, MessageCircle, CheckCircle, ArrowUpRight } from "lucide-react";
 
 export const ContactSection: React.FC = () => {
-  const { language, contactInfo } = useApp();
+  const { language, contactInfo, siteCopy } = useApp();
   const isAr = language === "ar";
 
   const badge = isAr ? contactInfo.badge_ar : contactInfo.badge_en;
@@ -29,8 +29,8 @@ export const ContactSection: React.FC = () => {
   const rawWhatsapp = contactInfo.whatsapp_number || "0930431817";
   const cleanWhatsapp = rawWhatsapp.replace(/[^0-9]/g, "").replace(/^0/, "963");
   const whatsappMessage = isAr
-    ? encodeURIComponent("مرحبا أريد الاستفسار عن خدماتك")
-    : encodeURIComponent("Hello, I'd like to inquire about your services");
+    ? encodeURIComponent(siteCopy.whatsapp_contact_message_ar)
+    : encodeURIComponent(siteCopy.whatsapp_contact_message_en);
 
   const whatsappUrl = `https://wa.me/${cleanWhatsapp}?text=${whatsappMessage}`;
 
@@ -60,7 +60,7 @@ export const ContactSection: React.FC = () => {
           {/* Direct Channels Cards (Spans 5 cols) */}
           <div className="lg:col-span-5 space-y-4">
             <h3 className="text-xl font-bold text-neutral-950 dark:text-white mb-6">
-              {isAr ? "وسائل التواصل المباشر" : "Direct Contact Channels"}
+              {isAr ? siteCopy.contact_direct_ar : siteCopy.contact_direct_en}
             </h3>
 
             {/* WhatsApp Card */}
@@ -76,7 +76,7 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-base font-bold text-neutral-950 dark:text-white">
-                    {isAr ? "واتساب" : "WhatsApp"}
+                    {isAr ? siteCopy.contact_whatsapp_label_ar : siteCopy.contact_whatsapp_label_en}
                   </h4>
                   <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400 mt-0.5">
                     {contactInfo.whatsapp_number}
@@ -99,7 +99,7 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-base font-bold text-neutral-950 dark:text-white">
-                    {isAr ? "تيليجرام" : "Telegram"}
+                    {isAr ? siteCopy.contact_telegram_label_ar : siteCopy.contact_telegram_label_en}
                   </h4>
                   <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400 mt-0.5">
                     {contactInfo.telegram_username}
@@ -124,7 +124,7 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-base font-bold text-neutral-950 dark:text-white">
-                    {isAr ? "إنستغرام" : "Instagram"}
+                    {isAr ? siteCopy.contact_instagram_label_ar : siteCopy.contact_instagram_label_en}
                   </h4>
                   <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400 mt-0.5">
                     {contactInfo.instagram_username}
@@ -143,33 +143,31 @@ export const ContactSection: React.FC = () => {
                   <CheckCircle className="w-8 h-8" />
                 </div>
                 <h3 className="text-2xl font-bold text-neutral-950 dark:text-white mb-2">
-                  {isAr ? "شكراً لك!" : "Thank You!"}
+                  {isAr ? siteCopy.contact_form_success_title_ar : siteCopy.contact_form_success_title_en}
                 </h3>
                 <p className="text-neutral-600 dark:text-neutral-400 text-sm max-w-md">
-                  {isAr
-                    ? "تم إرسال رسالتك بنجاح! سأتواصل معك في أقرب وقت ممكن."
-                    : "Message sent successfully! I will respond promptly."}
+                  {isAr ? siteCopy.contact_form_success_ar : siteCopy.contact_form_success_en}
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-xs font-mono uppercase tracking-wider text-neutral-800 dark:text-neutral-300 mb-2">
-                    {isAr ? "الاسم الكامل" : "Full Name"}
+                    {isAr ? siteCopy.contact_name_label_ar : siteCopy.contact_name_label_en}
                   </label>
                   <input
                     type="text"
                     required
                     value={formState.name}
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    placeholder={isAr ? "اكتب اسمك هنا..." : "Enter your name..."}
+                    placeholder={isAr ? siteCopy.contact_name_placeholder_ar : siteCopy.contact_name_placeholder_en}
                     className="w-full px-4 py-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 text-neutral-950 dark:text-white text-sm focus:outline-none focus:border-neutral-950 dark:focus:border-white transition-all"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-mono uppercase tracking-wider text-neutral-800 dark:text-neutral-300 mb-2">
-                    {isAr ? "البريد الإلكتروني" : "Email Address"}
+                    {isAr ? siteCopy.contact_email_label_ar : siteCopy.contact_email_label_en}
                   </label>
                   <input
                     type="email"
@@ -183,18 +181,14 @@ export const ContactSection: React.FC = () => {
 
                 <div>
                   <label className="block text-xs font-mono uppercase tracking-wider text-neutral-800 dark:text-neutral-300 mb-2">
-                    {isAr ? "تفاصيل المشروع أو الاستفسار" : "Project Details or Inquiry"}
+                    {isAr ? siteCopy.contact_message_label_ar : siteCopy.contact_message_label_en}
                   </label>
                   <textarea
                     required
                     rows={4}
                     value={formState.message}
                     onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    placeholder={
-                      isAr
-                        ? "تحدث عن موقعك المطلوب، أهدافه، وأي تفاصيل أخرى..."
-                        : "Describe your project goals, scope, and requirements..."
-                    }
+                    placeholder={isAr ? siteCopy.contact_message_placeholder_ar : siteCopy.contact_message_placeholder_en}
                     className="w-full px-4 py-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 text-neutral-950 dark:text-white text-sm focus:outline-none focus:border-neutral-950 dark:focus:border-white transition-all resize-none"
                   />
                 </div>
@@ -205,7 +199,7 @@ export const ContactSection: React.FC = () => {
                   className="w-full !py-4 text-base"
                   icon={<Send className="w-4 h-4" />}
                 >
-                  {isAr ? "إرسال الرسالة" : "Send Message"}
+                  {isAr ? siteCopy.contact_send_ar : siteCopy.contact_send_en}
                 </ShimmerButton>
               </form>
             )}
