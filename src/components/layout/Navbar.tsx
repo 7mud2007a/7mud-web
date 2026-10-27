@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useApp } from "@/context/AppContext";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
@@ -11,6 +11,17 @@ export const Navbar: React.FC = () => {
   const { language, theme, toggleLanguage, toggleTheme, navigation, siteCopy } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuRevealOrigin, setMenuRevealOrigin] = useState("calc(100% - 40px) 40px");
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  const toggleMobileMenu = () => {
+    const button = menuButtonRef.current;
+    if (button) {
+      const rect = button.getBoundingClientRect();
+      setMenuRevealOrigin(`${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`);
+    }
+    setMobileMenuOpen((open) => !open);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,7 +103,7 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Controls & Hamburger */}
-        <div className="flex sm:hidden items-center gap-2 pr-12">
+        <div className="flex sm:hidden items-center gap-2">
           <button
             onClick={toggleLanguage}
             className="px-2.5 py-1.5 rounded-xl text-xs font-bold border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
@@ -109,7 +120,8 @@ export const Navbar: React.FC = () => {
           </button>
 
       <button
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        ref={menuButtonRef}
+        onClick={toggleMobileMenu}
         className="relative z-[120] flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 shadow-sm transition-colors"
         aria-label={mobileMenuOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
         aria-expanded={mobileMenuOpen}
@@ -144,10 +156,10 @@ export const Navbar: React.FC = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="sm:hidden fixed inset-0 z-[110] flex min-h-[100dvh] flex-col justify-center overflow-y-auto bg-white dark:bg-black"
-            initial={{ clipPath: "circle(0px at calc(100% - 40px) 40px)" }}
-            animate={{ clipPath: "circle(200% at calc(100% - 40px) 40px)" }}
-            exit={{ clipPath: "circle(0px at calc(100% - 40px) 40px)" }}
+            className="sm:hidden fixed inset-0 z-[99] flex min-h-[100dvh] flex-col justify-center overflow-y-auto bg-white dark:bg-black"
+            initial={{ clipPath: `circle(0px at ${menuRevealOrigin})` }}
+            animate={{ clipPath: `circle(200% at ${menuRevealOrigin})` }}
+            exit={{ clipPath: `circle(0px at ${menuRevealOrigin})` }}
             transition={{ duration: 1.5, ease: [0.76, 0, 0.24, 1] }}
           >
             <nav className="mx-auto flex w-full max-w-7xl flex-col gap-0 px-8 py-24">
