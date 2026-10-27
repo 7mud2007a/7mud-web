@@ -120,15 +120,10 @@ export const Navbar: React.FC = () => {
           </button>
 
 
-
-        </div>
-      </div>
-
-      {/* Persistent mobile menu toggle stays above the circular reveal at all times */}
       <button
         ref={menuButtonRef}
         onClick={toggleMobileMenu}
-        className="sm:hidden fixed right-[calc(1rem+1rem+0.5rem)] top-[1.65rem] z-[130] flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 shadow-sm transition-colors"
+        className="relative z-[102] flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 shadow-sm transition-colors"
         aria-label={mobileMenuOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
         aria-expanded={mobileMenuOpen}
       >
@@ -155,11 +150,16 @@ export const Navbar: React.FC = () => {
         </span>
       </button>
 
+
+        </div>
+      </div>
+
+
       {/* Mobile menu: circular reveal inspired by the R2 navigation animation */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="sm:hidden fixed inset-0 z-[110] flex min-h-[100dvh] flex-col justify-center overflow-y-auto bg-white dark:bg-black"
+            className="sm:hidden fixed inset-0 z-[90] flex min-h-[100dvh] flex-col justify-center overflow-y-auto bg-white dark:bg-black"
             initial={{ clipPath: `circle(0px at ${menuRevealOrigin})` }}
             animate={{ clipPath: `circle(200% at ${menuRevealOrigin})` }}
             exit={{ clipPath: `circle(0px at ${menuRevealOrigin})` }}
