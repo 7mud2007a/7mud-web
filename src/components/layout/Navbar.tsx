@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useApp } from "@/context/AppContext";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
-import { Sun, Moon, Globe, ArrowUpRight } from "lucide-react";
+import { Sun, Moon, Globe, ArrowUpRight, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 export const Navbar: React.FC = () => {
@@ -33,9 +33,9 @@ export const Navbar: React.FC = () => {
 
   const visibleNavItems = navigation
     .filter((item) => item.enabled)
-    .map((item) => ({
-      label: language === "ar" ? item.label_ar : item.label_en,
-      href: item.href,
+    .map((item, index) => ({
+      label: index === 2 ? (language === "ar" ? "أعمالي" : "My Work") : (language === "ar" ? item.label_ar : item.label_en),
+      href: index === 2 ? "#projects" : item.href,
     }));
 
   return (
@@ -128,25 +128,9 @@ export const Navbar: React.FC = () => {
         aria-expanded={mobileMenuOpen}
       >
         <span className="sr-only">{mobileMenuOpen ? "Close menu" : "Open menu"}</span>
-        <span className="relative flex h-5 w-5 items-center justify-center overflow-hidden">
-          <motion.svg
-            viewBox="0 0 448 512"
-            className="absolute h-[15px] w-[15px] fill-current"
-            initial={false}
-            animate={mobileMenuOpen ? { opacity: 0, y: -24 } : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
-          >
-            <path d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z" />
-          </motion.svg>
-          <motion.svg
-            viewBox="0 0 320 512"
-            className="absolute z-10 h-[16px] w-[12px] fill-current"
-            initial={false}
-            animate={mobileMenuOpen ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.9 }}
-            transition={{ duration: 0.2, ease: [0.76, 0, 0.24, 1] }}
-          >
-            <path d="M310.6 361.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L160 301.3 54.7 406.7c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L114.7 256 9.4 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 210.7l105.3-105.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L205.3 256l105.3 105.4z" />
-          </motion.svg>
+        <span className="relative flex h-5 w-5 items-center justify-center">
+          <Menu className={"absolute h-5 w-5 transition-all duration-200 " + (mobileMenuOpen ? "rotate-90 scale-75 opacity-0" : "rotate-0 scale-100 opacity-100")} />
+          <X className={"absolute h-5 w-5 transition-all duration-200 " + (mobileMenuOpen ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-75 opacity-0")} />
         </span>
       </button>
 
