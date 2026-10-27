@@ -28,7 +28,7 @@ export const Navbar: React.FC = () => {
     }));
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 px-4 sm:px-8 py-4 transition-all duration-300">
+    <header className="fixed top-0 left-0 right-0 z-[100] px-4 sm:px-8 py-4 transition-all duration-300">
       <div
         className={`max-w-7xl mx-auto rounded-2xl transition-all duration-300 px-4 sm:px-6 py-3 flex items-center justify-between border ${
           scrolled
@@ -92,7 +92,7 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Controls & Hamburger */}
-        <div className="flex sm:hidden items-center gap-2">
+        <div className="flex sm:hidden items-center gap-2 pr-12">
           <button
             onClick={toggleLanguage}
             className="px-2.5 py-1.5 rounded-xl text-xs font-bold border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
@@ -108,43 +108,48 @@ export const Navbar: React.FC = () => {
             {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
 
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="relative z-[60] flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 shadow-sm transition-colors"
-            aria-label={mobileMenuOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
-            aria-expanded={mobileMenuOpen}
-          >
-            <span className="sr-only">{mobileMenuOpen ? "Close menu" : "Open menu"}</span>
-            <span className="relative flex h-4 w-5 flex-col items-center justify-center">
-              <motion.span
-                className="absolute h-[2px] w-5 rounded-full bg-current"
-                animate={mobileMenuOpen ? { y: 0, rotate: 45 } : { y: -6, rotate: 0 }}
-                transition={{ duration: 0.45, ease: [0.76, 0, 0.24, 1] }}
-              />
-              <motion.span
-                className="absolute h-[2px] w-5 rounded-full bg-current"
-                animate={mobileMenuOpen ? { opacity: 0, x: 8 } : { opacity: 1, x: 0 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-              />
-              <motion.span
-                className="absolute h-[2px] w-5 rounded-full bg-current"
-                animate={mobileMenuOpen ? { y: 0, rotate: -45 } : { y: 6, rotate: 0 }}
-                transition={{ duration: 0.45, ease: [0.76, 0, 0.24, 1] }}
-              />
-            </span>
-          </button>
         </div>
       </div>
+
+      {/* Fixed menu control stays above the blurred navbar and the circular overlay. */}
+      <button
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        className="sm:hidden fixed right-5 top-5 z-[120] flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 shadow-sm"
+        aria-label={mobileMenuOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
+        aria-expanded={mobileMenuOpen}
+      >
+        <span className="sr-only">{mobileMenuOpen ? "Close menu" : "Open menu"}</span>
+        <span className="relative flex h-5 w-5 items-center justify-center overflow-hidden">
+          <motion.svg
+            viewBox="0 0 448 512"
+            className="absolute h-[15px] w-[15px] fill-current"
+            initial={false}
+            animate={mobileMenuOpen ? { opacity: 0, y: -24 } : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
+          >
+            <path d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z" />
+          </motion.svg>
+          <motion.svg
+            viewBox="0 0 320 512"
+            className="absolute h-[16px] w-[12px] fill-current"
+            initial={false}
+            animate={mobileMenuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
+          >
+            <path d="M310.6 361.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L160 301.3 54.7 406.7c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L114.7 256 9.4 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 210.7l105.3-105.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L205.3 256l105.3 105.4z" />
+          </motion.svg>
+        </span>
+      </button>
 
       {/* Mobile menu: circular reveal inspired by the R2 navigation animation */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="sm:hidden fixed inset-0 z-50 flex min-h-[100dvh] flex-col justify-center overflow-y-auto bg-white dark:bg-neutral-950"
-            initial={{ clipPath: "circle(0px at calc(100% - 36px) 36px)" }}
-            animate={{ clipPath: "circle(150% at calc(100% - 36px) 36px)" }}
-            exit={{ clipPath: "circle(0px at calc(100% - 36px) 36px)" }}
-            transition={{ duration: 1.05, ease: [0.76, 0, 0.24, 1] }}
+            className="sm:hidden fixed inset-0 z-[110] flex min-h-[100dvh] flex-col justify-center overflow-y-auto bg-white dark:bg-neutral-950"
+            initial={{ clipPath: "circle(0px at calc(100% - 40px) 40px)" }}
+            animate={{ clipPath: "circle(200% at calc(100% - 40px) 40px)" }}
+            exit={{ clipPath: "circle(0px at calc(100% - 40px) 40px)" }}
+            transition={{ duration: 1.5, ease: [0.76, 0, 0.24, 1] }}
           >
             <nav className="mx-auto flex w-full max-w-7xl flex-col gap-2 px-8 py-24">
               {visibleNavItems.map((item, idx) => (
