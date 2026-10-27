@@ -140,10 +140,10 @@ export const Navbar: React.FC = () => {
           </motion.svg>
           <motion.svg
             viewBox="0 0 320 512"
-            className="absolute h-[16px] w-[12px] fill-current"
+            className="absolute z-10 h-[16px] w-[12px] fill-current"
             initial={false}
-            animate={mobileMenuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
+            animate={mobileMenuOpen ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.9 }}
+            transition={{ duration: 0.2, ease: [0.76, 0, 0.24, 1] }}
           >
             <path d="M310.6 361.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L160 301.3 54.7 406.7c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L114.7 256 9.4 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 210.7l105.3-105.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L205.3 256l105.3 105.4z" />
           </motion.svg>
