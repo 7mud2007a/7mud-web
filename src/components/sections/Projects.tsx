@@ -7,11 +7,11 @@ import { ArrowUpLeft, CarFront, Utensils } from "lucide-react";
 
 const projects = [
   {
-    name: "R2 Car",
-    descriptionAr: "تجربة مميزة لاستعراض السيارات",
-    descriptionEn: "A polished car browsing experience",
-    url: "https://r2-car.onrender.com",
-    preview: "https://image.thum.io/get/width/1200/crop/700/noanimate/https://r2-car.onrender.com/",
+    name: "Veltrion Motors",
+    descriptionAr: "منصة عصرية وفاخرة لعالم السيارات",
+    descriptionEn: "A modern, premium automotive experience",
+    url: "https://veltrion-motors.onrender.com/",
+    preview: "https://image.thum.io/get/width/1200/crop/700/noanimate/https://veltrion-motors.onrender.com/",
     icon: CarFront,
     categoryAr: "سيارات",
     categoryEn: "AUTOMOTIVE",
