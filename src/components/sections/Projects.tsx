@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useApp } from "@/context/AppContext";
-import { ArrowUpLeft, CarFront, Utensils } from "lucide-react";
+import { ArrowUpLeft, CarFront } from "lucide-react";
 
 const projects = [
   {
@@ -15,16 +15,6 @@ const projects = [
     icon: CarFront,
     categoryAr: "سيارات",
     categoryEn: "AUTOMOTIVE",
-  },
-  {
-    name: "Bitnaa Food",
-    descriptionAr: "موقع بطابع خاص لعالم الطعام",
-    descriptionEn: "A dedicated experience for food lovers",
-    url: "https://bitnaa-food.onrender.com",
-    preview: "https://image.thum.io/get/width/1200/crop/700/noanimate/https://bitnaa-food.onrender.com/",
-    icon: Utensils,
-    categoryAr: "طعام ومطاعم",
-    categoryEn: "FOOD & DINING",
   },
   {
     name: "R3 Car",
@@ -57,7 +47,7 @@ export const ProjectsSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-7">
           {projects.map((project, idx) => {
             const ProjectIcon = project.icon;
             return (
@@ -98,7 +88,7 @@ export const ProjectsSection: React.FC = () => {
                     <span className="rounded-full border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 px-3 py-1 text-[10px] font-mono tracking-widest text-neutral-500 dark:text-neutral-400">
                       {isAr ? project.categoryAr : project.categoryEn}
                     </span>
-                    <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">0{idx + 1} / 03</span>
+                    <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">0{idx + 1} / 02</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-sm">
