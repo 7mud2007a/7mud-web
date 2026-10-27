@@ -108,13 +108,9 @@ export const Navbar: React.FC = () => {
             {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
 
-        </div>
-      </div>
-
-      {/* Fixed menu control stays above the blurred navbar and the circular overlay. */}
       <button
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="sm:hidden fixed right-5 top-5 z-[120] flex h-10 w-10 items-center justify-center rounded-[25%] border border-transparent bg-[#223023] text-white shadow-[0_8px_25px_rgba(34,48,35,0.4)] transition-colors hover:bg-[#2c3e2e]"
+        className="relative z-[120] flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 shadow-sm transition-colors"
         aria-label={mobileMenuOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
         aria-expanded={mobileMenuOpen}
       >
@@ -141,11 +137,14 @@ export const Navbar: React.FC = () => {
         </span>
       </button>
 
+        </div>
+      </div>
+
       {/* Mobile menu: circular reveal inspired by the R2 navigation animation */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="sm:hidden fixed inset-0 z-[110] flex min-h-[100dvh] flex-col justify-center overflow-y-auto bg-[#223023]"
+            className="sm:hidden fixed inset-0 z-[110] flex min-h-[100dvh] flex-col justify-center overflow-y-auto bg-white dark:bg-black"
             initial={{ clipPath: "circle(0px at calc(100% - 40px) 40px)" }}
             animate={{ clipPath: "circle(200% at calc(100% - 40px) 40px)" }}
             exit={{ clipPath: "circle(0px at calc(100% - 40px) 40px)" }}
@@ -165,7 +164,7 @@ export const Navbar: React.FC = () => {
                     delay: 0.12 + idx * 0.09,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="border-0 py-3 text-[clamp(1.8rem,6vw,4.5rem)] font-bold uppercase tracking-[-0.02em] text-white/40 transition-all duration-300 hover:tracking-[0.02em] hover:text-white hover:[text-shadow:0_0_20px_rgba(255,255,255,0.4)]"
+                  className="border-0 py-3 text-[clamp(1.8rem,6vw,4.5rem)] font-bold uppercase tracking-[-0.02em] text-neutral-900/40 transition-all duration-300 hover:tracking-[0.02em] hover:text-black hover:[text-shadow:0_0_20px_rgba(0,0,0,0.18)] dark:text-white/40 dark:hover:text-white dark:hover:[text-shadow:0_0_20px_rgba(255,255,255,0.4)]"
                 >
                   {item.label}
                 </motion.a>
@@ -181,7 +180,7 @@ export const Navbar: React.FC = () => {
                   delay: 0.12 + visibleNavItems.length * 0.09,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="mt-6 flex w-full items-center justify-center gap-2 rounded-md bg-white/10 py-4 text-sm font-bold uppercase tracking-widest text-white transition-colors hover:bg-white/20"
+                className="mt-6 flex w-full items-center justify-center gap-2 rounded-md bg-black py-4 text-sm font-bold uppercase tracking-widest text-white transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
               >
                 <span>{language === "ar" ? "تواصل معي" : "Contact Me"}</span>
                 <ArrowUpRight className="h-4 w-4" />
