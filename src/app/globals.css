@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+/* Local custom font used for both Arabic and English */
+@font-face {
+  font-family: "Iphone Black";
+  src: url("/fonts/iphone-black.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Iphone Black", Arial, sans-serif;
+}
+
 @variant dark (&:where(.dark, .dark *));
 
 @layer base {
@@ -19,6 +32,11 @@
     --text-primary: #ffffff;
     --text-secondary: #a3a3a3;
     --text-muted: #737373;
+  }
+
+  html,
+  body {
+    font-family: "Iphone Black", Arial, sans-serif !important;
   }
 
   body {
