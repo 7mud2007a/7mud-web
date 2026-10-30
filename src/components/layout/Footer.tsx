@@ -29,7 +29,7 @@ export const Footer: React.FC = () => {
   const whatsappUrl = `https://wa.me/${cleanWhatsapp}?text=${whatsappMessage}`;
 
   return (
-    <footer className="relative border-t border-neutral-200 dark:border-neutral-900 bg-white dark:bg-black py-12 px-4 sm:px-8 overflow-hidden">
+    <footer className="relative border-t border-neutral-200 dark:border-neutral-900 bg-transparent py-12 px-4 sm:px-8 overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col gap-10">
         {/* Top Section */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
