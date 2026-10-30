@@ -29,7 +29,7 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-[85vh] flex items-center justify-center pt-32 pb-16 px-4 sm:px-8 overflow-hidden bg-white dark:bg-black text-neutral-950 dark:text-white"
+      className="relative min-h-[85vh] flex items-center justify-center pt-32 pb-16 px-4 sm:px-8 overflow-hidden bg-transparent text-neutral-950 dark:text-white"
     >
       <div className="max-w-5xl mx-auto flex flex-col items-center text-center relative z-10">
         {/* Optional Hero Image / Logo */}
