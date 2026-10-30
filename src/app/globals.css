@@ -85,3 +85,20 @@
 .dark ::-webkit-scrollbar-thumb {
   background: #404040;
 }
+
+
+/* WebGL background layer: visual-only, never intercepts site interaction. */
+#mesh-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.home-with-mesh > :not(#mesh-bg) {
+  position: relative;
+  z-index: 1;
+}
