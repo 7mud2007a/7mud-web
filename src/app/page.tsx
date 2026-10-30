@@ -11,7 +11,7 @@ import { MeshBackground } from "@/components/ui/MeshBackground";
 
 export default function Home() {
   return (
-    <main className="home-with-mesh min-h-screen flex flex-col relative overflow-hidden bg-transparent">
+    <main className="home-with-mesh min-h-screen flex flex-col relative overflow-hidden bg-white dark:bg-black">
       <MeshBackground />
       <Navbar />
       <Hero />
