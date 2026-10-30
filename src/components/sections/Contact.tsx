@@ -53,7 +53,7 @@ export const ContactSection: React.FC = () => {
   const instagramUrl = `https://instagram.com/${cleanInstagram}`;
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-8 relative overflow-hidden bg-neutral-50 dark:bg-black border-t border-neutral-200 dark:border-neutral-900">
+    <section id="contact" className="py-20 px-4 sm:px-8 relative overflow-hidden bg-transparent border-t border-neutral-200 dark:border-neutral-900">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">

@@ -33,7 +33,7 @@ export const ProjectsSection: React.FC = () => {
   const isAr = language === "ar";
 
   return (
-    <section id="projects" className="py-20 px-4 sm:px-8 relative overflow-hidden bg-white dark:bg-black border-t border-neutral-200 dark:border-neutral-900">
+    <section id="projects" className="py-20 px-4 sm:px-8 relative overflow-hidden bg-transparent border-t border-neutral-200 dark:border-neutral-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-xs font-mono tracking-widest text-neutral-800 dark:text-neutral-300 uppercase bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 px-3 py-1 rounded-full">
