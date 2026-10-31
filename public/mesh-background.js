@@ -52,7 +52,7 @@
       float lightC = blob(p, vec2(0.02 + sin(t * 0.55) * 0.12, 0.02 + cos(t * 0.6) * 0.08), vec2(1.8, 1.8));
 
       float glow = lightA * 0.030 + lightB * 0.024 + lightC * 0.012;
-      float vignette = smoothstep(1.05, 0.12, length(p * vec2(0.8, 1.0)));
+      float vignette = 1.0 - smoothstep(0.12, 1.05, length(p * vec2(0.8, 1.0)));
       float grain = fract(sin(dot(gl_FragCoord.xy + u_time, vec2(12.9898, 78.233))) * 43758.5453) - 0.5;
 
       vec3 base = vec3(0.011, 0.011, 0.012);
