@@ -143,11 +143,11 @@ export const Navbar: React.FC = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="sm:hidden fixed inset-0 z-[90] flex min-h-[100dvh] flex-col justify-center overflow-y-auto bg-white dark:bg-black"
-            initial={{ clipPath: `circle(0px at ${menuRevealOrigin})` }}
-            animate={{ clipPath: `circle(200% at ${menuRevealOrigin})` }}
-            exit={{ clipPath: `circle(0px at ${menuRevealOrigin})` }}
-            transition={{ duration: 1.5, ease: [0.76, 0, 0.24, 1] }}
+            className="sm:hidden fixed inset-0 z-[101] flex min-h-[100svh] flex-col justify-center overflow-y-auto bg-white dark:bg-black"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
           >
             <nav className="mx-auto flex w-full max-w-7xl flex-col gap-0 px-8 py-24">
               {visibleNavItems.map((item, idx) => (
@@ -163,7 +163,7 @@ export const Navbar: React.FC = () => {
                     delay: 0.12 + idx * 0.09,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="border-0 py-3 text-[clamp(1.8rem,6vw,4.5rem)] font-bold uppercase tracking-[-0.02em] text-neutral-900/40 transition-all duration-300 hover:tracking-[0.02em] hover:text-black hover:[text-shadow:0_0_20px_rgba(0,0,0,0.18)] dark:text-white/40 dark:hover:text-white dark:hover:[text-shadow:0_0_20px_rgba(255,255,255,0.4)]"
+                  className="relative z-10 border-0 py-3 text-[clamp(1.8rem,6vw,4.5rem)] font-bold uppercase tracking-[-0.02em] text-neutral-950 transition-all duration-300 hover:tracking-[0.02em] hover:text-black hover:[text-shadow:0_0_20px_rgba(0,0,0,0.18)] dark:text-white dark:hover:text-white dark:hover:[text-shadow:0_0_20px_rgba(255,255,255,0.4)]"
                 >
                   {item.label}
                 </motion.a>
