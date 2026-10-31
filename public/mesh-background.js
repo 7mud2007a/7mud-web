@@ -51,12 +51,12 @@
       float lightB = blob(p, vec2(0.30 + cos(t * 0.7) * 0.08, -0.18 + sin(t * 0.9) * 0.07), vec2(1.55, 1.25));
       float lightC = blob(p, vec2(0.02 + sin(t * 0.55) * 0.12, 0.02 + cos(t * 0.6) * 0.08), vec2(1.8, 1.8));
 
-      float glow = lightA * 0.018 + lightB * 0.014 + lightC * 0.007;
+      float glow = lightA * 0.052 + lightB * 0.040 + lightC * 0.020;
       float vignette = 1.0 - smoothstep(0.12, 1.05, length(p * vec2(0.8, 1.0)));
       float grain = fract(sin(dot(gl_FragCoord.xy + u_time, vec2(12.9898, 78.233))) * 43758.5453) - 0.5;
 
       vec3 base = vec3(0.011, 0.011, 0.012);
-      vec3 silver = vec3(0.62, 0.65, 0.70);
+      vec3 silver = vec3(0.68, 0.71, 0.76);
       vec3 color = base + silver * glow * (0.72 + 0.28 * vignette);
       color += vec3(grain * 0.0012);
       gl_FragColor = vec4(color, 1.0);
