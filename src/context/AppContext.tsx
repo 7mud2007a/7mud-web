@@ -102,10 +102,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setProjects(projectsData);
       setContactInfo(contactData);
       setSiteCopy(copyData);
-
-      if (settingsData.theme) {
-        setThemeState(settingsData.theme);
-      }
     } catch (err) {
       console.error("Error fetching site content from Supabase:", err);
     } finally {
@@ -121,11 +117,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setLanguageState(savedLang);
     }
 
-    const savedTheme = localStorage.getItem("7mud_theme") as Theme;
-    if (savedTheme === "dark" || savedTheme === "light") {
-      setThemeState(savedTheme);
-    }
-
     fetchAllData();
   }, [fetchAllData]);
 
@@ -139,14 +130,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!mounted) return;
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-    localStorage.setItem("7mud_theme", theme);
-  }, [theme, mounted]);
+    // The public site now uses one fixed appearance; no light/dark switching.
+    document.documentElement.classList.add("dark");
+    document.documentElement.classList.remove("light");
+  }, [mounted]);
 
   const setLanguage = (lang: Language) => setLanguageState(lang);
   const setTheme = (th: Theme) => setThemeState(th);
