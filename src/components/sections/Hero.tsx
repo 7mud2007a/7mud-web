@@ -7,7 +7,7 @@ import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import { ArrowUpRight } from "lucide-react";
 
 export const Hero: React.FC = () => {
-  const { language, heroContent, contactInfo } = useApp();
+  const { language, heroContent, contactInfo, isLoadingContent } = useApp();
 
   const isAr = language === "ar";
   const statusBadge = isAr ? heroContent.status_badge_ar : heroContent.status_badge_en;
@@ -30,6 +30,7 @@ export const Hero: React.FC = () => {
       id="hero"
       className="relative min-h-[85vh] flex items-center justify-center pt-32 pb-16 px-4 sm:px-8 overflow-hidden bg-transparent text-neutral-950 dark:text-white"
     >
+      {!isLoadingContent && (
       <div className="max-w-5xl mx-auto flex flex-col items-center text-center relative z-10">
         {/* Optional Hero Image / Logo */}
         {heroContent.hero_image_url && (
@@ -115,6 +116,7 @@ export const Hero: React.FC = () => {
 
         </motion.div>
       </div>
+      )}
     </section>
   );
 };
