@@ -16,7 +16,6 @@ export const Hero: React.FC = () => {
   const titleSuffix = isAr ? heroContent.title_suffix_ar : heroContent.title_suffix_en;
   const subtitle = isAr ? heroContent.subtitle_ar : heroContent.subtitle_en;
   const ctaPrimary = isAr ? heroContent.cta_primary_ar : heroContent.cta_primary_en;
-  const ctaSecondary = isAr ? heroContent.cta_secondary_ar : heroContent.cta_secondary_en;
 
   const rawWhatsapp = contactInfo.whatsapp_number || "0930431817";
   const cleanWhatsappNumber = rawWhatsapp.replace(/[^0-9]/g, "").replace(/^0/, "963");
@@ -113,14 +112,7 @@ export const Hero: React.FC = () => {
             </ShimmerButton>
           </a>
 
-          <a href="#pricing" className="w-full sm:w-auto">
-            <ShimmerButton
-              variant="outline"
-              className="w-full sm:w-auto px-8 py-4 text-base"
-            >
-              {ctaSecondary}
-            </ShimmerButton>
-          </a>
+
         </motion.div>
       </div>
     </section>
