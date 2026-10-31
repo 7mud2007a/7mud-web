@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { useApp } from "@/context/AppContext";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
@@ -11,15 +12,10 @@ export const Navbar: React.FC = () => {
   const { language, theme, toggleLanguage, toggleTheme, navigation, siteCopy } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [menuRevealOrigin, setMenuRevealOrigin] = useState("calc(100% - 40px) 40px");
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const toggleMobileMenu = () => {
     const button = menuButtonRef.current;
-    if (button) {
-      const rect = button.getBoundingClientRect();
-      setMenuRevealOrigin(`${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`);
-    }
     setMobileMenuOpen((open) => !open);
   };
 
@@ -139,55 +135,37 @@ export const Navbar: React.FC = () => {
       </div>
 
 
-      {/* Mobile menu: circular reveal inspired by the R2 navigation animation */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            className="sm:hidden fixed inset-0 z-[101] flex min-h-[100svh] flex-col justify-center overflow-y-auto bg-white dark:bg-black"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-          >
-            <nav className="mx-auto flex w-full max-w-7xl flex-col gap-0 px-8 py-24">
-              {visibleNavItems.map((item, idx) => (
-                <motion.a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  initial={{ x: -48, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: -36, opacity: 0 }}
-                  transition={{
-                    duration: 0.7,
-                    delay: 0.12 + idx * 0.09,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="relative z-10 border-0 py-3 text-[clamp(1.8rem,6vw,4.5rem)] font-bold uppercase tracking-[-0.02em] text-neutral-950 transition-all duration-300 hover:tracking-[0.02em] hover:text-black hover:[text-shadow:0_0_20px_rgba(0,0,0,0.18)] dark:text-white dark:hover:text-white dark:hover:[text-shadow:0_0_20px_rgba(255,255,255,0.4)]"
-                >
-                  {item.label}
-                </motion.a>
-              ))}
-              <motion.a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                initial={{ x: -48, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: -36, opacity: 0 }}
-                transition={{
-                  duration: 0.7,
-                  delay: 0.12 + visibleNavItems.length * 0.09,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="mt-6 flex w-full items-center justify-center gap-2 rounded-md bg-black py-4 text-sm font-bold uppercase tracking-widest text-white transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
-              >
-                <span>{language === "ar" ? "تواصل معي" : "Contact Me"}</span>
-                <ArrowUpRight className="h-4 w-4" />
-              </motion.a>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {typeof document !== "undefined" && createPortal(
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              className="sm:hidden fixed inset-0 z-[9999] flex min-h-[100svh] flex-col overflow-y-auto bg-white text-neutral-950 dark:bg-black dark:text-white"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+            >
+              <div className="flex min-h-20 items-center justify-end px-6 pt-4">
+                <button type="button" onClick={() => setMobileMenuOpen(false)} className="flex h-11 w-11 items-center justify-center rounded-xl border border-neutral-300 bg-neutral-100 text-neutral-950 shadow-sm dark:border-neutral-700 dark:bg-neutral-900 dark:text-white" aria-label={language === "ar" ? "إغلاق القائمة" : "Close menu"}>
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              <nav className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center gap-1 px-8 pb-16">
+                {visibleNavItems.map((item) => (
+                  <a key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)} className="block rounded-xl px-3 py-4 text-[clamp(1.8rem,6vw,4.5rem)] font-bold text-neutral-950 transition-colors hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-900">
+                    {item.label}
+                  </a>
+                ))}
+                <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-black px-5 py-4 text-sm font-bold text-white dark:bg-white dark:text-black">
+                  <span>{language === "ar" ? "تواصل معي" : "Contact Me"}</span>
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </header>
   );
 };

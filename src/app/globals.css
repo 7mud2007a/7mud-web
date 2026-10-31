@@ -99,7 +99,14 @@
   pointer-events: none;
 }
 
-.home-with-mesh > :not(#mesh-bg) {
+/* Keep the navigation fixed and above the page content. */
+.home-with-mesh > header {
+  position: fixed;
+  z-index: 100;
+}
+
+/* Keep ordinary sections above the WebGL canvas without changing fixed elements. */
+.home-with-mesh > :not(#mesh-bg):not(header) {
   position: relative;
   z-index: 1;
 }
