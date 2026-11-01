@@ -59,10 +59,10 @@ export const Footer: React.FC = () => {
           {/* Social Icons & Back to Top */}
           <div className="flex items-center gap-3">
             <a
-              href="https://instagram.com/dev7mud"
+              href="https://instagram.com/7mud9_63"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram @dev7mud"
+              aria-label="Instagram @7mud9_63"
               className="p-3 rounded-2xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 text-neutral-800 dark:text-neutral-200 transition-colors"
             >
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">

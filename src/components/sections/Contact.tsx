@@ -49,7 +49,7 @@ export const ContactSection: React.FC = () => {
   const cleanTelegram = (contactInfo.telegram_username || "@Dev7mud").replace("@", "");
   const telegramUrl = `https://t.me/${cleanTelegram}`;
 
-  const cleanInstagram = (contactInfo.instagram_username || "@dev7mud").replace("@", "");
+  const cleanInstagram = "7mud9_63";
   const instagramUrl = `https://instagram.com/${cleanInstagram}`;
 
   return (
@@ -139,7 +139,7 @@ export const ContactSection: React.FC = () => {
                     {isAr ? siteCopy.contact_instagram_label_ar : siteCopy.contact_instagram_label_en}
                   </h4>
                   <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400 mt-0.5">
-                    {contactInfo.instagram_username}
+                    @7mud9_63
                   </p>
                 </div>
               </div>
