@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useApp } from "@/context/AppContext";
-import { ArrowUpLeft, CarFront } from "lucide-react";
+import { ArrowUpLeft, CarFront, Armchair } from "lucide-react";
 
 const projects = [
   {
@@ -25,6 +25,16 @@ const projects = [
     icon: CarFront,
     categoryAr: "سيارات",
     categoryEn: "AUTOMOTIVE",
+  },
+  {
+    name: "LIVORA",
+    descriptionAr: "معرض أثاث بتجربة رقمية راقية وتصميم عصري",
+    descriptionEn: "A premium furniture showroom with a refined digital experience",
+    url: "https://livora-7u3a.onrender.com",
+    preview: "https://image.thum.io/get/width/1200/crop/700/noanimate/https://livora-7u3a.onrender.com",
+    icon: Armchair,
+    categoryAr: "أثاث ومفروشات",
+    categoryEn: "FURNITURE",
   },
 ];
 
@@ -88,7 +98,7 @@ export const ProjectsSection: React.FC = () => {
                     <span className="rounded-full border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 px-3 py-1 text-[10px] font-mono tracking-widest text-neutral-500 dark:text-neutral-400">
                       {isAr ? project.categoryAr : project.categoryEn}
                     </span>
-                    <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">0{idx + 1} / 02</span>
+                    <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">0{idx + 1} / 03</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-sm">
