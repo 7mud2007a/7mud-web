@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useApp } from "@/context/AppContext";
-import { ShimmerButton } from "@/components/ui/ShimmerButton";
-import { Send, MessageCircle, CheckCircle, ArrowUpRight } from "lucide-react";
+import { Send, MessageCircle, ArrowUpRight } from "lucide-react";
 
 export const ContactSection: React.FC = () => {
   const { language, contactInfo, siteCopy } = useApp();
@@ -12,31 +11,6 @@ export const ContactSection: React.FC = () => {
   const badge = isAr ? contactInfo.badge_ar : contactInfo.badge_en;
   const title = isAr ? contactInfo.title_ar : contactInfo.title_en;
   const subtitle = isAr ? contactInfo.subtitle_ar : contactInfo.subtitle_en;
-
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formState.name || !formState.email || !formState.message) return;
-    const { createClient } = await import("@/lib/supabase/client");
-    const supabase = createClient();
-    const { error } = await supabase.from("contact_messages").insert({
-      name: formState.name,
-      email: formState.email,
-      message: formState.message,
-    });
-    if (error) {
-      console.error("Failed to save contact message:", error);
-      return;
-    }
-    setSubmitted(true);
-    setFormState({ name: "", email: "", message: "" });
-  };
 
   const rawWhatsapp = contactInfo.whatsapp_number || "0930431817";
   const cleanWhatsapp = rawWhatsapp.replace(/[^0-9]/g, "").replace(/^0/, "963");
@@ -68,9 +42,9 @@ export const ContactSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 gap-8 items-start">
           {/* Direct Channels Cards (Spans 5 cols) */}
-          <div className="lg:col-span-5 space-y-4">
+          <div className="w-full max-w-2xl mx-auto space-y-4">
             <h3 className="text-xl font-bold text-neutral-950 dark:text-white mb-6">
               {isAr ? siteCopy.contact_direct_ar : siteCopy.contact_direct_en}
             </h3>
@@ -147,75 +121,6 @@ export const ContactSection: React.FC = () => {
             </a>
           </div>
 
-          {/* Contact Form (Spans 7 cols) */}
-          <div className="lg:col-span-7 bg-white dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-sm">
-            {submitted ? (
-              <div className="py-12 text-center flex flex-col items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white flex items-center justify-center mb-4 border border-neutral-200 dark:border-neutral-700">
-                  <CheckCircle className="w-8 h-8" />
-                </div>
-                <h3 className="text-2xl font-bold text-neutral-950 dark:text-white mb-2">
-                  {isAr ? siteCopy.contact_form_success_title_ar : siteCopy.contact_form_success_title_en}
-                </h3>
-                <p className="text-neutral-600 dark:text-neutral-400 text-sm max-w-md">
-                  {isAr ? siteCopy.contact_form_success_ar : siteCopy.contact_form_success_en}
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-neutral-800 dark:text-neutral-300 mb-2">
-                    {isAr ? siteCopy.contact_name_label_ar : siteCopy.contact_name_label_en}
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formState.name}
-                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    placeholder={isAr ? siteCopy.contact_name_placeholder_ar : siteCopy.contact_name_placeholder_en}
-                    className="w-full px-4 py-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 text-neutral-950 dark:text-white text-sm focus:outline-none focus:border-neutral-950 dark:focus:border-white transition-all"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-neutral-800 dark:text-neutral-300 mb-2">
-                    {isAr ? siteCopy.contact_email_label_ar : siteCopy.contact_email_label_en}
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formState.email}
-                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    placeholder="name@example.com"
-                    className="w-full px-4 py-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 text-neutral-950 dark:text-white text-sm focus:outline-none focus:border-neutral-950 dark:focus:border-white transition-all"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-neutral-800 dark:text-neutral-300 mb-2">
-                    {isAr ? siteCopy.contact_message_label_ar : siteCopy.contact_message_label_en}
-                  </label>
-                  <textarea
-                    required
-                    rows={4}
-                    value={formState.message}
-                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    placeholder={isAr ? siteCopy.contact_message_placeholder_ar : siteCopy.contact_message_placeholder_en}
-                    className="w-full px-4 py-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 text-neutral-950 dark:text-white text-sm focus:outline-none focus:border-neutral-950 dark:focus:border-white transition-all resize-none"
-                  />
-                </div>
-
-                <ShimmerButton
-                  type="submit"
-                  variant="primary"
-                  className="w-full !py-4 text-base"
-                  icon={<Send className="w-4 h-4" />}
-                >
-                  {isAr ? siteCopy.contact_send_ar : siteCopy.contact_send_en}
-                </ShimmerButton>
-              </form>
-            )}
-          </div>
         </div>
       </div>
     </section>
