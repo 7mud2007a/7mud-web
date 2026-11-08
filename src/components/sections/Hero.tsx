@@ -74,11 +74,7 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-neutral-950 dark:text-white leading-[1.15] max-w-4xl mb-6"
         >
-          {titlePrefix}{" "}
-          <span className="underline underline-offset-8 decoration-neutral-300 dark:decoration-neutral-700">
-            {titleHighlight}
-          </span>{" "}
-          {titleSuffix}
+          {isAr ? "أنا حمود ، مصمم ومبرمج مواقع وتطبيقات" : "I'm Hamoud, a Website & App Designer and Developer"}
         </motion.h1>
 
         {/* Subtitle */}
