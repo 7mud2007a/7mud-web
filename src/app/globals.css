@@ -17,15 +17,7 @@
 
 @layer base {
   :root {
-    --bg-main: #ffffff;
-    --bg-card: #ffffff;
-    --border-card: #e5e5e5;
-    --text-primary: #0a0a0a;
-    --text-secondary: #404040;
-    --text-muted: #737373;
-  }
-
-  .dark {
+    color-scheme: dark;
     --bg-main: #000000;
     --bg-card: #0a0a0a;
     --border-card: #262626;
@@ -42,8 +34,7 @@
   body {
     background-color: var(--bg-main);
     color: var(--text-primary);
-    transition: background-color 0.2s ease, color 0.2s ease;
-    overflow-x: hidden;
+      overflow-x: hidden;
   }
 }
 
