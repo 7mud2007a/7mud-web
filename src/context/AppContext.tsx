@@ -57,7 +57,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = useState<Language>("ar");
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const theme: Theme = "dark";
   const [mounted, setMounted] = useState(false);
 
   // Dynamic Content States
@@ -103,9 +103,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setContactInfo(contactData);
       setSiteCopy(copyData);
 
-      if (settingsData.theme) {
-        setThemeState(settingsData.theme);
-      }
     } catch (err) {
       console.error("Error fetching site content from Supabase:", err);
     } finally {
@@ -121,10 +118,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setLanguageState(savedLang);
     }
 
-    const savedTheme = localStorage.getItem("7mud_theme") as Theme;
-    if (savedTheme === "dark" || savedTheme === "light") {
-      setThemeState(savedTheme);
-    }
 
     fetchAllData();
   }, [fetchAllData]);
@@ -139,25 +132,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!mounted) return;
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-    localStorage.setItem("7mud_theme", theme);
-  }, [theme, mounted]);
+    document.documentElement.classList.add("dark");
+  }, [mounted]);
 
   const setLanguage = (lang: Language) => setLanguageState(lang);
-  const setTheme = (th: Theme) => setThemeState(th);
+  const setTheme = (_th: Theme) => undefined;
 
   const toggleLanguage = () => {
     setLanguageState((prev) => (prev === "ar" ? "en" : "ar"));
   };
 
-  const toggleTheme = () => {
-    setThemeState((prev) => (prev === "dark" ? "light" : "dark"));
-  };
+  const toggleTheme = () => undefined;
 
   const dir = language === "ar" ? "rtl" : "ltr";
 
