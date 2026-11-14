@@ -5,11 +5,11 @@ import { createPortal } from "react-dom";
 import { useApp } from "@/context/AppContext";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
-import { Sun, Moon, Globe, ArrowUpRight, Menu, X } from "lucide-react";
+import { Globe, ArrowUpRight, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 export const Navbar: React.FC = () => {
-  const { language, theme, toggleLanguage, toggleTheme, navigation, siteCopy } = useApp();
+  const { language, toggleLanguage, navigation, siteCopy } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -73,19 +73,6 @@ export const Navbar: React.FC = () => {
             <span>{language === "ar" ? "English" : "العربية"}</span>
           </button>
 
-          {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-900 dark:text-neutral-100 transition-colors"
-            aria-label="Toggle Theme"
-          >
-            {theme === "dark" ? (
-              <Sun className="w-4 h-4 text-neutral-100" />
-            ) : (
-              <Moon className="w-4 h-4 text-neutral-900" />
-            )}
-          </button>
-
           {/* CTA Button */}
           <a href="#contact">
             <ShimmerButton
@@ -105,14 +92,6 @@ export const Navbar: React.FC = () => {
             className="px-2.5 py-1.5 rounded-xl text-xs font-bold border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
           >
             {language === "ar" ? "EN" : "عربي"}
-          </button>
-
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
-            aria-label="Toggle Theme"
-          >
-            {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
 
 
